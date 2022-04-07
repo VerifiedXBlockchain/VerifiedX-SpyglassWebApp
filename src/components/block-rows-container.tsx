@@ -3,6 +3,8 @@ import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
 import { BlockRowList } from "./blocks-row-list";
 import InfiniteScroll from "react-infinite-scroller";
+import { BlockList } from "./block-list";
+import { isMobile } from "react-device-detect";
 
 export const BlockRowsContainer = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);

@@ -4,6 +4,7 @@ import "../src/styles/styles.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import type { AppProps } from "next/app";
 import { Search } from "../src/components/search";
+import { isMobile } from "react-device-detect";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -39,9 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <a className="nav-link text-secondary" href="/transaction">
                   Transactions
                 </a>
-                <span className="nav-link text-muted">|</span>
+                <span className="nav-link text-muted d-none d-md-block">|</span>
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link text-secondary  d-none d-md-block"
                   href="https://reserveblock.io"
                   target="blank"
                   rel="noreferrer"
@@ -49,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   ReserveBlock.io
                 </a>
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link text-secondary  d-none d-md-block"
                   href="https://github.com/ReserveBlockIO"
                   target="blank"
                   rel="noreferrer"
@@ -58,13 +59,19 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
               </div>
             </div>
-            <form className="d-flex">
+            <form className="d-flex  d-none d-md-block">
               <Search />
             </form>
           </div>
         </nav>
       </header>
       <div style={{ height: 70 }}></div>
+
+      <div className=" d-block d-md-none">
+        <div className="container">
+          <Search />
+        </div>
+      </div>
       <Component {...pageProps} />
     </div>
   );

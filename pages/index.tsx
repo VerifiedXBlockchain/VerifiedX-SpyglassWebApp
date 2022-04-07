@@ -2,8 +2,14 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { BlockRowsContainer } from "../src/components/block-rows-container";
 import { Search } from "../src/components/search";
+import { isMobile } from "react-device-detect";
+import { BlockListContainer } from "../src/components/block-list-container";
 
 const Home: NextPage = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   return (
     <div>
       <Head>
@@ -12,7 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <BlockRowsContainer />
+      {isMobile ? <BlockListContainer /> : <BlockRowsContainer />}
     </div>
   );
 };
