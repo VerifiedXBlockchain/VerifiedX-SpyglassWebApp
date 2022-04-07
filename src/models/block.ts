@@ -81,10 +81,10 @@ export class Block {
   }
 
   get craftTimeAccent(): string {
-    if (this.craftTime < 300) {
+    if (this.craftTime < 50) {
       return "success";
     }
-    if (this.craftTime < 800) {
+    if (this.craftTime < 150) {
       return "warning";
     }
 
