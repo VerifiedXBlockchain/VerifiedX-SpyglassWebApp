@@ -8,3 +8,9 @@
 @import "./theme.scss";
 
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+.badge.badge-lg {
+    font-size: 16px;
+    font-weight: 600;
+}

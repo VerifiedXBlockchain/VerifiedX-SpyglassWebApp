@@ -12,30 +12,30 @@ export const BlockRow = (props: Props) => {
   return (
     <tr>
       <td className="text-center">
-        <div className="badge">{block.height}</div>
+        <div className="badge badge-lg">{block.height}</div>
       </td>
       <td>
-        <div className="badge">{block.timestampLabel}</div>
+        <div className="badge badge-lg">{block.timestampLabel}</div>
       </td>
       <td className="text-center">
-        <div className={`badge bg-${block.craftTimeAccent}`}>
+        <div className={`badge badge-lg bg-${block.craftTimeAccent}`}>
           {block.craftTime}s
         </div>
       </td>
       <td>
-        <div className="badge">{block.validator}</div>
+        <div className="badge badge-lg">{block.validator}</div>
       </td>
       <td>
-        <div className="badge">{block.hashPreview()}</div>
+        <div className="badge badge-lg">{block.hashPreview()}</div>
       </td>
 
       <td className="text-center">
-        <div className="badge">{block.sizeLabel}</div>
+        <div className="badge badge-lg">{block.sizeLabel}</div>
       </td>
       <td className="text-center">
         {block.transactions.length > 0 ? (
           block.transactions.length == 1 ? (
-            <div className="badge d-block">
+            <div className="badge badge-lg d-block">
               <a href={`/transaction/${block.transactions[0].hash}`}>
                 {block.transactions[0].hashPreview()}
               </a>
@@ -43,7 +43,7 @@ export const BlockRow = (props: Props) => {
           ) : (
             <>
               <div
-                className="badge"
+                className="badge badge-lg"
                 onClick={() => setExpanded(!expanded)}
                 style={{ cursor: "pointer" }}
               >
@@ -58,7 +58,7 @@ export const BlockRow = (props: Props) => {
               {expanded ? (
                 <div>
                   {block.transactions.map((t) => (
-                    <div className="badge d-block" key={t.hash}>
+                    <div className="badge badge-lg d-block" key={t.hash}>
                       <a href={`/transaction/${t.hash}`}>{t.hashPreview()}</a>
                     </div>
                   ))}
@@ -71,10 +71,10 @@ export const BlockRow = (props: Props) => {
         )}
       </td>
       <td className="text-end">
-        <div className="badge">{block.totalAmount} RBX</div>
+        <div className="badge badge-lg">{block.totalAmount} RBX</div>
       </td>
       <td className="text-end">
-        <div className="badge">{block.totalReward} RBX</div>
+        <div className="badge badge-lg">{block.totalReward} RBX</div>
       </td>
       <td className="text-center">
         <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">
