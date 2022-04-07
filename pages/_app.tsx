@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import "../src/styles/styles.scss";
-
+import "bootstrap-icons/font/bootstrap-icons.css";
 import type { AppProps } from "next/app";
 import { Search } from "../src/components/search";
 
