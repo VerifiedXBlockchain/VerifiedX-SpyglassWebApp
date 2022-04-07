@@ -29,37 +29,41 @@ export const BlockRow = (props: Props) => {
         <div className="badge">{block.sizeLabel}</div>
       </td>
       <td className="text-center">
-        {block.transactions.length == 1 ? (
-          <div className="badge d-block">
-            <a href={`/transaction/${block.transactions[0].hash}`}>
-              {block.transactions[0].hashPreview()}
-            </a>
-          </div>
-        ) : (
-          <>
-            <div
-              className="badge"
-              onClick={() => setExpanded(!expanded)}
-              style={{ cursor: "pointer" }}
-            >
-              {block.transactions.length} Txs{" "}
-              <i
-                className={`bi ${
-                  expanded ? `bi-chevron-up` : "bi-chevron-down"
-                }`}
-              ></i>
+        {block.transactions.length > 0 ? (
+          block.transactions.length == 1 ? (
+            <div className="badge d-block">
+              <a href={`/transaction/${block.transactions[0].hash}`}>
+                {block.transactions[0].hashPreview()}
+              </a>
             </div>
-
-            {expanded ? (
-              <div>
-                {block.transactions.map((t) => (
-                  <div className="badge d-block" key={t.hash}>
-                    <a href={`/transaction/${t.hash}`}>{t.hashPreview()}</a>
-                  </div>
-                ))}
+          ) : (
+            <>
+              <div
+                className="badge"
+                onClick={() => setExpanded(!expanded)}
+                style={{ cursor: "pointer" }}
+              >
+                {block.transactions.length} Txs{" "}
+                <i
+                  className={`bi ${
+                    expanded ? `bi-chevron-up` : "bi-chevron-down"
+                  }`}
+                ></i>
               </div>
-            ) : null}
-          </>
+
+              {expanded ? (
+                <div>
+                  {block.transactions.map((t) => (
+                    <div className="badge d-block" key={t.hash}>
+                      <a href={`/transaction/${t.hash}`}>{t.hashPreview()}</a>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </>
+          )
+        ) : (
+          "-"
         )}
       </td>
       <td className="text-end">
