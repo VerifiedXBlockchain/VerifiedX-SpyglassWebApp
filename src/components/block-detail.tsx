@@ -115,12 +115,13 @@ export const BlockDetail = (props: Props) => {
         </div>
       </div>
       {transactions?.length ? <h4 className="mt-3">Transactions</h4> : null}
-
-      {transactions.map((t) => (
-        <div key={t.hash} className="col-12 col-md-4">
-          <TransactionCard transaction={t} />
-        </div>
-      ))}
+      <div className="row">
+        {transactions.map((t) => (
+          <div key={t.hash} className="col-12 col-md-4">
+            <TransactionCard transaction={t} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
