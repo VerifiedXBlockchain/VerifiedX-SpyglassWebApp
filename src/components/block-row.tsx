@@ -19,7 +19,7 @@ export const BlockRow = (props: Props) => {
       </td>
       <td className="text-center">
         <div className={`badge bg-${block.craftTimeAccent}`}>
-          {block.craftTime}s
+          {block.craftTime}ms
         </div>
       </td>
       <td>
