@@ -23,8 +23,12 @@ export const BlockRow = (props: Props) => {
         </div>
       </td>
       <td>
-        <div className="badge">{block.hash}</div>
+        <div className="badge">{block.validator}</div>
       </td>
+      <td>
+        <div className="badge">{block.hashPreview()}</div>
+      </td>
+
       <td className="text-center">
         <div className="badge">{block.sizeLabel}</div>
       </td>

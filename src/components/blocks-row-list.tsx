@@ -15,6 +15,7 @@ export const BlockRowList = (props: Props) => {
           <th className="text-center">Height</th>
           <th>Crafted</th>
           <th className="text-center">Craft Time</th>
+          <th>Validator</th>
           <th>Hash</th>
           <th className="text-center">Size</th>
           <th className="text-center">Transactions</th>
