@@ -1,5 +1,5 @@
 import { isToday } from "../utils/dates";
-import { numberWithCommas } from "../utils/formatting";
+import { formatBytes, numberWithCommas } from "../utils/formatting";
 import { Transaction } from "./transaction";
 
 export class Block {
@@ -73,7 +73,7 @@ export class Block {
   }
 
   get sizeLabel(): string {
-    return numberWithCommas(this.size);
+    return formatBytes(this.size);
   }
 
   get craftTimeLabel(): string {
