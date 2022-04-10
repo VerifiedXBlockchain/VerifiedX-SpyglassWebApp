@@ -20,19 +20,49 @@ const SearchPage: NextPage = () => {
   const [page, setPage] = useState(1);
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [twoColumns, setTwoColumns] = useState<boolean>(false);
+
+  const [blockNotFound, setBlockNotFound] = useState(false);
 
   useEffect(() => {
     const blockService = new BlockService();
 
-    blockService.search(`${q}`, page).then((data) => {
+    const trimmedQ = `${q}`.trim();
+    const isNumber = /^\d+$/.test(trimmedQ);
+
+    setBlockNotFound(false);
+
+    if (isNumber) {
+      blockService
+        .retrieve(trimmedQ)
+        .then((data) => {
+          setBlocks([data]);
+        })
+        .catch((e) => {
+          console.log(e);
+          setBlockNotFound(true);
+        });
+      return;
+    }
+
+    if (trimmedQ.length == 32 && trimmedQ[0].toUpperCase() == "R") {
+      blockService.search(trimmedQ, page).then((data) => {
+        setBlocks(data.results);
+      });
+      return;
+    }
+
+    blockService.search(trimmedQ, page).then((data) => {
       setBlocks(data.results);
     });
 
     const transactionService = new TransactionService();
 
-    transactionService.search(`${q}`, page).then((data) => {
+    transactionService.search(trimmedQ, page).then((data) => {
       setTransactions(data.results);
     });
+
+    setTwoColumns(blocks.length > 0 && transactions.length > 0);
   }, [q, page]);
 
   if (!q) {
@@ -42,7 +72,7 @@ const SearchPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer</title>
+        <title>RBX Explorer {twoColumns ? "TWO" : "ONE"}</title>
         <meta
           name="description"
           content="ReserveBlock Explorer: Search Results"
@@ -65,36 +95,55 @@ const SearchPage: NextPage = () => {
         {/* <Search initialValue={q.toString()} /> */}
         <div className="py-2"></div>
 
-        <h6>Results for {q}:</h6>
+        <pre className="text-center">Results for {q}</pre>
+
+        <hr />
+        {blockNotFound ? (
+          <div className="alert alert-danger">Block {q} Not Found.</div>
+        ) : null}
         <div className="row">
-          <div className="col-12 col-md-6">
-            <h4 className="text-center">Blocks</h4>
-            {blocks.length < 1 ? (
-              <div className="text-center">
-                <div className="badge bg-warning">No Blocks Found</div>
-              </div>
-            ) : null}
-            {blocks.map((b) => (
-              <div className="pb-2" key={b.height}>
-                <BlockCard block={b}></BlockCard>
-              </div>
-            ))}
-          </div>
+          {blocks.length > 0 ? (
+            <div className={`${twoColumns ? "col-6" : "col-12"}`}>
+              <h4 className="text-center">Blocks</h4>
+              {blocks.length < 1 ? (
+                <div className="text-center">
+                  <div className="badge bg-warning">No Blocks Found</div>
+                </div>
+              ) : null}
 
-          <div className="col-12 col-md-6">
-            <h4 className="text-center">Transactions</h4>
-            {transactions.length < 1 ? (
-              <div className="text-center">
-                <div className="badge bg-warning">No Transactions Found</div>
+              <div className="row">
+                {blocks.map((b) => (
+                  <div
+                    className={`${twoColumns ? "col-12" : "col-4"} p-2`}
+                    key={b.height}
+                  >
+                    <BlockCard block={b}></BlockCard>
+                  </div>
+                ))}
               </div>
-            ) : null}
+            </div>
+          ) : null}
 
-            {transactions.map((t) => (
-              <div className="pb-2" key={t.hash}>
-                <TransactionCard transaction={t}></TransactionCard>
+          {transactions.length > 0 ? (
+            <div className={`${twoColumns ? "col-6" : "col-12"}`}>
+              <h4 className="text-center">Transactions</h4>
+              {transactions.length < 1 ? (
+                <div className="text-center">
+                  <div className="badge bg-warning">No Transactions Found</div>
+                </div>
+              ) : null}
+              <div className="row">
+                {transactions.map((t) => (
+                  <div
+                    className={`${twoColumns ? "col-12" : "col-4"} p-2`}
+                    key={t.hash}
+                  >
+                    <TransactionCard transaction={t}></TransactionCard>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
