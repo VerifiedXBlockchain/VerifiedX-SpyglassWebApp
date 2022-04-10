@@ -72,7 +72,7 @@ const SearchPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer {twoColumns ? "TWO" : "ONE"}</title>
+        <title>RBX Explorer</title>
         <meta
           name="description"
           content="ReserveBlock Explorer: Search Results"
