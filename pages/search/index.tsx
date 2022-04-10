@@ -104,7 +104,7 @@ const SearchPage: NextPage = () => {
         <div className="row">
           {blocks.length > 0 ? (
             <div className={`${twoColumns ? "col-6" : "col-12"}`}>
-              <h4 className="text-center">Blocks</h4>
+              {twoColumns ? <h4 className="text-center">Blocks</h4> : null}
               {blocks.length < 1 ? (
                 <div className="text-center">
                   <div className="badge bg-warning">No Blocks Found</div>
@@ -126,7 +126,9 @@ const SearchPage: NextPage = () => {
 
           {transactions.length > 0 ? (
             <div className={`${twoColumns ? "col-6" : "col-12"}`}>
-              <h4 className="text-center">Transactions</h4>
+              {twoColumns ? (
+                <h4 className="text-center">Transactions</h4>
+              ) : null}
               {transactions.length < 1 ? (
                 <div className="text-center">
                   <div className="badge bg-warning">No Transactions Found</div>
