@@ -1,4 +1,5 @@
 import { isToday } from "../utils/dates";
+import { Location } from "./location";
 
 export class Validator {
   address: string;
@@ -9,6 +10,8 @@ export class Validator {
   isActive: boolean;
   blockCount: number;
 
+  location?: Location;
+
   constructor(d: any) {
     this.address = d["address"];
     this.uniqueName = d["unique_name"];
@@ -17,6 +20,10 @@ export class Validator {
     this.connectDate = new Date(d["connect_date"]);
     this.isActive = d["is_active"];
     this.blockCount = d["block_count"];
+
+    if (d["location"]) {
+      this.location = new Location(d["location"]);
+    }
   }
 
   get dateLabel(): string {

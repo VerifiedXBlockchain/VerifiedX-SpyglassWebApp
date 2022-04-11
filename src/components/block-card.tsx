@@ -37,9 +37,19 @@ export const BlockCard = (props: Props) => {
               </div>
             ) : null}
           </div>
-          {/* <small>{block.validatorPreview()}</small> */}
 
           <small>{block.validator}</small>
+        </li>
+        <li className="list-group-item ">
+          <div className="d-flex justify-content-between align-items-center">
+            <div>Validator Location:</div>
+
+            <small>
+              {block.masternode?.location
+                ? block.masternode.location.label
+                : "-"}
+            </small>
+          </div>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
           <div>

@@ -31,6 +31,11 @@ export const ValidatorDetail = (props: Props) => {
               label="IP"
               value={`${validator.ipAddress}`}
             ></DetailItem>
+            <div className="px-1  py-1"></div>
+            <DetailItem
+              label="Location"
+              value={`${validator.location ? validator.location.label : "-"}`}
+            ></DetailItem>
           </div>
           <div className="py-1"></div>
 
