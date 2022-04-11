@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -30,44 +31,52 @@ const BlockDetailPage: NextPage = () => {
   const prev = block.height - 1;
 
   return (
-    <div>
-      <div className="container">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb align-items-center">
-            <li className="breadcrumb-item">
-              <a href="/">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              <a href="/block">Blocks</a>
-            </li>
+    <>
+      <Head>
+        <title>RBX Explorer</title>
+        <meta name="description" />
+        <title>{`ReserveBlock Explorer: Block ${block.height}`}</title>
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      <div>
+        <div className="container">
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb align-items-center">
+              <li className="breadcrumb-item">
+                <a href="/">Home</a>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                <a href="/block">Blocks</a>
+              </li>
 
-            <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/block/${block.height}`}>{block.height}</a>
-            </li>
-            <div className="ms-auto">
-              <div className="btn-group">
-                {prev > 0 ? (
+              <li className="breadcrumb-item active" aria-current="page">
+                <a href={`/block/${block.height}`}>{block.height}</a>
+              </li>
+              <div className="ms-auto">
+                <div className="btn-group">
+                  {prev > 0 ? (
+                    <a
+                      href={`/block/${prev}`}
+                      className="btn btn-dark btn-sm border"
+                    >
+                      Prev
+                    </a>
+                  ) : null}
                   <a
-                    href={`/block/${prev}`}
+                    href={`/block/${next}`}
                     className="btn btn-dark btn-sm border"
                   >
-                    Prev
+                    Next
                   </a>
-                ) : null}
-                <a
-                  href={`/block/${next}`}
-                  className="btn btn-dark btn-sm border"
-                >
-                  Next
-                </a>
+                </div>
               </div>
-            </div>
-          </ol>
-        </nav>
-      </div>
+            </ol>
+          </nav>
+        </div>
 
-      <BlockDetail block={block} />
-    </div>
+        <BlockDetail block={block} />
+      </div>
+    </>
   );
 };
 

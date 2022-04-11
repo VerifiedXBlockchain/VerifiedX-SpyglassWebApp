@@ -1,37 +1,32 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
+import { Validator } from "../models/validator";
 import { BlockService } from "../services/block-service";
+import { ValidatorService } from "../services/validator-service";
 import { BlockList } from "./block-list";
+import { ValidatorList } from "./validator-list";
 
-interface Props {
-  validatorAddress?: string;
-}
-
-export const BlockListContainer = (props: Props) => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+export const ValidatorListContainer = () => {
+  const [validators, setValidators] = useState<Validator[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
   const fetchPage = async (p: number) => {
-    const service = new BlockService();
+    const service = new ValidatorService();
     try {
-      const params = props.validatorAddress
-        ? { validator: props.validatorAddress }
-        : {};
-
-      const data = await service.list(p, params);
+      const data = await service.list(p);
       if (data.page == 1) {
-        setBlocks(data.results);
+        setValidators(data.results);
       } else {
         const results = [];
         for (const result of data.results) {
-          const exists = blocks.some((b) => b.height == result.height);
+          const exists = validators.some((b) => b.address == result.address);
           if (!exists) {
             results.push(result);
           }
         }
 
-        setBlocks([...blocks, ...results]);
+        setValidators([...validators, ...results]);
       }
 
       setCanLoadMore(data.numPages > data.page);
@@ -43,21 +38,17 @@ export const BlockListContainer = (props: Props) => {
 
   useEffect(() => {
     const poll = () => {
-      const service = new BlockService();
-      const params = props.validatorAddress
-        ? { validator: props.validatorAddress }
-        : {};
-
-      service.list(1, params).then((data) => {
-        const newBlocks = [];
-        for (const block of data.results) {
-          const exists = blocks.some((b) => b.height == block.height);
+      const service = new ValidatorService();
+      service.list(1).then((data) => {
+        const newValidators = [];
+        for (const validator of data.results) {
+          const exists = validators.some((v) => v.address == validator.address);
           if (!exists) {
-            newBlocks.push(block);
+            newValidators.push(validator);
           }
         }
-        if (newBlocks.length > 0) {
-          setBlocks([...newBlocks, ...blocks]);
+        if (newValidators.length > 0) {
+          setValidators([...newValidators, ...validators]);
         }
       });
     };
@@ -67,10 +58,10 @@ export const BlockListContainer = (props: Props) => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [blocks]);
+  }, [validators]);
 
   return (
-    <div className="container">
+    <div>
       <InfiniteScroll
         pageStart={0}
         loadMore={fetchPage}
@@ -87,7 +78,7 @@ export const BlockListContainer = (props: Props) => {
           </div>
         }
       >
-        <BlockList blocks={blocks} />
+        <ValidatorList validators={validators} />
       </InfiniteScroll>
     </div>
   );

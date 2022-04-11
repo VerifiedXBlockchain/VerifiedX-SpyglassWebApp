@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { Block } from "../models/block";
 import { DetailItem } from "./detail-item";
 import { TransactionCard } from "./transaction-card";
@@ -14,12 +13,6 @@ export const BlockDetail = (props: Props) => {
 
   return (
     <>
-      <Head>
-        <title>RBX Explorer</title>
-        <meta name="description" />
-        <title>{`ReserveBlock Explorer: Block ${block.height}`}</title>
-        <link rel="icon" href="/favicon.png" />
-      </Head>
       <div className="container">
         <h4>Block Details</h4>
         <div className="bg-dark p-2">

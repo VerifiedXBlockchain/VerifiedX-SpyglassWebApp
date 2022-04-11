@@ -10,9 +10,13 @@ export class BlockService {
 
     return new Block(data);
   }
-  async list(page: number = 1): Promise<PaginatedResponse<Block>> {
+  async list(
+    page: number = 1,
+    params: any = {}
+  ): Promise<PaginatedResponse<Block>> {
     const response = await httpGet(`${API_BASE_URL}/blocks/`, {
       page: page,
+      ...params,
     });
     const data: any = response.parsedBody;
 

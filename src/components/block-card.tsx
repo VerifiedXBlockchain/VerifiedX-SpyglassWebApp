@@ -24,9 +24,21 @@ export const BlockCard = (props: Props) => {
           <small>{block.hash}</small>
         </li>
         <li className="list-group-item ">
-          Validated By:
-          <br />
+          <div className="d-flex justify-content-between align-items-center">
+            <div>Validated By:</div>
+            {block.masternode ? (
+              <div>
+                <a
+                  href={`/validator/${block.masternode.address}`}
+                  className="btn btn-sm btn-success "
+                >
+                  {block.masternode.uniqueNameLabel}
+                </a>
+              </div>
+            ) : null}
+          </div>
           {/* <small>{block.validatorPreview()}</small> */}
+
           <small>{block.validator}</small>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">

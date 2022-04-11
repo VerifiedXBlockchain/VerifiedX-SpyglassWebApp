@@ -10,9 +10,10 @@ export const BlockRowsContainer = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
-  const fetchPage = (p: number) => {
+  const fetchPage = async (p: number) => {
     const service = new BlockService();
-    service.list(p).then((data) => {
+    try {
+      const data = await service.list(p);
       if (data.page == 1) {
         setBlocks(data.results);
       } else {
@@ -28,7 +29,10 @@ export const BlockRowsContainer = () => {
       }
 
       setCanLoadMore(data.numPages > data.page);
-    });
+    } catch (e) {
+      console.log(e);
+      setCanLoadMore(false);
+    }
   };
 
   useEffect(() => {

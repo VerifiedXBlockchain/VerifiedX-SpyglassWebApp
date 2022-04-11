@@ -24,13 +24,11 @@ export const BlockRowList = (props: Props) => {
           <th className="text-center">Actions</th>
         </tr>
       </thead>
-      {blocks.map((block) => (
-        // <div className="" key={block.height}>
-        <tbody key={block.height}>
-          <BlockRow block={block} />
-        </tbody>
-        // </div>
-      ))}
+      <tbody>
+        {blocks.map((block) => (
+          <BlockRow block={block} key={block.height} />
+        ))}
+      </tbody>
     </table>
   );
 };

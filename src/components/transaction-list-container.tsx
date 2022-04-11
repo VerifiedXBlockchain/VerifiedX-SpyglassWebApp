@@ -8,9 +8,11 @@ export const TransactionListContainer = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
-  const fetchPage = (p: number) => {
+  const fetchPage = async (p: number) => {
     const service = new TransactionService();
-    service.list(p).then((data) => {
+
+    try {
+      const data = await service.list(p);
       if (data.page == 1) {
         setTransactions(data.results);
       } else {
@@ -26,7 +28,10 @@ export const TransactionListContainer = () => {
       }
 
       setCanLoadMore(data.numPages > data.page);
-    });
+    } catch (e) {
+      console.log(e);
+      setCanLoadMore(false);
+    }
   };
 
   useEffect(() => {

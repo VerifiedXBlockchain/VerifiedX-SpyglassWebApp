@@ -1,6 +1,7 @@
 import { isToday } from "../utils/dates";
 import { formatBytes, numberWithCommas } from "../utils/formatting";
 import { Transaction } from "./transaction";
+import { Validator } from "./validator";
 
 export class Block {
   height: number;
@@ -21,6 +22,7 @@ export class Block {
   // nextValidators: string[];
   totalValidators: number;
   version: number;
+  masternode?: Validator;
 
   constructor(d: any) {
     this.height = d["height"];
@@ -46,6 +48,10 @@ export class Block {
       for (let tx of transactions) {
         this.transactions.push(new Transaction(tx));
       }
+    }
+
+    if (d["masternode"]) {
+      this.masternode = new Validator(d["masternode"]);
     }
   }
 
