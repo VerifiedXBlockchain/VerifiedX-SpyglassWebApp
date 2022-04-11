@@ -35,8 +35,8 @@ const SearchPage: NextPage = () => {
     if (isNumber) {
       blockService
         .retrieve(trimmedQ)
-        .then((data) => {
-          setBlocks([data]);
+        .then((b) => {
+          router.push(`/block/${b.height}`);
         })
         .catch((e) => {
           console.log(e);
