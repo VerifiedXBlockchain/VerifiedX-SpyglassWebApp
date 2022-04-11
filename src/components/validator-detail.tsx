@@ -27,11 +27,7 @@ export const ValidatorDetail = (props: Props) => {
               value={`${validator.uniqueName}`}
             ></DetailItem>
             <div className="px-1  py-1"></div>
-            <DetailItem
-              label="IP"
-              value={`${validator.ipAddress}`}
-            ></DetailItem>
-            <div className="px-1  py-1"></div>
+
             <DetailItem
               label="Location"
               value={`${validator.location ? validator.location.label : "-"}`}
@@ -45,10 +41,7 @@ export const ValidatorDetail = (props: Props) => {
               value={`${validator.dateLabel}`}
             ></DetailItem>
             <div className="px-1  py-1"></div>
-            <DetailItem
-              label="Connection ID"
-              value={`${validator.connectionId}`}
-            ></DetailItem>
+
             <div className="px-1  py-1"></div>
             <DetailItem
               label="Status"

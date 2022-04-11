@@ -1,5 +1,4 @@
 export class Location {
-  ipAddress: string;
   city: string;
   region: string;
   country: string;
@@ -8,7 +7,6 @@ export class Location {
   longitude: number;
 
   constructor(d: any) {
-    this.ipAddress = d["ip_address"];
     this.city = d["city"];
     this.region = d["region"];
     this.country = d["country"];

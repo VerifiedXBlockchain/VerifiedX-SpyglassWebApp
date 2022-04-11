@@ -4,7 +4,6 @@ import { Location } from "./location";
 export class Validator {
   address: string;
   uniqueName: string;
-  connectionId: string;
   ipAddress: string;
   connectDate: Date;
   isActive: boolean;
@@ -15,7 +14,6 @@ export class Validator {
   constructor(d: any) {
     this.address = d["address"];
     this.uniqueName = d["unique_name"];
-    this.connectionId = d["connection_id"];
     this.ipAddress = d["ip_address"];
     this.connectDate = new Date(d["connect_date"]);
     this.isActive = d["is_active"];

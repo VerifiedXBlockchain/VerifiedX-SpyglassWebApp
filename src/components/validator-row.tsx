@@ -25,17 +25,13 @@ export const ValidatorRow = (props: Props) => {
       <td>
         <div className="badge badge-lg  ps-0">{validator.blockCount}</div>
       </td>
-      <td>
-        <div className="badge badge-lg  ps-0">{validator.ipAddress}</div>
-      </td>
+
       <td>
         <div className="badge badge-lg  ps-0">
           {validator.location ? validator.location.label : "-"}
         </div>
       </td>
-      <td>
-        <div className="badge badge-lg  ps-0">{validator.connectionId}</div>
-      </td>
+
       <td>
         <div className="badge badge-lg  ps-0">{validator.dateLabel}</div>
       </td>

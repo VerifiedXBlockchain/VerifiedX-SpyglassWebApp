@@ -17,9 +17,7 @@ export const ValidatorList = (props: Props) => {
           <th>Address</th>
           <th>Validator Name</th>
           <th>Blocks Crafted</th>
-          <th>IP</th>
           <th>Location</th>
-          <th>Connection ID</th>
           <th>Connected</th>
           <th>Actions</th>
         </tr>
