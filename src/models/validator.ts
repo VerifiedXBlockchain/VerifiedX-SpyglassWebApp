@@ -4,7 +4,6 @@ import { Location } from "./location";
 export class Validator {
   address: string;
   uniqueName: string;
-  ipAddress: string;
   connectDate: Date;
   isActive: boolean;
   blockCount: number;
@@ -14,7 +13,6 @@ export class Validator {
   constructor(d: any) {
     this.address = d["address"];
     this.uniqueName = d["unique_name"];
-    this.ipAddress = d["ip_address"];
     this.connectDate = new Date(d["connect_date"]);
     this.isActive = d["is_active"];
     this.blockCount = d["block_count"];
@@ -26,7 +24,7 @@ export class Validator {
 
   get dateLabel(): string {
     if (isToday(this.connectDate)) {
-      return this.connectDate.toLocaleTimeString();
+      return `Today @ ${this.connectDate.toLocaleTimeString()}`;
     }
     return `${this.connectDate.toLocaleDateString()} ${this.connectDate.toLocaleTimeString()}`;
   }

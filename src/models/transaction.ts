@@ -36,7 +36,7 @@ export class Transaction {
 
   get timestampLabel(): string {
     if (isToday(this.timestampDate)) {
-      return this.timestampDate.toLocaleTimeString();
+      return `Today @ ${this.timestampDate.toLocaleTimeString()}`;
     }
     return `${this.timestampDate.toLocaleDateString()} ${this.timestampDate.toLocaleTimeString()}`;
   }
