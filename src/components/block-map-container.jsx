@@ -35,12 +35,13 @@ export const BlockMapContainer = () => {
             .setPopup(
               new Popup().setHTML(
                 `<div>
-                <h6>${validator.uniqueName}</h6>
-                <div class="pb-1">IP: ${validator.ipAddress}</div>
-              
-                <a class="btn btn-primary" href="/validators/${
+                <h6 class="mb-0">${validator.uniqueName}</h6>
+                <div class="pb-2">IP: ${validator.ipAddress}</div>
+                <div class="text-center">
+                <a class="btn btn-primary btn-sm d-block" href="/validators/${
                   validator.address
                 }" target="_blank">Details</a>
+                </div>
                 </div>
                 `
               )
