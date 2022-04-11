@@ -16,6 +16,7 @@ export const ValidatorList = (props: Props) => {
           <th>Status</th>
           <th>Address</th>
           <th>Validator Name</th>
+          <th>Blocks Crafted</th>
           <th>IP</th>
           <th>Connection ID</th>
           <th>Connected</th>

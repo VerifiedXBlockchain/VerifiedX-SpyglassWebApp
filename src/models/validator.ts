@@ -7,6 +7,7 @@ export class Validator {
   ipAddress: string;
   connectDate: Date;
   isActive: boolean;
+  blockCount: number;
 
   constructor(d: any) {
     this.address = d["address"];
@@ -15,6 +16,7 @@ export class Validator {
     this.ipAddress = d["ip_address"];
     this.connectDate = new Date(d["connect_date"]);
     this.isActive = d["is_active"];
+    this.blockCount = d["block_count"];
   }
 
   get dateLabel(): string {
