@@ -5,10 +5,9 @@ import { Validator } from "../models/validator";
 import { BlockService } from "../services/block-service";
 import { ValidatorService } from "../services/validator-service";
 import { BlockList } from "./block-list";
-import { ValidatorCardList } from "./validator-card-list";
 import { ValidatorList } from "./validator-list";
 
-export const ValidatorListContainer = () => {
+export const ValidatorRowsContainer = () => {
   const [validators, setValidators] = useState<Validator[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -79,7 +78,7 @@ export const ValidatorListContainer = () => {
           </div>
         }
       >
-        <ValidatorCardList validators={validators} />
+        <ValidatorList validators={validators} />
       </InfiniteScroll>
     </div>
   );

@@ -37,11 +37,30 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <a className="nav-link text-secondary" href="/block">
                   Blocks
                 </a>
-                <a className="nav-link text-secondary" href="/transaction">
+                <a
+                  className="nav-link text-secondary d-none d-md-block"
+                  href="/transaction"
+                >
                   Transactions
                 </a>
-                <a className="nav-link text-secondary" href="/validators">
+
+                <a
+                  className="nav-link text-secondary d-block d-md-none"
+                  href="/transaction"
+                >
+                  Txs
+                </a>
+                <a
+                  className="nav-link text-secondary d-none d-md-block"
+                  href="/validators"
+                >
                   Validator Pool
+                </a>
+                <a
+                  className="nav-link text-secondary d-block d-md-none"
+                  href="/validators"
+                >
+                  Pool
                 </a>
                 <span className="nav-link text-muted d-none d-md-block">|</span>
                 <a
