@@ -50,19 +50,19 @@ const TransactionDetailPage: NextPage = () => {
         </nav>
         <h4>Transaction Details</h4>
         <div className="bg-dark p-2">
-          <div className="d-flex">
+          <div className="d-block d-md-flex">
             <DetailItem
               label="Craft Time"
               value={transaction.timestampLabel}
               smallValue
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="p-1"></div>
             <DetailItem
               label="Hash"
               value={transaction.hash}
               smallValue
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="p-1"></div>
 
             <DetailItem
               label="Block"
@@ -70,13 +70,13 @@ const TransactionDetailPage: NextPage = () => {
               smallValue
               href={`/block/${transaction.height}`}
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="p-1"></div>
             <DetailItem
               label="Amount"
               value={`${transaction.amount} RBX`}
               smallValue
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="p-1"></div>
 
             <DetailItem
               label="Fee"
@@ -86,13 +86,13 @@ const TransactionDetailPage: NextPage = () => {
           </div>
           <div className="py-1"></div>
 
-          <div className="d-flex">
+          <div className="d-block d-md-flex">
             <DetailItem
               label="From"
               value={transaction.fromAddress}
               smallValue
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="p-1"></div>
 
             <DetailItem
               label="To"

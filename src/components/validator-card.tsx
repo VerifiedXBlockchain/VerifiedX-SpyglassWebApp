@@ -30,11 +30,8 @@ export const ValidatorCard = (props: Props) => {
           </div>
         </li>
         <li className="list-group-item ">
-          <div className="d-flex justify-content-between align-items-center">
-            <div>Address</div>
-
-            <small>{validator.address}</small>
-          </div>
+          <div>Address</div>
+          <small>{validator.address}</small>
         </li>
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
@@ -46,6 +43,13 @@ export const ValidatorCard = (props: Props) => {
           <div className="d-flex justify-content-between align-items-center">
             <div>Connection ID</div>
             <small>{validator.connectionId}</small>
+          </div>
+        </li>
+
+        <li className="list-group-item ">
+          <div className="d-flex justify-content-between align-items-center">
+            <div>Blocks Crafted</div>
+            <small>{validator.blockCount}</small>
           </div>
         </li>
       </ul>

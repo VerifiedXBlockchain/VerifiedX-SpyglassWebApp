@@ -16,38 +16,44 @@ export const ValidatorDetail = (props: Props) => {
       <div className="container">
         <h4>Validator Details</h4>
         <div className="bg-dark p-2">
-          <div className="d-flex justify-start">
+          <div className="d-block d-md-flex justify-start">
             <DetailItem
               label="Address"
               value={`${validator.address}`}
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="px-1 py-1"></div>
             <DetailItem
               label="Name"
               value={`${validator.uniqueName}`}
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="px-1  py-1"></div>
             <DetailItem
               label="IP"
               value={`${validator.ipAddress}`}
             ></DetailItem>
           </div>
-          <div className="py-2"></div>
+          <div className="py-1"></div>
 
-          <div className="d-flex justify-start">
+          <div className="d-block d-md-flex justify-start">
             <DetailItem
               label="Connection Date"
               value={`${validator.dateLabel}`}
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="px-1  py-1"></div>
             <DetailItem
               label="Connection ID"
               value={`${validator.connectionId}`}
             ></DetailItem>
-            <div className="px-1"></div>
+            <div className="px-1  py-1"></div>
             <DetailItem
               label="Status"
               value={`${validator.isActive ? "Active" : "Inactive"}`}
+            ></DetailItem>
+            <div className="px-1  py-1"></div>
+
+            <DetailItem
+              label="Blocks Crafted"
+              value={`${validator.blockCount}`}
             ></DetailItem>
           </div>
         </div>
