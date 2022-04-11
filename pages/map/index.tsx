@@ -11,10 +11,13 @@ const MapPage: NextPage = () => {
     <div>
       <Head>
         <title>RBX Explorer</title>
-        <meta name="description" content="ReserveBlock Explorer: BlockMap" />
+        <meta
+          name="description"
+          content="ReserveBlock Explorer: Validator Map"
+        />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <h3 className="text-center">Latest Blocks</h3>
+      <h3 className="text-center">Heat Map</h3>
       <BlockMapContainer />
     </div>
   );

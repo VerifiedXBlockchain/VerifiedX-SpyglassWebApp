@@ -10,9 +10,13 @@ export class ValidatorService {
 
     return new Validator(data);
   }
-  async list(page: number = 1): Promise<PaginatedResponse<Validator>> {
+  async list(
+    page: number = 1,
+    params: any = {}
+  ): Promise<PaginatedResponse<Validator>> {
     const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
+      ...params,
     });
     const data: any = response.parsedBody;
 

@@ -68,7 +68,17 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Pool
                 </a>
 
-                <a className="nav-link text-secondary" href="/map">
+                <a
+                  className="nav-link text-secondary d-none d-md-block"
+                  href="/map"
+                >
+                  Heat Map
+                </a>
+
+                <a
+                  className="nav-link text-secondary d-block d-md-none"
+                  href="/map"
+                >
                   Map
                 </a>
                 <span className="nav-link text-muted d-none d-md-block">|</span>

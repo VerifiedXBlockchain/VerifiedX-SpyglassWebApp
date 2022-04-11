@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
+import { ValidatorService } from "../services/validator-service";
 import { BlockList } from "./block-list";
 
 
 export const BlockMapContainer = () => {
-  const [blocks, setBlocks] = useState([]);
+  // const [blocks, setBlocks] = useState([]);
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-96);
@@ -17,30 +18,28 @@ export const BlockMapContainer = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchPage = async () => {
-    const service = new BlockService();
+    const service = new ValidatorService();
     try {
-      const data = await service.list(1, { limit: 100 });
+      const data = await service.list(1, { limit: 300, is_active: true });
 
       setLoading(false);
 
-      for (const block of data.results) {
-        if (block.masternode?.location) {
+      for (const validator of data.results) {
+        if (validator.location) {
           const marker = new mapboxgl.Marker()
             .setLngLat([
-              block.masternode.location.longitude,
-              block.masternode.location.latitude,
+              validator.location.longitude,
+              validator.location.latitude,
             ])
             // .setPopup(new Popup().setText(`Block ${block.height}`))
             .setPopup(
               new Popup().setHTML(
                 `<div>
-                <h6>Block ${block.height}</h6>
-                <div class="pb-1">Hash: ${block.hashPreview()}</div>
-                <div class="pb-1">Validator: ${
-                  block.masternode.uniqueNameLabel
-                }</div>
-                <a class="btn btn-primary" href="/block/${
-                  block.height
+                <h6>${validator.uniqueName}</h6>
+                <div class="pb-1">IP: ${validator.ipAddress}</div>
+              
+                <a class="btn btn-primary" href="/validators/${
+                  validator.address
                 }" target="_blank">Details</a>
                 </div>
                 `
@@ -68,16 +67,8 @@ export const BlockMapContainer = () => {
     });
 
     fetchPage();
-    const poll = () => {
-      fetchPage();
-    };
-
-    const interval = setInterval(() => {
-      poll();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [blocks]);
+  
+  }, []);
 
   return (
     <div className="map-outer-container">
