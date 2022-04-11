@@ -5,6 +5,11 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import type { AppProps } from "next/app";
 import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -61,6 +66,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                   href="/validators"
                 >
                   Pool
+                </a>
+
+                <a className="nav-link text-secondary" href="/map">
+                  Map
                 </a>
                 <span className="nav-link text-muted d-none d-md-block">|</span>
                 <a
