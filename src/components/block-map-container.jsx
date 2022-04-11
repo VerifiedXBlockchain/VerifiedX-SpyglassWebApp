@@ -5,13 +5,10 @@ import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
 import { BlockList } from "./block-list";
 
-interface Props {
-  validatorAddress?: string;
-}
 
-export const BlockMapContainer = (props: Props) => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
-  const mapContainer = useRef<mapboxgl.Map | undefined>(null);
+export const BlockMapContainer = () => {
+  const [blocks, setBlocks] = useState([]);
+  const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-96);
   const [lat, setLat] = useState(37);
