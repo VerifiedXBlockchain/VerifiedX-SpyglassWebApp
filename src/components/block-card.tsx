@@ -29,7 +29,7 @@ export const BlockCard = (props: Props) => {
             {block.masternode ? (
               <div>
                 <a
-                  href={`/validator/${block.masternode.address}`}
+                  href={`/validators/${block.masternode.address}`}
                   className="btn btn-sm btn-success "
                 >
                   {block.masternode.uniqueNameLabel}
