@@ -8,10 +8,14 @@ import { BlockList } from "../../src/components/block-list";
 import { Search } from "../../src/components/search";
 import { TransactionCard } from "../../src/components/transaction-card";
 import { TransactionList } from "../../src/components/transaction-list";
+import { Address } from "../../src/models/address";
 import { Block } from "../../src/models/block";
 import { Transaction } from "../../src/models/transaction";
+import { AddressService } from "../../src/services/address-service";
 import { BlockService } from "../../src/services/block-service";
 import { TransactionService } from "../../src/services/transaction-service";
+
+const SHOW_BALANCE = false;
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -21,11 +25,13 @@ const SearchPage: NextPage = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [twoColumns, setTwoColumns] = useState<boolean>(false);
+  const [address, setAddress] = useState<Address | undefined>(undefined);
 
   const [blockNotFound, setBlockNotFound] = useState(false);
 
   useEffect(() => {
     const blockService = new BlockService();
+    const transactionService = new TransactionService();
 
     const trimmedQ = `${q}`.trim();
     const isNumber = /^\d+$/.test(trimmedQ);
@@ -45,24 +51,39 @@ const SearchPage: NextPage = () => {
       return;
     }
 
-    if (trimmedQ.length == 32 && trimmedQ[0].toUpperCase() == "R") {
-      blockService.search(trimmedQ, page).then((data) => {
-        setBlocks(data.results);
+    if (trimmedQ.length == 34 && trimmedQ[0].toUpperCase() == "R") {
+      // blockService.search(trimmedQ, page).then((data) => {
+      //   setBlocks(data.results);
+      // });
+
+      const addressService = new AddressService();
+      addressService.retrieve(trimmedQ).then((data) => {
+        setAddress(data);
       });
-      return;
+      // return;
     }
 
-    blockService.search(trimmedQ, page).then((data) => {
-      setBlocks(data.results);
-    });
+    const queryBlocksAndTransaction = async () => {
+      const b = await blockService.search(trimmedQ, page);
 
-    const transactionService = new TransactionService();
+      const t = await transactionService.search(trimmedQ, page);
+      setTwoColumns(b.results.length > 0 && t.results.length > 0);
+      setBlocks(b.results);
+      setTransactions(t.results);
+    };
 
-    transactionService.search(trimmedQ, page).then((data) => {
-      setTransactions(data.results);
-    });
+    queryBlocksAndTransaction();
+    // blockService.search(trimmedQ, page).then((data) => {
+    //   setBlocks(data.results);
 
-    setTwoColumns(blocks.length > 0 && transactions.length > 0);
+    // });
+
+    // const transactionService = new TransactionService();
+
+    // transactionService.search(trimmedQ, page).then((data) => {
+    //   setTransactions(data.results);
+
+    // });
   }, [q, page]);
 
   if (!q) {
@@ -96,6 +117,12 @@ const SearchPage: NextPage = () => {
         <div className="py-2"></div>
 
         <pre className="text-center">Results for {q}</pre>
+
+        {SHOW_BALANCE && address ? (
+          <div className="alert bg-success text-center">
+            Balance: {address.balance} RBX
+          </div>
+        ) : null}
 
         <hr />
         {blockNotFound ? (
