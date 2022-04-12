@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { BlockCard } from "../../src/components/block-card";
 import { BlockList } from "../../src/components/block-list";
 import { Search } from "../../src/components/search";
@@ -15,7 +16,7 @@ import { AddressService } from "../../src/services/address-service";
 import { BlockService } from "../../src/services/block-service";
 import { TransactionService } from "../../src/services/transaction-service";
 
-const SHOW_BALANCE = false;
+const SHOW_BALANCE = true;
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -28,6 +29,9 @@ const SearchPage: NextPage = () => {
   const [address, setAddress] = useState<Address | undefined>(undefined);
 
   const [blockNotFound, setBlockNotFound] = useState(false);
+
+  const [canLoadMoreBlocks, setCanLoadMoreBlocks] = useState(false);
+  const [canLoadMoreTransactions, setCanLoadMoreTransactions] = useState(false);
 
   useEffect(() => {
     const blockService = new BlockService();
@@ -70,6 +74,8 @@ const SearchPage: NextPage = () => {
       setTwoColumns(b.results.length > 0 && t.results.length > 0);
       setBlocks(b.results);
       setTransactions(t.results);
+      setCanLoadMoreBlocks(b.numPages > 1);
+      setCanLoadMoreTransactions(t.numPages > 1);
     };
 
     queryBlocksAndTransaction();
@@ -85,6 +91,41 @@ const SearchPage: NextPage = () => {
 
     // });
   }, [q, page]);
+
+  const fetchTransactions = async (p: number) => {
+    const service = new TransactionService();
+    try {
+      const trimmedQ = `${q}`.trim();
+      const data = await service.search(trimmedQ, p);
+      if (data.page == 1) {
+        setTransactions(data.results);
+      } else {
+        setTransactions([...transactions, ...data.results]);
+      }
+      setCanLoadMoreTransactions(data.numPages > data.page);
+    } catch (e) {
+      console.log(e);
+      setCanLoadMoreTransactions(false);
+    }
+  };
+
+  const fetchBlocks = async (p: number) => {
+    console.log("FETCH BLOCK");
+    const service = new BlockService();
+    try {
+      const trimmedQ = `${q}`.trim();
+      const data = await service.search(trimmedQ, p);
+      if (data.page == 1) {
+        setBlocks(data.results);
+      } else {
+        setBlocks([...blocks, ...data.results]);
+      }
+      setCanLoadMoreBlocks(data.numPages > data.page);
+    } catch (e) {
+      console.log(e);
+      setCanLoadMoreBlocks(false);
+    }
+  };
 
   if (!q) {
     return <></>;
@@ -138,16 +179,33 @@ const SearchPage: NextPage = () => {
                 </div>
               ) : null}
 
-              <div className="row">
-                {blocks.map((b) => (
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={fetchBlocks}
+                hasMore={canLoadMoreBlocks}
+                initialLoad={true}
+                loader={
                   <div
-                    className={`${twoColumns ? "col-12" : "col-4"} p-2`}
-                    key={b.height}
+                    className="d-flex justify-content-center align-items-center"
+                    key={0}
                   >
-                    <BlockCard block={b}></BlockCard>
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   </div>
-                ))}
-              </div>
+                }
+              >
+                <div className="row">
+                  {blocks.map((b) => (
+                    <div
+                      className={`${twoColumns ? "col-12" : "col-4"} p-2`}
+                      key={b.height}
+                    >
+                      <BlockCard block={b}></BlockCard>
+                    </div>
+                  ))}
+                </div>
+              </InfiniteScroll>
             </div>
           ) : null}
 
@@ -159,16 +217,33 @@ const SearchPage: NextPage = () => {
                   <div className="badge bg-warning">No Transactions Found</div>
                 </div>
               ) : null}
-              <div className="row">
-                {transactions.map((t) => (
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={fetchTransactions}
+                hasMore={canLoadMoreTransactions}
+                initialLoad={true}
+                loader={
                   <div
-                    className={`${twoColumns ? "col-12" : "col-4"} p-2`}
-                    key={t.hash}
+                    className="d-flex justify-content-center align-items-center"
+                    key={0}
                   >
-                    <TransactionCard transaction={t}></TransactionCard>
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   </div>
-                ))}
-              </div>
+                }
+              >
+                <div className="row">
+                  {transactions.map((t) => (
+                    <div
+                      className={`${twoColumns ? "col-12" : "col-4"} p-2`}
+                      key={t.hash}
+                    >
+                      <TransactionCard transaction={t}></TransactionCard>
+                    </div>
+                  ))}
+                </div>
+              </InfiniteScroll>
             </div>
           ) : null}
         </div>
