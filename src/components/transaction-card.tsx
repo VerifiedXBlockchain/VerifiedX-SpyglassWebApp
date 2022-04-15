@@ -37,6 +37,12 @@ export const TransactionCard = (props: Props) => {
         To:
         <small>{transaction.toAddress}</small>
       </li>
+      <li className="list-group-item d-flex justify-content-between align-items-center">
+        Fee:
+        <span className="badge bg-primary rounded-pill">
+          {transaction.fee} RBX
+        </span>
+      </li>
 
       <div className="card-footer text-muted text-center">
         {new Date(transaction.timestamp * 1000).toLocaleDateString("en-US")}{" "}

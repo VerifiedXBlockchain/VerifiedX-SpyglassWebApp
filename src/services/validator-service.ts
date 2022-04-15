@@ -16,6 +16,7 @@ export class ValidatorService {
   ): Promise<PaginatedResponse<Validator>> {
     const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
+      is_active: true,
       ...params,
     });
     const data: any = response.parsedBody;

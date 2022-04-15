@@ -20,7 +20,7 @@ export const BlockMapContainer = () => {
   const fetchPage = async () => {
     const service = new ValidatorService();
     try {
-      const data = await service.list(1, { limit: 300, is_active: true });
+      const data = await service.list(1, { limit: 500, is_active: true });
 
       setLoading(false);
 

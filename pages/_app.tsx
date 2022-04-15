@@ -7,11 +7,28 @@ import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { MAINTENENCE_MODE } from "../src/constants";
+import Head from "next/head";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  if (MAINTENENCE_MODE) {
+    return (
+      <>
+        <Head>
+          <title>RBX Explorer</title>
+          <meta name="description" content="ReserveBlock Explorer: Home" />
+          <link rel="icon" href="/favicon.png" />
+        </Head>
+        <div className="p-5 text-center">
+          Down for Maintenance. Come back soon!
+        </div>
+      </>
+    );
+  }
+
   return (
     <div>
       <header>
@@ -106,7 +123,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </nav>
       </header>
-      <div style={{ height: 70 }}></div>
+      <div style={{ height: 64 }}></div>
 
       <div className=" d-block d-md-none">
         <div className="container">

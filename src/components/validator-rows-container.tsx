@@ -11,10 +11,13 @@ export const ValidatorRowsContainer = () => {
   const [validators, setValidators] = useState<Validator[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
+  const [activeValidatorCount, setActiveValidatorCount] = useState<number>(0);
+
   const fetchPage = async (p: number) => {
     const service = new ValidatorService();
     try {
       const data = await service.list(p);
+      setActiveValidatorCount(data.count);
       if (data.page == 1) {
         setValidators(data.results);
       } else {
@@ -40,6 +43,8 @@ export const ValidatorRowsContainer = () => {
     const poll = () => {
       const service = new ValidatorService();
       service.list(1).then((data) => {
+        setActiveValidatorCount(data.count);
+
         const newValidators = [];
         for (const validator of data.results) {
           const exists = validators.some((v) => v.address == validator.address);
@@ -62,6 +67,11 @@ export const ValidatorRowsContainer = () => {
 
   return (
     <div>
+      <div className="bg-dark text-end px-3 py-2">
+        <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
+          Total Active Validators: {activeValidatorCount}
+        </div>
+      </div>
       <InfiniteScroll
         pageStart={0}
         loadMore={fetchPage}
