@@ -18,8 +18,6 @@ export const Search = (props: Props) => {
   useEffect(() => {
     const listener = (event: any) => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
-        console.log("Enter key was pressed. Run your function.");
-        console.log(query);
         handleSearch();
         event.preventDefault();
         // callMyFunction();
