@@ -16,7 +16,6 @@ export class ValidatorService {
   ): Promise<PaginatedResponse<Validator>> {
     const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
-      is_active: true,
       ...params,
     });
     const data: any = response.parsedBody;
@@ -33,6 +32,16 @@ export class ValidatorService {
       data["num_pages"],
       results
     );
+  }
+
+  async activeCount(): Promise<number> {
+    const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
+      limit: 0,
+      is_active: true,
+    });
+    const data: any = response.parsedBody;
+
+    return parseInt(data["count"]);
   }
 
   async search(

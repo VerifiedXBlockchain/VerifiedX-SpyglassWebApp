@@ -17,7 +17,8 @@ export const ValidatorListContainer = () => {
     const service = new ValidatorService();
     try {
       const data = await service.list(p);
-      setActiveValidatorCount(data.count);
+      const count = await service.activeCount();
+      setActiveValidatorCount(count);
 
       if (data.page == 1) {
         setValidators(data.results);
@@ -43,6 +44,7 @@ export const ValidatorListContainer = () => {
   useEffect(() => {
     const poll = () => {
       const service = new ValidatorService();
+
       service.list(1).then((data) => {
         setActiveValidatorCount(data.count);
 
@@ -56,6 +58,10 @@ export const ValidatorListContainer = () => {
         if (newValidators.length > 0) {
           setValidators([...newValidators, ...validators]);
         }
+      });
+
+      service.activeCount().then((count) => {
+        setActiveValidatorCount(count);
       });
     };
 
