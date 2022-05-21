@@ -54,6 +54,7 @@ const TransactionDetailPage: NextPage = () => {
             <DetailItem
               label="Tx&nbsp;Type"
               value={transaction.transactionTypeLabel}
+              dontBreak
             ></DetailItem>
             <div className="p-1"></div>
 

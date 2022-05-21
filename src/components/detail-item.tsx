@@ -3,6 +3,7 @@ interface Props {
   value: string;
   smallValue?: boolean;
   href?: string;
+  dontBreak?: boolean;
 }
 
 export const DetailItem = (props: Props) => {
@@ -11,7 +12,11 @@ export const DetailItem = (props: Props) => {
       <div className="text-start h6 text-muted">{props.label}</div>
       <div
         className={`text-start m-0 ${!props.smallValue ? "h4" : ""}`}
-        style={{ wordBreak: "break-all" }}
+        style={
+          props.dontBreak
+            ? { whiteSpace: "nowrap" }
+            : { wordBreak: "break-all" }
+        }
       >
         {props.href ? <a href={props.href!}>{props.value}</a> : props.value}
       </div>
