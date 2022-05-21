@@ -18,6 +18,12 @@ export const TransactionCard = (props: Props) => {
         </a>
       </div>
       <li className="list-group-item d-flex justify-content-between align-items-center">
+        Tx Type:
+        <span className="badge bg-primary rounded-pill">
+          {transaction.transactionTypeLabel}
+        </span>
+      </li>
+      <li className="list-group-item d-flex justify-content-between align-items-center">
         Height:
         <span className="badge bg-primary rounded-pill">
           {transaction.height}

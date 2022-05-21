@@ -52,6 +52,12 @@ const TransactionDetailPage: NextPage = () => {
         <div className="bg-dark p-2">
           <div className="d-block d-md-flex">
             <DetailItem
+              label="Tx&nbsp;Type"
+              value={transaction.transactionTypeLabel}
+            ></DetailItem>
+            <div className="p-1"></div>
+
+            <DetailItem
               label="Craft Time"
               value={transaction.timestampLabel}
               smallValue
@@ -100,6 +106,14 @@ const TransactionDetailPage: NextPage = () => {
               smallValue
             ></DetailItem>
           </div>
+        </div>
+        <div>
+          {transaction.nftData != null ? (
+            <div className="mt-3">
+              <h4>Tx Data</h4>
+              <pre className="bg-black p-2">{transaction.nftDataFormatted}</pre>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
