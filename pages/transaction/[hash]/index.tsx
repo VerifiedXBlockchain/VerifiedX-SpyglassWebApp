@@ -112,7 +112,16 @@ const TransactionDetailPage: NextPage = () => {
           {transaction.nftData != null ? (
             <div className="mt-3">
               <h4>Tx Details</h4>
-              <pre className="bg-black p-2">{transaction.nftDataFormatted}</pre>
+              <pre
+                className="bg-black p-2"
+                style={{
+                  // wordBreak: "break-all",
+                  whiteSpace: "pre-line",
+                  overflowWrap: "anywhere",
+                }}
+              >
+                {transaction.nftDataFormatted}
+              </pre>
             </div>
           ) : null}
 
