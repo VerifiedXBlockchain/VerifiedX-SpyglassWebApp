@@ -1,4 +1,5 @@
 import { isToday } from "../utils/dates";
+import pako from "pako";
 
 export class Transaction {
   hash: string;
@@ -53,14 +54,67 @@ export class Transaction {
     const items = [];
     for (let item of data) {
       if ("Data" in item) {
-        // const decoded = atob(item["Data"]);
-        const decoded = item["Data"];
-        item = { ...item, Data: decoded };
+        item = { ...item, Data: item["Data"] };
       }
       items.push(item);
     }
 
     return JSON.stringify(items, null, 4);
+  }
+
+  get nftDataDataFormatted() {
+    const data: any[] = JSON.parse(this.nftData);
+
+    const items = [];
+    for (let item of data) {
+      if ("Data" in item) {
+        const decoded = this.decompressData(item["Data"]);
+
+        items.push(decoded);
+      }
+    }
+
+    return items.toString();
+  }
+
+  decompressData(encodedData: string) {
+    const data = Buffer.from(encodedData, "base64");
+    const str = pako.ungzip(data, { to: "string" });
+
+    console.log(str);
+    // return decodeURIComponent(escape(str));
+    return str;
+
+    // const output = decodeURIComponent(
+    //   JSON.parse('"' + str.replace(/\"/g, '\\"') + '"')
+    // );
+    // return output;
+    // var r = /\\u([\d\w]{4})/gi;
+    // var x = str.replace(r, function (match, grp) {
+    //   return String.fromCharCode(parseInt(grp, 16));
+    // });
+    // return x;
+
+    // let output = "";
+    // for (let c of str) {
+    //   console.log(c);
+
+    //   output = `${output}${c.toString()}`;
+    // }
+
+    // console.log(output);
+
+    // return output;
+
+    // return str.replace(/\\u[\dA-F]{4}/gi, function (match) {
+    //   return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+    // });
+  }
+
+  unicodeToChar(char: string) {
+    return char.replace(/\\u[\dA-F]{4}/gi, function (match) {
+      return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+    });
   }
 
   get transactionTypeLabel() {
