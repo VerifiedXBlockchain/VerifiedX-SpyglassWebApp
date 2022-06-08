@@ -45,11 +45,15 @@ export class Transaction {
   }
 
   get nftDataFormatted() {
-    if (this.nftData == null) {
+    if (this.nftData == null || this.nftData == "") {
       return "-";
     }
 
     const data: any[] = JSON.parse(this.nftData);
+
+    if (data == null) {
+      return "-";
+    }
 
     const items = [];
     for (let item of data) {
@@ -63,6 +67,10 @@ export class Transaction {
   }
 
   get nftDataDataFormatted() {
+    if (this.nftData == null || this.nftData == "") {
+      return "";
+    }
+
     const data: any[] = JSON.parse(this.nftData);
 
     const items = [];
