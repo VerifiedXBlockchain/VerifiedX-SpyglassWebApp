@@ -21,7 +21,7 @@ export async function httpGet<T>(
 
   args: RequestInit = {
     method: "get",
-
+    cache: "no-cache",
     mode: "cors",
     headers: {
       Accept: "application/json",
