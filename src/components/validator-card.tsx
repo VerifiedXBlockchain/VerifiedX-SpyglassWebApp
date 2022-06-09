@@ -10,7 +10,15 @@ export const ValidatorCard = (props: Props) => {
   return (
     <div className="card">
       <div className="card-header  d-flex justify-content-between align-items-center">
-        {validator.uniqueName}
+        <span
+          style={{
+            // wordBreak: "break-all",
+            whiteSpace: "pre-line",
+            overflowWrap: "anywhere",
+          }}
+        >
+          {validator.uniqueName}
+        </span>
         <a
           href={`/validators/${validator.address}`}
           className="btn btn-primary btn-sm"
@@ -31,7 +39,15 @@ export const ValidatorCard = (props: Props) => {
         </li>
         <li className="list-group-item ">
           <div>Address</div>
-          <small>{validator.address}</small>
+          <small
+            style={{
+              // wordBreak: "break-all",
+              whiteSpace: "pre-line",
+              overflowWrap: "anywhere",
+            }}
+          >
+            {validator.address}
+          </small>
         </li>
 
         <li className="list-group-item ">
