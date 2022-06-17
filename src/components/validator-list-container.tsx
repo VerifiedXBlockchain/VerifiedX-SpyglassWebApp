@@ -17,8 +17,11 @@ export const ValidatorListContainer = () => {
     const service = new ValidatorService();
     try {
       const data = await service.list(p);
-      const count = await service.activeCount();
-      setActiveValidatorCount(count);
+
+      if (activeValidatorCount < 1) {
+        const count = await service.activeCount();
+        setActiveValidatorCount(count);
+      }
 
       if (data.page == 1) {
         setValidators(data.results);

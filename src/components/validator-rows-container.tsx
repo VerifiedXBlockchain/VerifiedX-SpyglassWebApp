@@ -16,9 +16,13 @@ export const ValidatorRowsContainer = () => {
   const fetchPage = async (p: number) => {
     const service = new ValidatorService();
     try {
+      if (activeValidatorCount < 1) {
+        const count = await service.activeCount();
+        setActiveValidatorCount(count);
+      }
+
       const data = await service.list(p);
-      const count = await service.activeCount();
-      setActiveValidatorCount(count);
+
       if (data.page == 1) {
         setValidators(data.results);
       } else {
