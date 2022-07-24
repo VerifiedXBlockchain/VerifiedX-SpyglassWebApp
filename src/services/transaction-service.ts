@@ -6,13 +6,13 @@ import { httpGet } from "../utils/network";
 
 export class TransactionService {
   async retrieve(id: string): Promise<Transaction> {
-    const response = await httpGet(`${API_BASE_URL}/transactions/${id}`, {});
+    const response = await httpGet(`${API_BASE_URL}/transaction/${id}`, {});
     const data: any = response.parsedBody;
 
     return new Transaction(data);
   }
   async list(page: number = 1): Promise<PaginatedResponse<Transaction>> {
-    const response = await httpGet(`${API_BASE_URL}/transactions/`, {
+    const response = await httpGet(`${API_BASE_URL}/transaction/`, {
       page: page,
     });
     const data: any = response.parsedBody;
@@ -35,7 +35,7 @@ export class TransactionService {
     q: string,
     page: number = 1
   ): Promise<PaginatedResponse<Transaction>> {
-    const response = await httpGet(`${API_BASE_URL}/transactions/`, {
+    const response = await httpGet(`${API_BASE_URL}/transaction/`, {
       page: page,
       search: q,
     });

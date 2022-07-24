@@ -1,5 +1,6 @@
 import { isToday } from "../utils/dates";
 import pako from "pako";
+import { Nft } from "./nft";
 
 export class Transaction {
   hash: string;
@@ -8,24 +9,26 @@ export class Transaction {
   amount: number;
   nounce: number;
   fee: number;
-  timestamp: number;
+  dateCrafted: Date;
   nftData?: any;
   signature?: any;
   height: number;
   transactionType: number;
+  nft?: Nft;
 
   constructor(d: any) {
     this.hash = d["hash"];
     this.toAddress = d["to_address"];
     this.fromAddress = d["from_address"];
-    this.amount = d["amount"];
+    this.amount = d["total_amount"];
     this.nounce = d["nounce"];
-    this.fee = d["fee"];
-    this.timestamp = d["timestamp"];
-    this.nftData = d["nft_data"];
+    this.fee = d["total_fee"];
+    this.dateCrafted = new Date(d["date_crafted"]);
+    this.nftData = d["data"];
     this.signature = d["signature"];
     this.height = d["height"];
     this.transactionType = d["transaction_type"] ?? 0;
+    this.nft = d['nft'] != null ? new Nft(d['nft']) : undefined;
   }
 
   hashPreview(n: number = 16): string {
@@ -33,15 +36,12 @@ export class Transaction {
     return `${this.hash.slice(0, amount)}...${this.hash.slice(-amount)}`;
   }
 
-  get timestampDate(): Date {
-    return new Date(this.timestamp * 1000);
-  }
 
   get timestampLabel(): string {
-    if (isToday(this.timestampDate)) {
-      return `Today @ ${this.timestampDate.toLocaleTimeString()}`;
+    if (isToday(this.dateCrafted)) {
+      return this.dateCrafted.toLocaleTimeString();
     }
-    return `${this.timestampDate.toLocaleDateString()} ${this.timestampDate.toLocaleTimeString()}`;
+    return `${this.dateCrafted.toLocaleDateString()} ${this.dateCrafted.toLocaleTimeString()}`;
   }
 
   get nftDataFormatted() {
@@ -90,33 +90,7 @@ export class Transaction {
     const str = pako.ungzip(data, { to: "string" });
 
     console.log(str);
-    // return decodeURIComponent(escape(str));
     return str;
-
-    // const output = decodeURIComponent(
-    //   JSON.parse('"' + str.replace(/\"/g, '\\"') + '"')
-    // );
-    // return output;
-    // var r = /\\u([\d\w]{4})/gi;
-    // var x = str.replace(r, function (match, grp) {
-    //   return String.fromCharCode(parseInt(grp, 16));
-    // });
-    // return x;
-
-    // let output = "";
-    // for (let c of str) {
-    //   console.log(c);
-
-    //   output = `${output}${c.toString()}`;
-    // }
-
-    // console.log(output);
-
-    // return output;
-
-    // return str.replace(/\\u[\dA-F]{4}/gi, function (match) {
-    //   return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
-    // });
   }
 
   unicodeToChar(char: string) {

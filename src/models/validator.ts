@@ -7,19 +7,22 @@ export class Validator {
   connectDate: Date;
   isActive: boolean;
   blockCount: number;
+  country?: string;
+  city?: string;
+  latitude?: number;
+  longitude?: number;
 
-  location?: Location;
 
   constructor(d: any) {
     this.address = d["address"];
-    this.uniqueName = d["unique_name"];
-    this.connectDate = new Date(d["connect_date"]);
+    this.uniqueName = d["name"];
     this.isActive = d["is_active"];
+    this.connectDate = new Date(d["date_connected"]);
     this.blockCount = d["block_count"];
-
-    if (d["location"]) {
-      this.location = new Location(d["location"]);
-    }
+    this.city = d['city'];
+    this.country = d['country'];
+    this.latitude = d['latitude'];
+    this.longitude = d['longitude'];
   }
 
   get dateLabel(): string {
@@ -30,12 +33,24 @@ export class Validator {
   }
 
   get uniqueNameLabel(): string {
-    if (this.uniqueName.length > 32) {
-      const amount = 14;
+    if (this.uniqueName.length > 16) {
+      const amount = 8;
       return `${this.uniqueName.slice(0, amount)}...${this.uniqueName.slice(
         -amount
       )}`;
     }
     return this.uniqueName;
+  }
+
+  get locationLabel():string {
+    if(this.country && this.city) {
+      return `${this.city}, ${this.country}`;
+    }
+
+    if(this.country) {
+      return this.country;
+    }
+
+    return "-";
   }
 }

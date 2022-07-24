@@ -53,7 +53,7 @@ export const ValidatorCard = (props: Props) => {
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
             <div>Location</div>
-            <small>{validator.location ? validator.location.label : "-"}</small>
+            <small>{validator.locationLabel}</small>
           </div>
         </li>
 

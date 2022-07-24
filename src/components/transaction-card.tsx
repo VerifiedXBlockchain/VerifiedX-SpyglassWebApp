@@ -51,8 +51,7 @@ export const TransactionCard = (props: Props) => {
       </li>
 
       <div className="card-footer text-muted text-center">
-        {new Date(transaction.timestamp * 1000).toLocaleDateString("en-US")}{" "}
-        {new Date(transaction.timestamp * 1000).toLocaleTimeString("en-US")}
+        {transaction.timestampLabel}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export const BlockListContainer = (props: Props) => {
     const service = new BlockService();
     try {
       const params = props.validatorAddress
-        ? { validator: props.validatorAddress }
+        ? { master_node: props.validatorAddress }
         : {};
 
       const data = await service.list(p, params);
@@ -45,7 +45,7 @@ export const BlockListContainer = (props: Props) => {
     const poll = () => {
       const service = new BlockService();
       const params = props.validatorAddress
-        ? { validator: props.validatorAddress }
+        ? { master_node: props.validatorAddress }
         : {};
 
       service.list(1, params).then((data) => {

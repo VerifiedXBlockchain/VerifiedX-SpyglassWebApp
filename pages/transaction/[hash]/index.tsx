@@ -109,6 +109,52 @@ const TransactionDetailPage: NextPage = () => {
           </div>
         </div>
         <div>
+        {transaction.nft ? (
+          <div className="mt-3">
+            <h4>NFT Details</h4>
+            <table className="table table-striped">
+              <tbody>
+
+            <tr>
+                <th>Identifier:</th>
+                <td>{transaction.nft.identifier}</td>
+              </tr>
+              <tr>
+                <th>Name:</th>
+                <td>{transaction.nft.name}</td>
+              </tr>
+              <tr>
+                <th>Description:</th>
+                <td>{transaction.nft.description}</td>
+              </tr>
+             
+              <tr>
+                <th>minterAddress:</th>
+                <td>{transaction.nft.minterAddress}</td>
+              </tr>
+              <tr>
+                <th>ownerAddress:</th>
+                <td>{transaction.nft.ownerAddress}</td>
+              </tr>
+
+              <tr>
+                <th>minterName:</th>
+                <td>{transaction.nft.minterName}</td>
+              </tr>
+              <tr>
+                <th>primaryAssetName:</th>
+                <td>{transaction.nft.primaryAssetName}</td>
+              </tr>
+              <tr>
+                <th>primaryAssetSize:</th>
+                <td>{transaction.nft.primaryAssetSize}</td>
+              </tr>
+              </tbody>
+
+            </table>
+          </div>
+        ): null}
+        
           {transaction.nftData != null ? (
             <div className="mt-3">
               <h4>Tx Details</h4>
@@ -134,6 +180,8 @@ const TransactionDetailPage: NextPage = () => {
             </div>
           ) : null}
         </div>
+
+      
       </div>
     </div>
   );
