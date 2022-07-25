@@ -89,7 +89,6 @@ export class Transaction {
     const data = Buffer.from(encodedData, "base64");
     const str = pako.ungzip(data, { to: "string" });
 
-    console.log(str);
     return str;
   }
 

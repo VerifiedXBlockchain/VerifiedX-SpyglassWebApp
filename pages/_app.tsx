@@ -67,12 +67,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Transactions
                 </a>
 
+                <a
+                  className="nav-link text-secondary"
+                  href="/circulation"
+                >
+                  Supply
+                </a>
+
+                
+
                
                 <a
                   className="nav-link text-secondary"
                   href="/validators"
                 >
-                  Validator Pool
+                  Validators
                 </a>
                
 
@@ -80,7 +89,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link text-secondary"
                   href="/map"
                 >
-                  Heat Map
+                  Map
+                </a>
+
+                <a
+                  className="nav-link text-secondary"
+                  href="/nfts"
+                >
+                  NFTs
                 </a>
 
                

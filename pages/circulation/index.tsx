@@ -37,16 +37,20 @@ const CirculationPage: NextPage = () => {
   return (
     <div>
       <div className="container">
-        <h3 className="mt-3 text-center">Circulation Supply</h3>
+        <h3 className="mt-3 text-center">Circulating Supply</h3>
 
       <ul className="list-group my-5">
         <li className="list-group-item d-flex justify-content-between align-items-center">
-        Active Circulation
-          <span className="badge bg-primary badge-lg">{circulation.balance} RBX</span>
+         Circulating Supply
+          <span className="badge bg-primary badge-lg">{ numberWithCommas(circulation.balance)} RBX</span>
+        </li>
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+        Amount Staked
+          <span className="badge bg-primary badge-lg">{numberWithCommas(circulation.totalStaked)} RBX</span>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
         Total Burned Fees
-          <span className="badge bg-primary badge-lg">{circulation.feesBurnedSum} RBX</span>
+          <span className="badge bg-primary badge-lg">{numberWithCommas(circulation.feesBurnedSum)} RBX</span>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
         Total Transactions

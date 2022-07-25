@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Nft } from "../../../src/models/nft";
 import { NftService } from "../../../src/services/nft-service";
+import { formatBytes } from "../../../src/utils/formatting";
 
 const NftDetailPage: NextPage = () => {
   const router = useRouter();
@@ -56,22 +57,37 @@ const NftDetailPage: NextPage = () => {
                 <td>{nft.minterAddress}</td>
               </tr>
               <tr>
-                <th>ownerAddress:</th>
+                <th>Owner Address:</th>
                 <td>{nft.ownerAddress}</td>
               </tr>
 
               <tr>
-                <th>minterName:</th>
+                <th>Minter Name:</th>
                 <td>{nft.minterName}</td>
               </tr>
               <tr>
-                <th>primaryAssetName:</th>
+                <th>Primary Asset Name:</th>
                 <td>{nft.primaryAssetName}</td>
               </tr>
               <tr>
-                <th>primaryAssetSize:</th>
-                <td>{nft.primaryAssetSize}</td>
+                <th>Primary AssetSize:</th>
+                <td>{formatBytes(nft.primaryAssetSize)}</td>
               </tr>
+
+              <tr>
+                <th>Mint Transaction:</th>
+                <td> <a href={"/transaction/" + nft.mintTransaction} >
+                {nft.mintTransaction}
+                </a></td>
+              </tr>
+              {nft.burnTransaction ? (
+              <tr>
+                <th>Burn Transaction:</th>
+                <td> <a href={"/transaction/" + nft.burnTransaction} >
+                {nft.burnTransaction}
+                </a></td>
+              </tr>
+              ) : null}
               </tbody>
 
         </table>

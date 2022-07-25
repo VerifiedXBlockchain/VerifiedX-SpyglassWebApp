@@ -1,4 +1,5 @@
 import pako from "pako";
+import { isToday } from "../utils/dates";
 
 export class Nft {
     identifier: string;
@@ -10,6 +11,10 @@ export class Nft {
     primaryAssetName: string;
     primaryAssetSize: number;
     data: string;
+    isBurned: boolean;
+    mintTransaction: string;
+    burnTransaction?: string;
+    mintedAt: Date;
   
     constructor(d: any) {
         this.identifier = d["identifier"];
@@ -21,6 +26,10 @@ export class Nft {
         this.primaryAssetName = d["primary_asset_name"];
         this.primaryAssetSize = d["primary_asset_size"];
         this.data = d["data"];
+        this.isBurned = d['is_burned'];
+        this.mintTransaction = d['mint_transaction'];
+        this.burnTransaction = d['burn_transaction'];
+        this.mintedAt = new Date(d['minted_at']);
     }
 
     get nftDataFormatted() {
@@ -71,6 +80,13 @@ export class Nft {
 
     console.log(str);
     return str;
+  }
+
+  get timestampLabel(): string {
+    if (isToday(this.mintedAt)) {
+      return this.mintedAt.toLocaleTimeString();
+    }
+    return `${this.mintedAt.toLocaleDateString()} ${this.mintedAt.toLocaleTimeString()}`;
   }
   
   
