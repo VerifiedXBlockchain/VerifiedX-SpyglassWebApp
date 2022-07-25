@@ -40,7 +40,7 @@ export const Search = (props: Props) => {
         placeholder={props.placeholder || "Search"}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        style={props.mini ? {width: 140, height: 32, borderColor: 'rgba(255,255,255,.4)'}: {}}
+        style={props.mini ? { height: 32, fontSize:12, borderColor: 'rgba(255,255,255,.4)'}: {}}
       />
       <button
         className="btn btn-secondary"

@@ -2,6 +2,7 @@ import { isToday } from "../utils/dates";
 import { formatBytes, numberWithCommas } from "../utils/formatting";
 import { Transaction } from "./transaction";
 import { Validator } from "./validator";
+import * as timeago from 'timeago.js';
 
 export class Block {
   height: number;
@@ -95,5 +96,9 @@ export class Block {
     }
 
     return "danger";
+  }
+
+  get timeAgoLabel() {
+    return timeago.format(this.dateCrafted);
   }
 }

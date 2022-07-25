@@ -97,7 +97,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Metrics
                 </a>
                
-                <span className="nav-link text-muted d-none d-md-block">|</span>
+                <span className="nav-link text-muted d-none d-lg-block">|</span>
                 <a
                   className="nav-link text-secondary "
                   href="https://reserveblock.io"

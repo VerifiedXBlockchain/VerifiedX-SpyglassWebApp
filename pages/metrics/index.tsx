@@ -2,6 +2,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { LatestBlock } from "../../src/components/latest-block";
 import { Search } from "../../src/components/search";
 import { Circulation } from "../../src/models/circulation";
 import { CirculationService } from "../../src/services/circulation-service";
@@ -40,49 +41,58 @@ const CirculationPage: NextPage = () => {
       <div className="container">
         <h3 className="mt-3 text-center">Metrics</h3>
 
-      <ul className="list-group my-5">
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-         Circulating Supply
-          <span className="badge bg-secondary badge-lg text-black">{ numberWithCommas(circulation.balance)} RBX</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-        Amount Staked
-          <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} RBX</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-        Total Burned Fees
-          <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} RBX</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-        Total Transactions
-          <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurned)}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-        <span style={{textDecoration: 'underline'}}>Network</span>
-          <span className="badge bg-secondary badge-lg text-black">{}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-        CLI Version
-          <span className="badge bg-secondary badge-lg text-black">{circulation.cliVersion}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-          Total Validator Pool
-          <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalMasterNodes)}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-          <div className="d-flex align-items-start align-items-md-center flex-column flex-md-row">
-            <div className="pe-2 pb-2 pb-md-0">
+        <ul className="list-group my-5">
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Circulating Supply
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} RBX</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Lifetime Supply
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(372000000)} RBX</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Amount Staked
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} RBX</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Total Burned Fees
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} RBX</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Total Transactions
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurned)}</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            <span style={{ textDecoration: 'underline' }}>Network</span>
+            <span className="badge bg-secondary badge-lg text-black">{ }</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            CLI Version
+            <span className="badge bg-secondary badge-lg text-black">{circulation.cliVersion}</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            Total Validator Pool
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalMasterNodes)}</span>
+          </li>
+          <li className="list-group-item d-flex justify-content-between align-items-center" style={{ borderBottom: 'none' }}>
+            <div className="d-flex align-items-start  flex-column">
+              <div className="">
 
-            Active&nbsp;Validator&nbsp;Pool
+                Active&nbsp;Validator&nbsp;Pool
+              </div>
             </div>
-            {/* <div className="py-1"></div> */}
-            <Search placeholder="Search Address" mini />
-          </div>
-          <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.activeMasterNodes)}</span>
-        </li>
-      </ul>
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.activeMasterNodes)}</span>
+          </li>
 
-  
+          <li className="list-group-item d-flex justify-content-between align-items-center">
+            <Search placeholder="Search Address" mini />
+          </li>
+        </ul>
+
+        <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
+
+
+        <LatestBlock />
 
 
       </div>
