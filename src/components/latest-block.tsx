@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { useEffect, useState } from "react"
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { Nft } from "../models/nft";
 import { Validator } from "../models/validator";
 
@@ -34,7 +35,7 @@ export const NftCard = (props: Props) => {
             {nft.isBurned ? (
               <div className="badge bg-danger">Burned</div>
             ) : (
-                <div className="badge bg-success">Active</div>
+              <div className="badge bg-success">Active</div>
 
             )}
           </div>
@@ -78,15 +79,15 @@ export const NftCard = (props: Props) => {
               whiteSpace: "pre-line",
               overflowWrap: "anywhere",
             }}>
-                <a href={"/transaction/" + nft.mintTransaction} >
+              <a href={"/transaction/" + nft.mintTransaction} >
                 {nft.mintTransaction}
-                </a>
+              </a>
             </small>
           </div>
         </li>
 
 
-       
+
       </ul>
       <div className="card-footer text-muted text-center">
         Minted: {nft.timestampLabel}
