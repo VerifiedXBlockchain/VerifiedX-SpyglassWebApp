@@ -69,14 +69,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link text-secondary"
-                  href="/circulation"
+                  href="/nfts"
                 >
-                  Supply
+                  NFT Data
                 </a>
 
-                
 
-               
                 <a
                   className="nav-link text-secondary"
                   href="/validators"
@@ -94,11 +92,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link text-secondary"
-                  href="/nfts"
+                  href="/metrics"
                 >
-                  NFTs
+                  Metrics
                 </a>
-
                
                 <span className="nav-link text-muted d-none d-md-block">|</span>
                 <a

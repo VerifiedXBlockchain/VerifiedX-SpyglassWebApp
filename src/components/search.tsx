@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 interface Props {
   initialValue?: string;
+  placeholder?: string;
+  mini?: boolean;
 }
 
 export const Search = (props: Props) => {
@@ -35,15 +37,17 @@ export const Search = (props: Props) => {
       <input
         type="text"
         className="form-control bg-dark text-light"
-        placeholder="Search"
+        placeholder={props.placeholder || "Search"}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
+        style={props.mini ? {width: 140, height: 32}: {}}
       />
       <button
         className="btn btn-secondary"
         type="button"
         disabled={!query}
         onClick={handleSearch}
+        style={props.mini ? {height: 32, paddingTop: 5, fontSize: 12,}: {}}
       >
         Search
       </button>
