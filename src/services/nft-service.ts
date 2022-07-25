@@ -1,20 +1,21 @@
 import { API_BASE_URL } from "../constants";
-import { Block } from "../models/block";
+import { Nft } from "../models/nft";
 import { PaginatedResponse } from "../models/paginated-response";
 import { httpGet } from "../utils/network";
 
-export class BlockService {
-  async retrieve(id: string): Promise<Block> {
-    const response = await httpGet(`${API_BASE_URL}/block/${id}`, {});
+export class NftService {
+  async retrieve(id: string): Promise<Nft> {
+    const response = await httpGet(`${API_BASE_URL}/nft/${id}`, {});
     const data: any = response.parsedBody;
 
-    return new Block(data);
+    return new Nft(data);
   }
+
   async list(
     page: number = 1,
     params: any = {}
-  ): Promise<PaginatedResponse<Block>> {
-    const response = await httpGet(`${API_BASE_URL}/block/`, {
+  ): Promise<PaginatedResponse<Nft>> {
+    const response = await httpGet(`${API_BASE_URL}/nft/`, {
       page: page,
       ...params,
     });
@@ -23,10 +24,10 @@ export class BlockService {
     const results = [];
 
     for (let result of data["results"]) {
-      results.push(new Block(result));
+      results.push(new Nft(result));
     }
 
-    return new PaginatedResponse<Block>(
+    return new PaginatedResponse<Nft>(
       data["count"],
       data["page"],
       data["num_pages"],
@@ -34,8 +35,8 @@ export class BlockService {
     );
   }
 
-  async search(q: string, page: number = 1): Promise<PaginatedResponse<Block>> {
-    const response = await httpGet(`${API_BASE_URL}/block/`, {
+  async search(q: string, page: number = 1): Promise<PaginatedResponse<Nft>> {
+    const response = await httpGet(`${API_BASE_URL}/nft/`, {
       page: page,
       search: q,
     });
@@ -44,14 +45,15 @@ export class BlockService {
     const results = [];
 
     for (let result of data["results"]) {
-      results.push(new Block(result));
+      results.push(new Nft(result));
     }
 
-    return new PaginatedResponse<Block>(
+    return new PaginatedResponse<Nft>(
       data["count"],
       data["page"],
       data["num_pages"],
       results
     );
   }
+ 
 }

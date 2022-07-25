@@ -45,9 +45,7 @@ export const BlockCard = (props: Props) => {
             <div>Validator Location:</div>
 
             <small>
-              {block.masternode?.location
-                ? block.masternode.location.label
-                : "-"}
+              {block.masternode?.locationLabel || "-"}
             </small>
           </div>
         </li>
@@ -85,8 +83,7 @@ export const BlockCard = (props: Props) => {
       </div>
 
       <div className="card-footer text-muted text-center">
-        {new Date(block.timestamp * 1000).toLocaleDateString("en-US")}{" "}
-        {new Date(block.timestamp * 1000).toLocaleTimeString("en-US")}
+        {block.timestampLabel}
       </div>
     </div>
   );

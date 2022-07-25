@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
+import { Nft } from "../models/nft";
+import { Validator } from "../models/validator";
 import { BlockService } from "../services/block-service";
+import { NftService } from "../services/nft-service";
+import { ValidatorService } from "../services/validator-service";
 import { BlockList } from "./block-list";
+import { NftCardList } from "./nft-list";
+import { ValidatorCardList } from "./validator-card-list";
+import { ValidatorList } from "./validator-list";
 
-interface Props {
-  validatorAddress?: string;
-}
-
-export const BlockListContainer = (props: Props) => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+export const NftListContainer = () => {
+  const [nfts, setNfts] = useState<Nft[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
   const fetchPage = async (p: number) => {
-    const service = new BlockService();
+    const service = new NftService();
     try {
-      const params = props.validatorAddress
-        ? { master_node: props.validatorAddress }
-        : {};
 
-      const data = await service.list(p, params);
+      const data = await service.list(p);
+
       if (data.page == 1) {
-        setBlocks(data.results);
+        setNfts(data.results);
       } else {
         const results = [];
         for (const result of data.results) {
-          const exists = blocks.some((b) => b.height == result.height);
+          const exists = nfts.some((n) => n.identifier == result.identifier);
           if (!exists) {
             results.push(result);
           }
         }
 
-        setBlocks([...blocks, ...results]);
+        setNfts([...nfts, ...results]);
       }
 
       setCanLoadMore(data.numPages > data.page);
@@ -43,23 +44,21 @@ export const BlockListContainer = (props: Props) => {
 
   useEffect(() => {
     const poll = () => {
-      const service = new BlockService();
-      const params = props.validatorAddress
-        ? { master_node: props.validatorAddress }
-        : {};
+      const service = new NftService();
 
-      service.list(1, params).then((data) => {
-        const newBlocks = [];
-        for (const block of data.results) {
-          const exists = blocks.some((b) => b.height == block.height);
+      service.list(1).then((data) => {
+        const newNfts = [];
+        for (const nft of data.results) {
+          const exists = nfts.some((n) => n.identifier == nft.identifier);
           if (!exists) {
-            newBlocks.push(block);
+            newNfts.push(nft);
           }
         }
-        if (newBlocks.length > 0) {
-          setBlocks([...newBlocks, ...blocks]);
+        if (newNfts.length > 0) {
+          setNfts([...newNfts, ...nfts]);
         }
       });
+
     };
 
     const interval = setInterval(() => {
@@ -67,10 +66,12 @@ export const BlockListContainer = (props: Props) => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [blocks]);
+  }, [nfts]);
 
   return (
-    <div className="container">
+    <div>
+      <div className="container">
+       
       <InfiniteScroll
         pageStart={0}
         loadMore={fetchPage}
@@ -87,8 +88,10 @@ export const BlockListContainer = (props: Props) => {
           </div>
         }
       >
-        <BlockList blocks={blocks} />
+        <NftCardList nfts={nfts} />
       </InfiniteScroll>
     </div>
+    </div>
+
   );
 };

@@ -30,7 +30,7 @@ export const ValidatorDetail = (props: Props) => {
 
             <DetailItem
               label="Location"
-              value={`${validator.location ? validator.location.label : "-"}`}
+              value={`${validator.locationLabel}`}
             ></DetailItem>
           </div>
           <div className="py-1"></div>

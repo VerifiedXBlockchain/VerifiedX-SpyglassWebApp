@@ -35,7 +35,7 @@ export const BlockRow = (props: Props) => {
       </td>
       <td>
         <div className="badge badge-lg  ps-0">
-          {block.masternode?.location ? block.masternode.location.label : "-"}
+          {block.masternode?.locationLabel || "-"}
         </div>
       </td>
       <td>

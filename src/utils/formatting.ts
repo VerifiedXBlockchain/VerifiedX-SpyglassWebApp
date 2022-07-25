@@ -1,5 +1,15 @@
 export function numberWithCommas(n: number) {
-  return n.toString().replace(/\B(?!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+
+  const parts = n.toString().split('.');
+  if(parts.length < 2) {
+    return n.toString().replace(/\B(?!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  const sig = parts[0].replace(/\B(?!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  const fract = parts[1];
+
+  return `${sig}.${fract}`;
+
 }
 
 export function formatBytes(bytes: number, decimals: number = 2) {

@@ -2,10 +2,10 @@ import { isToday } from "../utils/dates";
 import { formatBytes, numberWithCommas } from "../utils/formatting";
 import { Transaction } from "./transaction";
 import { Validator } from "./validator";
+import * as timeago from 'timeago.js';
 
 export class Block {
   height: number;
-  timestamp: number;
   hash: string;
   validator: string;
   totalAmount: number;
@@ -23,36 +23,40 @@ export class Block {
   totalValidators: number;
   version: number;
   masternode?: Validator;
+  dateCrafted: Date;
 
   constructor(d: any) {
     this.height = d["height"];
-    this.timestamp = d["timestamp"];
+    if (d["master_node"]) {
+      this.masternode = new Validator(d["master_node"]);
+    }
+
     this.hash = d["hash"];
-    this.validator = d["validator"];
-    this.totalAmount = d["total_amount"];
-    this.totalReward = d["total_reward"];
-    this.numberOfTransactions = d["number_of_transactions"];
-    this.size = d["size"];
-    this.craftTime = d["craft_time"];
     this.prevHash = d["prev_hash"];
+    this.validator = d["validator_address"];
+    this.validatorSignature = d["validator_signature"];
     this.chainRefId = d["chain_ref_id"];
     this.merkleRoot = d["merkle_root"];
     this.stateRoot = d["state_root"];
-    this.validatorSignature = d["validator_signature"];
+    this.totalReward = d["total_reward"];
+    this.totalAmount = d["total_amount"];
     this.totalValidators = d["total_validators"];
     this.version = d["version"];
+    this.size = d["size"];
+    this.craftTime = d["craft_time"];
+    this.dateCrafted = new Date(d["date_crafted"]);
 
     const transactions = d["transactions"];
+    this.numberOfTransactions = transactions?.length || 0;
 
     if (transactions) {
       for (let tx of transactions) {
         this.transactions.push(new Transaction(tx));
       }
+
     }
 
-    if (d["masternode"]) {
-      this.masternode = new Validator(d["masternode"]);
-    }
+    
   }
 
   hashPreview(n: number = 16): string {
@@ -67,15 +71,12 @@ export class Block {
     )}`;
   }
 
-  get timestampDate(): Date {
-    return new Date(this.timestamp * 1000);
-  }
 
   get timestampLabel(): string {
-    if (isToday(this.timestampDate)) {
-      return this.timestampDate.toLocaleTimeString();
+    if (isToday(this.dateCrafted)) {
+      return this.dateCrafted.toLocaleTimeString();
     }
-    return `${this.timestampDate.toLocaleDateString()} ${this.timestampDate.toLocaleTimeString()}`;
+    return `${this.dateCrafted.toLocaleDateString()} ${this.dateCrafted.toLocaleTimeString()}`;
   }
 
   get sizeLabel(): string {
@@ -87,13 +88,17 @@ export class Block {
   }
 
   get craftTimeAccent(): string {
-    if (this.craftTime < 50) {
+    if (this.craftTime < 1000) {
       return "success";
     }
-    if (this.craftTime < 150) {
+    if (this.craftTime < 2000) {
       return "warning";
     }
 
     return "danger";
+  }
+
+  get timeAgoLabel() {
+    return timeago.format(this.dateCrafted);
   }
 }

@@ -9,11 +9,18 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
+import { useState } from "react";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+
   if (MAINTENENCE_MODE) {
     return (
       <>
@@ -32,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <header>
-        <nav className="navbar navbar-expand text-light bg-black fixed-top pb-1 pt-2">
+        <nav className="navbar navbar-dark navbar-expand-lg text-light bg-black fixed-top pb-1 pt-2">
           <div className="container-fluid">
             <a className="navbar-brand text-white" href="/">
               <img
@@ -43,64 +50,56 @@ function MyApp({ Component, pageProps }: AppProps) {
               />
               <span>RBX Explorer</span>
             </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
+            
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation" onClick={handleNavCollapse}>
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample07XL">
               <div className="navbar-nav">
                 <a className="nav-link text-secondary" href="/block">
                   Blocks
                 </a>
                 <a
-                  className="nav-link text-secondary d-none d-md-block"
+                  className="nav-link text-secondary"
                   href="/transaction"
                 >
                   Transactions
                 </a>
 
                 <a
-                  className="nav-link text-secondary d-block d-md-none"
-                  href="/transaction"
+                  className="nav-link text-secondary"
+                  href="/nfts"
                 >
-                  Txs
-                </a>
-                <a
-                  className="nav-link text-secondary d-none d-md-block"
-                  href="/validators"
-                >
-                  Validator Pool
-                </a>
-                <a
-                  className="nav-link text-secondary d-block d-md-none"
-                  href="/validators"
-                >
-                  Pool
+                  NFT Data
                 </a>
 
-                <a
-                  className="nav-link text-secondary d-none d-md-block"
-                  href="/map"
-                >
-                  Heat Map
-                </a>
 
                 <a
-                  className="nav-link text-secondary d-block d-md-none"
+                  className="nav-link text-secondary"
+                  href="/validators"
+                >
+                  Validators
+                </a>
+               
+
+                <a
+                  className="nav-link text-secondary"
                   href="/map"
                 >
                   Map
                 </a>
-                <span className="nav-link text-muted d-none d-md-block">|</span>
+
                 <a
-                  className="nav-link text-secondary  d-none d-md-block"
+                  className="nav-link text-secondary"
+                  href="/metrics"
+                >
+                  Metrics
+                </a>
+               
+                <span className="nav-link text-muted d-none d-lg-block">|</span>
+                <a
+                  className="nav-link text-secondary "
                   href="https://reserveblock.io"
                   target="blank"
                   rel="noreferrer"
@@ -108,7 +107,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   ReserveBlock.io
                 </a>
                 <a
-                  className="nav-link text-secondary  d-none d-md-block"
+                  className="nav-link text-secondary "
                   href="https://github.com/ReserveBlockIO"
                   target="blank"
                   rel="noreferrer"
@@ -117,7 +116,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
               </div>
             </div>
-            <form className="d-flex  d-none d-md-block">
+            <form className="d-flex  d-none d-lg-block">
               <Search />
             </form>
           </div>
@@ -125,7 +124,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </header>
       <div style={{ height: 64 }}></div>
 
-      <div className=" d-block d-md-none">
+      <div className=" d-block d-lg-none">
         <div className="container">
           <Search />
         </div>
