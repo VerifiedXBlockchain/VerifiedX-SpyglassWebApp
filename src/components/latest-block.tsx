@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
+import * as timeago from 'timeago.js';
 
 interface Props {
 
@@ -34,13 +35,15 @@ export const LatestBlock = (props: Props) => {
     }, [])
 
 
+
+
     return <div className="bg-black my-4 py-2 px-3 rounded" style={{ boxShadow: "0 0 3px 2px rgba(255,255,255,.15)" }}>
         {block ? (
 
             <div>
                 <div className="d-flex justify-content-between">
                     <div>Block {block.height}</div>
-                    <div><small className="text-light">{block.timeAgoLabel}</small></div>
+                    <div><DateCrafted date={block.dateCrafted}></DateCrafted></div>
                 </div>
                 <div className="pt-2">
                     <LineItem title="Hash" value={block.hash} fullWidth href={"/block/" + block.height}></LineItem>
@@ -98,4 +101,31 @@ const LineItem = (props: LineItemProps) => {
             )}
 
         </div>);
+}
+
+interface DateCraftedProps {
+    date: Date;
+}
+
+const DateCrafted = (props: DateCraftedProps) => {
+
+    const { date } = props;
+
+    const [label, setLabel] = useState<String>(timeago.format(date))
+
+    useEffect(() => {
+
+        const update = () => {
+            setLabel(timeago.format(date));
+        }
+
+        update();
+        const interval = setInterval(() => {
+            update();
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [])
+
+    return <small className="text-light">{label}</small>
 }
