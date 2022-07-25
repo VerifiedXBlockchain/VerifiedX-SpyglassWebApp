@@ -44,7 +44,7 @@ export const LatestBlock = (props: Props) => {
             <div>
                 <div className="d-flex justify-content-between">
                     <div>Block {block.height}</div>
-                    <div><DateCrafted date={block.dateCrafted}></DateCrafted></div>
+                    <div><small className="text-light">{block.timestampLabel}</small></div>
                 </div>
                 <div className="pt-2">
                     <LineItem title="Hash" value={block.hash} fullWidth href={"/block/" + block.height}></LineItem>
