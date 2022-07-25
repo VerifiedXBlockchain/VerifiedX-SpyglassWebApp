@@ -84,20 +84,7 @@ export const NftCard = (props: Props) => {
             </small>
           </div>
         </li>
-          {nft.burnTransaction ?(
-        <li className="list-group-item ">
-          <div className="">
-            <div>Burn Tx</div>
-            <small style={{
-              whiteSpace: "pre-line",
-              overflowWrap: "anywhere",
-            }}>
-                <a href={"/transaction/" + nft.burnTransaction} >
-                {nft.burnTransaction}
-                </a>
-            </small>
-          </div>
-        </li>) :null}
+
 
        
       </ul>

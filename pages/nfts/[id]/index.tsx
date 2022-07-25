@@ -33,8 +33,25 @@ const NftDetailPage: NextPage = () => {
         <title>{`ReserveBlock Explorer: NFT ${id}`}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="text-center p-5 h3">{nft.name}</div>
       <div className="container">
+      <nav aria-label="breadcrumb">
+          <ol className="breadcrumb align-items-center">
+            <li className="breadcrumb-item">
+              <a href="/">Home</a>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              <a href="/nfts">NFTs</a>
+            </li>
+
+            <li className="breadcrumb-item active" aria-current="page">
+              <a href={`/nft/${nft.identifier}`}>
+                {nft.name}
+              </a>
+            </li>
+          </ol>
+        </nav>
+      <div className="text-center p-3 h3">{nft.name}</div>
+     
 
       <table className="table table-striped">
           <tbody>
