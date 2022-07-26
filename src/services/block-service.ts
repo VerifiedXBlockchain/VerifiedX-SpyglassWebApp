@@ -5,7 +5,7 @@ import { httpGet } from "../utils/network";
 
 export class BlockService {
   async retrieve(id: string): Promise<Block> {
-    const response = await httpGet(`${API_BASE_URL}/block/${id}`, {});
+    const response = await httpGet(`${API_BASE_URL}/blocks/${id}`, {});
     const data: any = response.parsedBody;
 
     return new Block(data);
@@ -14,7 +14,7 @@ export class BlockService {
     page: number = 1,
     params: any = {}
   ): Promise<PaginatedResponse<Block>> {
-    const response = await httpGet(`${API_BASE_URL}/block/`, {
+    const response = await httpGet(`${API_BASE_URL}/blocks/`, {
       page: page,
       ...params,
     });
@@ -35,7 +35,7 @@ export class BlockService {
   }
 
   async search(q: string, page: number = 1): Promise<PaginatedResponse<Block>> {
-    const response = await httpGet(`${API_BASE_URL}/block/`, {
+    const response = await httpGet(`${API_BASE_URL}/blocks/`, {
       page: page,
       search: q,
     });

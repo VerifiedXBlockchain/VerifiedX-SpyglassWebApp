@@ -5,7 +5,7 @@ import { httpGet } from "../utils/network";
 
 export class ValidatorService {
   async retrieve(id: string): Promise<Validator> {
-    const response = await httpGet(`${API_BASE_URL}/master-node/${id}`, {});
+    const response = await httpGet(`${API_BASE_URL}/masternodes/${id}`, {});
     const data: any = response.parsedBody;
 
     return new Validator(data);
@@ -14,7 +14,7 @@ export class ValidatorService {
     page: number = 1,
     params: any = {}
   ): Promise<PaginatedResponse<Validator>> {
-    const response = await httpGet(`${API_BASE_URL}/master-node/`, {
+    const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
       ...params,
     });
@@ -35,7 +35,7 @@ export class ValidatorService {
   }
 
   async activeCount(): Promise<number> {
-    const response = await httpGet(`${API_BASE_URL}/master-node/`, {
+    const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       limit: 1,
       is_active: true,
     });
@@ -48,7 +48,7 @@ export class ValidatorService {
     q: string,
     page: number = 1
   ): Promise<PaginatedResponse<Validator>> {
-    const response = await httpGet(`${API_BASE_URL}/master-node/`, {
+    const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
       search: q, 
     });
