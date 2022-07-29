@@ -83,9 +83,9 @@ export class Nft {
   }
 
   get timestampLabel(): string {
-    if (isToday(this.mintedAt)) {
-      return this.mintedAt.toLocaleTimeString();
-    }
+    // if (isToday(this.mintedAt)) {
+    //   return this.mintedAt.toLocaleTimeString();
+    // }
     return `${this.mintedAt.toLocaleDateString()} ${this.mintedAt.toLocaleTimeString()}`;
   }
   

@@ -26,9 +26,9 @@ export class Validator {
   }
 
   get dateLabel(): string {
-    if (isToday(this.connectDate)) {
-      return `Today @ ${this.connectDate.toLocaleTimeString()}`;
-    }
+    // if (isToday(this.connectDate)) {
+    //   return `Today @ ${this.connectDate.toLocaleTimeString()}`;
+    // }
     return `${this.connectDate.toLocaleDateString()} ${this.connectDate.toLocaleTimeString()}`;
   }
 

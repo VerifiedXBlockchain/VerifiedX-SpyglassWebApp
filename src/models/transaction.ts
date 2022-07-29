@@ -38,9 +38,9 @@ export class Transaction {
 
 
   get timestampLabel(): string {
-    if (isToday(this.dateCrafted)) {
-      return this.dateCrafted.toLocaleTimeString();
-    }
+    // if (isToday(this.dateCrafted)) {
+    //   return this.dateCrafted.toLocaleTimeString();
+    // }
     return `${this.dateCrafted.toLocaleDateString()} ${this.dateCrafted.toLocaleTimeString()}`;
   }
 
