@@ -23,7 +23,7 @@ export const ValidatorCard = (props: Props) => {
           href={`/validators/${validator.address}`}
           className="btn btn-primary btn-sm"
         >
-          View Details
+          Details
         </a>
       </div>
       <ul className="list-group">
@@ -57,12 +57,12 @@ export const ValidatorCard = (props: Props) => {
           </div>
         </li>
 
-        <li className="list-group-item ">
+        {/* <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
             <div>Blocks Crafted</div>
             <small>{validator.blockCount}</small>
           </div>
-        </li>
+        </li> */}
       </ul>
       <div className="card-footer text-muted text-center">
         Connected: {validator.dateLabel}
