@@ -11,15 +11,11 @@ import { ValidatorList } from "./validator-list";
 export const ValidatorListContainer = () => {
   const [validators, setValidators] = useState<Validator[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
-  const [activeValidatorCount, setActiveValidatorCount] = useState<number>(0);
 
   const fetchPage = async (p: number) => {
     const service = new ValidatorService();
     try {
-      if (activeValidatorCount < 1) {
-        const count = await service.activeCount();
-        setActiveValidatorCount(count);
-      }
+
 
       const data = await service.list(p);
 
@@ -49,7 +45,6 @@ export const ValidatorListContainer = () => {
       const service = new ValidatorService();
 
       service.list(1).then((data) => {
-        setActiveValidatorCount(data.count);
 
         const newValidators = [];
         for (const validator of data.results) {
@@ -63,9 +58,7 @@ export const ValidatorListContainer = () => {
         }
       });
 
-      service.activeCount().then((count) => {
-        setActiveValidatorCount(count);
-      });
+
     };
 
     const interval = setInterval(() => {
@@ -79,9 +72,10 @@ export const ValidatorListContainer = () => {
     <div>
       <div className="container">
         <div className="text-center px-3 pt-2">
-          <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
-            Total Active Validators: {activeValidatorCount}
-          </div>
+          {validators.length ? (
+            <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
+              Total Active Validators: {validators.filter(v => v.isActive).length}
+            </div>) : null}
         </div>
       </div>
       <InfiniteScroll
