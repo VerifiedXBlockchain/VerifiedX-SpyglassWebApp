@@ -32,7 +32,7 @@ export class Block {
     }
 
     this.hash = d["hash"];
-    this.prevHash = d["prev_hash"];
+    this.prevHash = d["previous_hash"];
     this.validator = d["validator_address"];
     this.validatorSignature = d["validator_signature"];
     this.chainRefId = d["chain_ref_id"];
@@ -56,7 +56,7 @@ export class Block {
 
     }
 
-    
+
   }
 
   hashPreview(n: number = 16): string {
