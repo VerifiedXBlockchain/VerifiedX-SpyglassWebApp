@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
@@ -17,7 +18,7 @@ export const ValidatorRowsContainer = () => {
     try {
 
 
-      const data = await service.list(p);
+      const data = await service.list(p, { 'is_active': true });
 
       if (data.page == 1) {
         setValidators(data.results);
@@ -43,7 +44,7 @@ export const ValidatorRowsContainer = () => {
   useEffect(() => {
     const poll = () => {
       const service = new ValidatorService();
-      service.list(1).then((data) => {
+      service.list(1, { 'is_active': true }).then((data) => {
 
         const newValidators = [];
         for (const validator of data.results) {
@@ -69,10 +70,18 @@ export const ValidatorRowsContainer = () => {
   return (
     <div>
       <div className="bg-dark text-end px-3 py-2">
-        {validators.length ? (
-          <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
-            Total Active Validators: {validators.filter(v => v.isActive).length}
-          </div>) : null}
+        <div className="d-flex justify-content-end align-items-center">
+
+          {validators.length ? (
+            <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
+              Total Active Validators: {validators.filter(v => v.isActive).length}
+            </div>) : null}
+          <div>
+            <Link href={"/validators/search"}>
+              <a className="btn-link btn btn-sm" >Check Validator Status</a>
+            </Link>
+          </div>
+        </div>
       </div>
       <InfiniteScroll
         pageStart={0}
@@ -90,6 +99,8 @@ export const ValidatorRowsContainer = () => {
           </div>
         }
       >
+
+
         <ValidatorList validators={validators} />
       </InfiniteScroll>
     </div>
