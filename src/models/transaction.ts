@@ -27,7 +27,7 @@ export class Transaction {
     this.nftData = d["data"];
     this.signature = d["signature"];
     this.height = d["height"];
-    this.transactionType = d["transaction_type"] ?? 0;
+    this.transactionType = d["transaction_type"] ?? d["type"] ?? 0;
     this.nft = d['nft'] != null ? new Nft(d['nft']) : undefined;
   }
 
@@ -55,6 +55,10 @@ export class Transaction {
       return "-";
     }
 
+    if (this.transactionType == 6) {
+      return "-";
+    }
+
     const items = [];
     for (let item of data) {
       if ("Data" in item) {
@@ -71,9 +75,16 @@ export class Transaction {
       return "";
     }
 
+
+
     const data: any[] = JSON.parse(this.nftData);
 
     const items = [];
+
+    if (this.transactionType == 6) {
+      return "-";
+    }
+
     for (let item of data) {
       if ("Data" in item) {
         const decoded = this.decompressData(item["Data"]);
