@@ -48,7 +48,7 @@ const CirculationPage: NextPage = () => {
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center">
             Lifetime Supply
-            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(372000000)} RBX</span>
+            <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} RBX</span>
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center">
             Amount Staked
