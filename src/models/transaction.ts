@@ -85,15 +85,19 @@ export class Transaction {
       return "-";
     }
 
-    for (let item of data) {
-      if ("Data" in item) {
-        const decoded = this.decompressData(item["Data"]);
 
-        items.push(decoded);
+    if (data) {
+
+      for (let item of data) {
+        if ("Data" in item) {
+          const decoded = this.decompressData(item["Data"]);
+
+          items.push(decoded);
+        }
       }
-    }
 
-    return items.toString();
+      return items.toString();
+    }
   }
 
   decompressData(encodedData: string) {
