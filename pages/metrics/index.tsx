@@ -51,7 +51,7 @@ const CirculationPage: NextPage = () => {
             <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} RBX</span>
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center">
-            Amount Staked
+            Total Assured
             <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} RBX</span>
           </li>
           <li className="list-group-item d-flex justify-content-between align-items-center">
