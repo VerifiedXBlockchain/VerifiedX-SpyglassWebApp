@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IS_TESTNET } from "../constants";
 import { Block } from "../models/block";
 
 interface Props {
@@ -33,11 +34,14 @@ export const BlockRow = (props: Props) => {
           <div className="badge badge-lg  ps-0">{block.validator}</div>
         )}
       </td>
-      <td>
-        <div className="badge badge-lg  ps-0">
-          {block.masternode?.locationLabel || "-"}
-        </div>
-      </td>
+      {!IS_TESTNET ? (
+
+        <td>
+          <div className="badge badge-lg  ps-0">
+            {block.masternode?.locationLabel || "-"}
+          </div>
+        </td>
+      ) : null}
       <td>
         <div className="badge badge-lg  ps-0">{block.hashPreview()}</div>
       </td>
@@ -62,9 +66,8 @@ export const BlockRow = (props: Props) => {
               >
                 {block.transactions.length} Txs{" "}
                 <i
-                  className={`bi ${
-                    expanded ? `bi-chevron-up` : "bi-chevron-down"
-                  }`}
+                  className={`bi ${expanded ? `bi-chevron-up` : "bi-chevron-down"
+                    }`}
                 ></i>
               </div>
 

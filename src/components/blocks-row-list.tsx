@@ -1,3 +1,4 @@
+import { IS_TESTNET } from "../constants";
 import { Block } from "../models/block";
 import { BlockCard } from "./block-card";
 import { BlockRow } from "./block-row";
@@ -16,7 +17,7 @@ export const BlockRowList = (props: Props) => {
           <th>Crafted</th>
           <th className="text-center">Craft Time</th>
           <th>Validator</th>
-          <th>Validator Location</th>
+          {!IS_TESTNET ? <th>Validator Location</th> : null}
           <th>Hash</th>
           <th className="text-center">Size</th>
           <th className="text-center">Transactions</th>
