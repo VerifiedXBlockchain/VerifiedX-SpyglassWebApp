@@ -3,12 +3,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { BlockListContainer } from "../../src/components/block-list-container";
 import { Search } from "../../src/components/search";
+import { IS_TESTNET } from "../../src/constants";
 
 const BlockListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer</title>
+        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer: Blocks" />
         <link rel="icon" href="/favicon.png" />
       </Head>

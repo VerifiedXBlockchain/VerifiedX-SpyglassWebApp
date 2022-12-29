@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { IS_TESTNET } from "../../../src/constants";
 import { Nft } from "../../../src/models/nft";
 import { NftService } from "../../../src/services/nft-service";
 import { formatBytes } from "../../../src/utils/formatting";
@@ -29,9 +30,8 @@ const NftDetailPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>RBX Explorer</title>
         <meta name="description" />
-        <title>{`ReserveBlock Explorer: NFT ${id}`}</title>
+        <title>{`RBX Explorer: NFT ${id}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="container">

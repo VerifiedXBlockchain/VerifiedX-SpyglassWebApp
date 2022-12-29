@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BlockDetail } from "../../../src/components/block-detail";
+import { IS_TESTNET } from "../../../src/constants";
 import { Block } from "../../../src/models/block";
 import { BlockService } from "../../../src/services/block-service";
 
@@ -33,9 +34,9 @@ const BlockDetailPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>RBX Explorer</title>
+
         <meta name="description" />
-        <title>{`ReserveBlock Explorer: Block ${block.height}`}</title>
+        <title>{`RBX Explorer: Block ${block.height}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div>

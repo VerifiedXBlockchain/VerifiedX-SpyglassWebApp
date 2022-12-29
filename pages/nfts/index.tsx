@@ -4,12 +4,13 @@ import Head from "next/head";
 import { BlockListContainer } from "../../src/components/block-list-container";
 import { NftListContainer } from "../../src/components/nft-list-container";
 import { Search } from "../../src/components/search";
+import { IS_TESTNET } from "../../src/constants";
 
 const NftListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer</title>
+        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer: NFTs" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -25,9 +26,9 @@ const NftListPage: NextPage = () => {
             </li>
           </ol>
         </nav>
-      
+
       </div>
-    <NftListContainer />
+      <NftListContainer />
 
 
     </div>

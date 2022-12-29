@@ -3,6 +3,7 @@ import Head from "next/head";
 import { isMobile } from "react-device-detect";
 import { ValidatorListContainer } from "../../src/components/validator-list-container";
 import { ValidatorRowsContainer } from "../../src/components/validator-rows-container";
+import { IS_TESTNET } from "../../src/constants";
 
 const ValidatorPoolPage: NextPage = () => {
   if (typeof window === "undefined") {
@@ -12,7 +13,7 @@ const ValidatorPoolPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer: Validator Pool</title>
+        <title>RBX Explorer: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>

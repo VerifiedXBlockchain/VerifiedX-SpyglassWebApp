@@ -9,6 +9,7 @@ import { BlockList } from "../../src/components/block-list";
 import { Search } from "../../src/components/search";
 import { TransactionCard } from "../../src/components/transaction-card";
 import { TransactionList } from "../../src/components/transaction-list";
+import { IS_TESTNET } from "../../src/constants";
 import { Address } from "../../src/models/address";
 import { Block } from "../../src/models/block";
 import { Transaction } from "../../src/models/transaction";
@@ -134,7 +135,7 @@ const SearchPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer</title>
+        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta
           name="description"
           content="ReserveBlock Explorer: Search Results"

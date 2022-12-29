@@ -3,12 +3,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Search } from "../../src/components/search";
 import { TransactionListContainer } from "../../src/components/transaction-list-container";
+import { IS_TESTNET } from "../../src/constants";
 
 const TransactionListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer: Transactions</title>
+        <title>RBX Explorer: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer Transactions" />
         <link rel="icon" href="/favicon.png" />
       </Head>

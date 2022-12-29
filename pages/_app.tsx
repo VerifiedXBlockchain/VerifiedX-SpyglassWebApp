@@ -7,7 +7,7 @@ import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { MAINTENENCE_MODE } from "../src/constants";
+import { IS_TESTNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
 import { useState } from "react";
 
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
       <>
         <Head>
-          <title>RBX Explorer</title>
+          <title>RBX Explorer{IS_TESTNET ? ' TESTNET' : ''}</title>
           <meta name="description" content="ReserveBlock Explorer: Home" />
           <link rel="icon" href="/favicon.png" />
         </Head>
@@ -48,9 +48,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 className="me-1"
                 style={{ width: 40, height: 40, position: "relative", top: -2 }}
               />
-              <span>RBX Explorer</span>
+              <span>RBX{IS_TESTNET ? <span style={{ fontWeight: 500, color: "#67ad5f" }}>  Testnet</span> : <span> Explorer</span>}</span>
             </a>
-            
+
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation" onClick={handleNavCollapse}>
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -74,29 +74,35 @@ function MyApp({ Component, pageProps }: AppProps) {
                   NFT Data
                 </a>
 
+                {!IS_TESTNET ? (
+                  <a
+                    className="nav-link text-secondary"
+                    href="/validators"
+                  >
+                    Validators
+                  </a>
+                ) : null}
 
-                <a
-                  className="nav-link text-secondary"
-                  href="/validators"
-                >
-                  Validators
-                </a>
-               
+                {!IS_TESTNET ? (
 
-                <a
-                  className="nav-link text-secondary"
-                  href="/map"
-                >
-                  Map
-                </a>
+                  <a
+                    className="nav-link text-secondary"
+                    href="/map"
+                  >
+                    Map
+                  </a>
+                ) : null}
 
-                <a
-                  className="nav-link text-secondary"
-                  href="/metrics"
-                >
-                  Metrics
-                </a>
-               
+                {!IS_TESTNET ? (
+
+                  <a
+                    className="nav-link text-secondary"
+                    href="/metrics"
+                  >
+                    Metrics
+                  </a>
+                ) : null}
+
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
                 <a
                   className="nav-link text-secondary "

@@ -4,6 +4,7 @@ import { BlockRowsContainer } from "../src/components/block-rows-container";
 import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
 import { BlockListContainer } from "../src/components/block-list-container";
+import { IS_TESTNET } from "../src/constants";
 
 const Home: NextPage = () => {
   if (typeof window === "undefined") {
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer</title>
+        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>
