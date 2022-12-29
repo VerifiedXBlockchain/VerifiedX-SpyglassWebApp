@@ -1,3 +1,6 @@
-export const API_BASE_URL = "https://rbx-explorer-service.herokuapp.com/api";
+export const API_BASE_URL = process.env.NEXT_API_BASE_URL || "https://rbx-explorer-service.herokuapp.com/api";
+export const IS_TESTNET = process.env.NEXT_IS_TESTNET || false;
+
+
 // export const API_BASE_URL = "http://127.0.0.1:8000/api";
-export const MAINTENENCE_MODE = false;
+export const MAINTENENCE_MODE = process.env.NEXT_MAINTENENCE_MODE || false;
