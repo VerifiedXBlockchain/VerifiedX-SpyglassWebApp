@@ -56,7 +56,7 @@ const SearchPage: NextPage = () => {
       return;
     }
 
-    if (trimmedQ.length == 34 && trimmedQ[0].toUpperCase() == "R") {
+    if (trimmedQ.length == 34 && trimmedQ[0].toUpperCase() == (IS_TESTNET ? "X" : "R")) {
       // blockService.search(trimmedQ, page).then((data) => {
       //   setBlocks(data.results);
       // });
