@@ -74,14 +74,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                   NFT Data
                 </a>
 
-                {!IS_TESTNET ? (
-                  <a
-                    className="nav-link text-secondary"
-                    href="/validators"
-                  >
-                    Validators
-                  </a>
-                ) : null}
+                <a
+                  className="nav-link text-secondary"
+                  href="/validators"
+                >
+                  Validators
+                </a>
 
                 {!IS_TESTNET ? (
 

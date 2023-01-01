@@ -34,14 +34,12 @@ export const BlockRow = (props: Props) => {
           <div className="badge badge-lg  ps-0">{block.validator}</div>
         )}
       </td>
-      {!IS_TESTNET ? (
 
-        <td>
-          <div className="badge badge-lg  ps-0">
-            {block.masternode?.locationLabel || "-"}
-          </div>
-        </td>
-      ) : null}
+      <td>
+        <div className="badge badge-lg  ps-0">
+          {block.masternode?.locationLabel || "-"}
+        </div>
+      </td>
       <td>
         <div className="badge badge-lg  ps-0">{block.hashPreview()}</div>
       </td>
