@@ -42,6 +42,8 @@ const SearchPage: NextPage = () => {
     const isNumber = /^\d+$/.test(trimmedQ);
 
     setBlockNotFound(false);
+    setAddress(undefined);
+
 
     if (isNumber) {
       blockService
