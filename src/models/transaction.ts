@@ -131,6 +131,10 @@ export class Transaction {
         return "ADNR";
       case 7:
         return "DST Registration";
+      case 8:
+        return "Topic";
+      case 9:
+        return "Topic Vote";
       default:
         return "-";
     }
