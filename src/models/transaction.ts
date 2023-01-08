@@ -49,7 +49,7 @@ export class Transaction {
       return "-";
     }
 
-    const data: any[] = JSON.parse(this.nftData);
+    let data: any[] = JSON.parse(this.nftData);
 
     if (data == null) {
       return "-";
@@ -59,7 +59,12 @@ export class Transaction {
       return "-";
     }
 
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
     const items = [];
+
     for (let item of data) {
       if ("Data" in item) {
         item = { ...item, Data: item["Data"] };
@@ -77,12 +82,18 @@ export class Transaction {
 
 
 
-    const data: any[] = JSON.parse(this.nftData);
+    let data: any[] = JSON.parse(this.nftData);
 
     const items = [];
 
+
     if (this.transactionType == 6) {
       return "-";
+    }
+
+    if (!Array.isArray(data)) {
+      data = [data];
+
     }
 
 
