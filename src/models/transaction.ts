@@ -66,7 +66,7 @@ export class Transaction {
     const items = [];
 
     for (let item of data) {
-      if ("Data" in item) {
+      if (item && "Data" in item) {
         item = { ...item, Data: item["Data"] };
       }
       items.push(item);
@@ -100,7 +100,7 @@ export class Transaction {
     if (data) {
 
       for (let item of data) {
-        if ("Data" in item) {
+        if (item && "Data" in item) {
           const decoded = this.decompressData(item["Data"]);
 
           items.push(decoded);
