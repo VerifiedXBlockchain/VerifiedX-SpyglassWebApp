@@ -1,5 +1,4 @@
-// export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://rbx-explorer-service.herokuapp.com/api";
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://rbx-explorer-service-testnet.herokuapp.com/api";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://data.rbx.network/api";
 export const IS_TESTNET = process.env.NEXT_PUBLIC_IS_TESTNET == "true" ? true : false;
 
 

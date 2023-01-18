@@ -9,4 +9,11 @@ export class AddressService {
 
     return new Address(data);
   }
+
+  async retrieveByAdnr(id: string): Promise<Address> {
+    const response = await httpGet(`${API_BASE_URL}/addresses/adnr/${id}`, {});
+    const data: any = response.parsedBody;
+
+    return new Address(data);
+  }
 }
