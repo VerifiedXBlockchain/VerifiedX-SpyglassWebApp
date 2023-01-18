@@ -44,6 +44,17 @@ const SearchPage: NextPage = () => {
     setBlockNotFound(false);
     setAddress(undefined);
 
+    if (trimmedQ.includes('.rbx')) {
+      const addressService = new AddressService();
+      addressService.retrieveByAdnr(trimmedQ).then((data) => {
+        if (data && data.address) {
+          setAddress(data);
+          router.push(`/search?q=${data.address}`);
+        }
+      });
+
+    }
+
 
     if (isNumber) {
       blockService
@@ -68,12 +79,6 @@ const SearchPage: NextPage = () => {
         setAddress(data);
       });
       // return;
-    } else if (trimmedQ.includes('.rbx')) {
-      const addressService = new AddressService();
-      addressService.retrieveByAdnr(trimmedQ).then((data) => {
-        setAddress(data);
-      });
-
     }
 
     const queryBlocksAndTransaction = async () => {
