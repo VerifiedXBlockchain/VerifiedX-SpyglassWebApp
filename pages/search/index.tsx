@@ -174,8 +174,7 @@ const SearchPage: NextPage = () => {
         <pre className="text-center">Results for {q}</pre>
 
         {SHOW_BALANCE && address ? (
-          <div className="alert bg-success text-start">
-            Address: {address.address}<br />
+          <div className="alert bg-success text-center">
             Balance: {address.balance} RBX<br />
             {address.adnr != null ? `RBX Domain: ${address.adnr}` : ``}
           </div>
