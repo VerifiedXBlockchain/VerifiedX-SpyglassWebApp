@@ -44,6 +44,17 @@ const SearchPage: NextPage = () => {
     setBlockNotFound(false);
     setAddress(undefined);
 
+    if (trimmedQ.includes('.rbx')) {
+      const addressService = new AddressService();
+      addressService.retrieveByAdnr(trimmedQ).then((data) => {
+        if (data && data.address) {
+          setAddress(data);
+          router.push(`/search?q=${data.address}`);
+        }
+      });
+
+    }
+
 
     if (isNumber) {
       blockService
@@ -164,7 +175,8 @@ const SearchPage: NextPage = () => {
 
         {SHOW_BALANCE && address ? (
           <div className="alert bg-success text-center">
-            Balance: {address.balance} RBX
+            Balance: {address.balance} RBX<br />
+            {address.adnr != null ? `RBX Domain: ${address.adnr}` : ``}
           </div>
         ) : null}
 

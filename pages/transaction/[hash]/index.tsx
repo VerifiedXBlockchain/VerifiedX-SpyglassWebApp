@@ -48,7 +48,7 @@ const TransactionDetailPage: NextPage = () => {
             </li>
           </ol>
         </nav>
-        <h4>Transaction Details</h4>
+        <h4>Transaction Details!</h4>
         <div className="bg-dark p-2">
           <div className="d-block d-md-flex">
             <DetailItem
