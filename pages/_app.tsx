@@ -85,7 +85,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link text-secondary"
                   href="/domains"
                 >
-                  RBX Domains
+                  Domains
                 </a>
 
                 {!IS_TESTNET ? (

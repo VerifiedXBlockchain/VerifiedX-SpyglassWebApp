@@ -20,7 +20,7 @@ const AdnrListPage: NextPage = () => {
                             <a href="/">Home</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/domains">RBX Domains</a>
+                            <a href="/domains">Domains</a>
                         </li>
                     </ol>
                 </nav>
