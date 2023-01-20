@@ -57,7 +57,7 @@ export const AdnrListContainer = () => {
           }
         }
         if (newAdnrs.length > 0) {
-          setAdnrs([...adnrs, ...newAdnrs]);
+          setAdnrs([...newAdnrs, ...adnrs]);
         }
       });
 
