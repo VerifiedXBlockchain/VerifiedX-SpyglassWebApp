@@ -81,6 +81,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Validators
                 </a>
 
+                <a
+                  className="nav-link text-secondary"
+                  href="/domains"
+                >
+                  RBX Domains
+                </a>
+
                 {!IS_TESTNET ? (
 
                   <a
