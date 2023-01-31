@@ -51,7 +51,7 @@ export const LatestBlock = (props: Props) => {
                 </div>
 
                 <div className="d-flex justify-content-between">
-                    <LineItem title="Craft Time" value={`${block.craftTime / 1000} seconds`}></LineItem>
+                    <LineItem title="Craft Time" value={`${block.craftTime} ms`}></LineItem>
                     <LineItem title="Size" value={block.sizeLabel}></LineItem>
                 </div>
                 <div className="d-flex justify-content-between">
