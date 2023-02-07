@@ -132,10 +132,10 @@ const CirculationPage: NextPage = () => {
                 Block Last Delay
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.blockLastDelay)} s</span>
               </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
+              {/* <li className="list-group-item d-flex justify-content-between align-items-center">
                 Time Since Last Block
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.timeSinceLastBlock)} s</span>
-              </li>
+              </li> */}
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Block Averages
                 <span className="badge bg-secondary badge-lg text-black">{metrics.blocksAverages}</span>
