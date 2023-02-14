@@ -11,6 +11,8 @@ import { IS_TESTNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
 import { useState } from "react";
 
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
