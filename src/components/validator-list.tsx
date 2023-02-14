@@ -12,10 +12,10 @@ interface Props {
 export const ValidatorList = (props: Props) => {
   const { validators } = props;
 
-  const [sorting, setSorting] = useState<"uniqueName" | "address" | undefined>(undefined);
+  const [sorting, setSorting] = useState<"uniqueName" | "address" | "locationLabel" | undefined>(undefined);
   const [sortingDirection, setSortingDirection] = useState(false);
 
-  const updateSorting = (col: "uniqueName" | "address") => {
+  const updateSorting = (col: "uniqueName" | "address" | "locationLabel") => {
     if (sorting == col) {
       setSortingDirection(!sortingDirection);
     } else {
@@ -49,7 +49,10 @@ export const ValidatorList = (props: Props) => {
               Validator Name{' '}
               <span className={sorting == 'uniqueName' ? '' : 'text-muted'}><i className={`bi ${sorting == 'uniqueName' && sortingDirection ? 'bi-sort-alpha-up' : 'bi-sort-alpha-down'} `}></i></span>
             </th>
-            <th>Location</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => updateSorting('locationLabel')}>
+              Location{' '}
+              <span className={sorting == 'locationLabel' ? '' : 'text-muted'}><i className={`bi ${sorting == 'locationLabel' && sortingDirection ? 'bi-sort-alpha-up' : 'bi-sort-alpha-down'} `}></i></span>
+            </th>
             <th>Actions</th>
           </tr>
         </thead>
