@@ -70,22 +70,25 @@ const BlockRewardsCalculator = (props: Props) => {
                 </div>
 
                 {rewardEstimate ?
+                    <div>
 
-                    <div className="d-flex justify-content-end align-items-center justify-content-md-between">
-                        <div className="text-muted d-none d-md-block" >
-                            <div><pre className="mb-0">rbx = v * (({blocksPerDay} * d) / t) * 32</pre></div>
-                            <div><pre className="mb-0">    = {validatorCount} * (({blocksPerDay} * {days}) / {totalValidators}) * 32</pre></div>
-                        </div>
+                        <div className="d-flex justify-content-end align-items-center justify-content-md-between">
+                            <div className="text-muted d-none d-md-block" >
+                                <div><pre className="mb-0">rbx = v * (({blocksPerDay} * d) / t) * 32</pre></div>
+                                <div><pre className="mb-0">    = {validatorCount} * (({blocksPerDay} * {days}) / {totalValidators}) * 32</pre></div>
+                            </div>
 
-                        <div>
-                            <span className="d-none d-md-inline">={' '}</span>
+                            <div>
+                                <span className="d-none d-md-inline">={' '}</span>
 
-                            <div className="badge badge-lg bg-success">
-                                {rewardEstimate} RBX
+                                <div className="badge badge-lg bg-success">
+                                    {rewardEstimate} RBX
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div className='mt-2 text-muted'><small>This is just an estimate and rewards are not guaranteed.</small></div>
+                    </div>
                     : null}
             </div>
         </div>
