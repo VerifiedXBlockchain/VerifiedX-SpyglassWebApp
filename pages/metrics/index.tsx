@@ -10,6 +10,7 @@ import { CirculationService } from "../../src/services/circulation-service";
 import { NetworkMetricsService } from "../../src/services/network-metrics-service";
 import { numberWithCommas } from "../../src/utils/formatting";
 import * as timeago from 'timeago.js';
+import BlockRewardsCalculator from "../../src/components/block-rewards-calculator";
 
 
 const CirculationPage: NextPage = () => {
@@ -143,10 +144,21 @@ const CirculationPage: NextPage = () => {
             </>) : null}
         </ul>
 
-        <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
+        <div className="row">
+          <div className="col-12 col-md-6">
+            <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
+            <LatestBlock />
+          </div>
+
+          {circulation ?
+            <div className="col-12 col-md-6">
+              <h3 className="mt-3 mb-4 text-center">Block Rewards Calculator</h3>
+              <BlockRewardsCalculator totalValidators={circulation.activeMasterNodes} />
+            </div> : null}
+        </div>
 
 
-        <LatestBlock />
+        <div className="py-5"></div>
 
 
       </div>
