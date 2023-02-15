@@ -14,7 +14,18 @@ export const ValidatorRowsContainer = () => {
 
 
   const fetchPage = async (p: number) => {
+
+
+
     const service = new ValidatorService();
+
+    const data = await service.algoliaSearch();
+
+    setValidators([data.results[0]]);
+
+
+
+    return;
     try {
 
 
@@ -42,30 +53,34 @@ export const ValidatorRowsContainer = () => {
   };
 
   useEffect(() => {
-    const poll = () => {
-      const service = new ValidatorService();
-      service.list(1, { 'is_active': true }).then((data) => {
+    fetchPage(1);
+  }, []);
 
-        const newValidators = [];
-        for (const validator of data.results) {
-          const exists = validators.some((v) => v.address == validator.address);
-          if (!exists) {
-            newValidators.push(validator);
-          }
-        }
-        if (newValidators.length > 0) {
-          setValidators([...newValidators, ...validators]);
-        }
-      });
+  // useEffect(() => {
+  //   const poll = () => {
+  //     const service = new ValidatorService();
+  //     service.list(1, { 'is_active': true }).then((data) => {
 
-    };
+  //       const newValidators = [];
+  //       for (const validator of data.results) {
+  //         const exists = validators.some((v) => v.address == validator.address);
+  //         if (!exists) {
+  //           newValidators.push(validator);
+  //         }
+  //       }
+  //       if (newValidators.length > 0) {
+  //         setValidators([...newValidators, ...validators]);
+  //       }
+  //     });
 
-    const interval = setInterval(() => {
-      poll();
-    }, 5000);
+  //   };
 
-    return () => clearInterval(interval);
-  }, [validators]);
+  //   const interval = setInterval(() => {
+  //     poll();
+  //   }, 5000);
+
+  //   return () => clearInterval(interval);
+  // }, [validators]);
 
   return (
     <div>
@@ -83,7 +98,11 @@ export const ValidatorRowsContainer = () => {
           </div>
         </div>
       </div>
-      <InfiniteScroll
+
+      <ValidatorList validators={validators} />
+
+
+      {/* <InfiniteScroll
         pageStart={0}
         loadMore={fetchPage}
         hasMore={canLoadMore}
@@ -102,7 +121,7 @@ export const ValidatorRowsContainer = () => {
 
 
         <ValidatorList validators={validators} />
-      </InfiniteScroll>
+      </InfiniteScroll> */}
     </div>
   );
 };
