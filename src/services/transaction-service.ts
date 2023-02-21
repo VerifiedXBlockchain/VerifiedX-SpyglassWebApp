@@ -54,4 +54,27 @@ export class TransactionService {
       results
     );
   }
+
+  async address(
+    address: string,
+    page: number = 1
+  ): Promise<PaginatedResponse<Transaction>> {
+    const response = await httpGet(`${API_BASE_URL}/transaction/address/${address}`, {
+      page: page,
+    });
+    const data: any = response.parsedBody;
+
+    const results = [];
+
+    for (let result of data["results"]) {
+      results.push(new Transaction(result));
+    }
+
+    return new PaginatedResponse<Transaction>(
+      data["count"],
+      data["page"],
+      data["num_pages"],
+      results
+    );
+  }
 }

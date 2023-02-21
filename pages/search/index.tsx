@@ -12,6 +12,7 @@ import { TransactionList } from "../../src/components/transaction-list";
 import { IS_TESTNET } from "../../src/constants";
 import { Address } from "../../src/models/address";
 import { Block } from "../../src/models/block";
+import { PaginatedResponse } from "../../src/models/paginated-response";
 import { Transaction } from "../../src/models/transaction";
 import { AddressService } from "../../src/services/address-service";
 import { BlockService } from "../../src/services/block-service";
@@ -82,9 +83,20 @@ const SearchPage: NextPage = () => {
     }
 
     const queryBlocksAndTransaction = async () => {
-      const b = await blockService.search(trimmedQ, page);
+      let b: PaginatedResponse<Block>;
+      let t: PaginatedResponse<Transaction>;
 
-      const t = await transactionService.search(trimmedQ, page);
+      if (trimmedQ.length == 34 && trimmedQ[0].toUpperCase() == (IS_TESTNET ? "X" : "R")) {
+        b = await blockService.address(trimmedQ, page);
+        t = await transactionService.address(trimmedQ, page);
+      } else {
+        b = await blockService.search(trimmedQ, page);
+        t = await transactionService.search(trimmedQ, page);
+
+      }
+
+
+
       setTwoColumns(b.results.length > 0 && t.results.length > 0);
       setBlocks(b.results);
       setTransactions(t.results);
