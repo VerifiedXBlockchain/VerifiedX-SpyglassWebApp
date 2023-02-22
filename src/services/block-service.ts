@@ -10,6 +10,13 @@ export class BlockService {
 
     return new Block(data);
   }
+
+  async retrieveByHash(hash: string): Promise<Block> {
+    const response = await httpGet(`${API_BASE_URL}/blocks/hash/${hash}`, {});
+    const data: any = response.parsedBody;
+
+    return new Block(data);
+  }
   async list(
     page: number = 1,
     params: any = {}

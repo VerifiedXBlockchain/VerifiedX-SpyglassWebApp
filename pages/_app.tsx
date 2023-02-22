@@ -110,6 +110,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null}
 
+
+                <a
+                  className="nav-link text-secondary"
+                  href="/search"
+                >
+                  Search
+                </a>
+
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
                 <a
                   className="nav-link text-secondary "
@@ -129,9 +137,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
               </div>
             </div>
-            <form className="d-flex  d-none d-lg-block">
+            <div className="d-flex  d-none d-lg-block">
               <Search />
-            </form>
+            </div>
           </div>
         </nav>
       </header>
