@@ -6,20 +6,21 @@ import { ValidatorRowsContainer } from "../../src/components/validator-rows-cont
 import { IS_TESTNET } from "../../src/constants";
 
 const ValidatorPoolPage: NextPage = () => {
-  if (typeof window === "undefined") {
-    return null;
-  }
+    if (typeof window === "undefined") {
+        return null;
+    }
 
-  return (
-    <div>
-      <Head>
-        <title>RBX Explorer: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="ReserveBlock Explorer: Home" />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      {isMobile ? <ValidatorListContainer /> : <ValidatorRowsContainer />}
-    </div>
-  );
+    return (
+        <div>
+            <Head>
+                <title>RBX Explorer: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+                <meta name="description" content="ReserveBlock Explorer: Home" />
+                <link rel="icon" href="/favicon.png" />
+            </Head>
+            {isMobile ? <ValidatorListContainer /> : <ValidatorRowsContainer />}
+        </div>
+    );
 };
+
 
 export default ValidatorPoolPage;
