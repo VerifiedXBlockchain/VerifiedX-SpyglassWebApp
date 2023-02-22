@@ -14,8 +14,8 @@ export const Search = (props: Props) => {
   const handleSearch = () => {
     if (query) {
 
-      router.push(`/search?q=${query}`);
-      // window.location.href = `/search?q=${query}`
+      // router.push(`/search?q=${query}`);
+      window.location.href = `/search?q=${query}`
     }
   };
 
