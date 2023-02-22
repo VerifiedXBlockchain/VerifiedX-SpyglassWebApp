@@ -51,10 +51,10 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
-  // res.setHeader(
-  //   'Cache-Control',
-  //   'public, s-maxage=10, stale-while-revalidate=59'
-  // )
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=60, stale-while-revalidate=120'
+  )
 
   const url = `${API_BASE_URL}/masternodes/?is_active=true`;
   const result = await fetch(url)
