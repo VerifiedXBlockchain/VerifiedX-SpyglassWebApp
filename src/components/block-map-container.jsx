@@ -20,7 +20,7 @@ export const BlockMapContainer = () => {
   const fetchPage = async () => {
     const service = new ValidatorService();
     try {
-      const data = await service.list(1, { is_active: true });
+      const data = await service.map(1, { is_active: true });
 
       setLoading(false);
 
@@ -35,7 +35,7 @@ export const BlockMapContainer = () => {
             .setPopup(
               new Popup().setHTML(
                 `<div>
-                <h6 class="mb-0">${validator.uniqueName}</h6>
+                <h6 class="mb-0">${validator.address}</h6>
                 <div class="text-center pt-2">
                 <a class="btn btn-primary btn-sm d-block" href="/validators/${validator.address
                 }" target="_blank">Details</a>

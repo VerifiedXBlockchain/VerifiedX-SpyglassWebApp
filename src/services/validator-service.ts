@@ -34,6 +34,33 @@ export class ValidatorService {
     );
   }
 
+
+  async map(
+    page: number = 1,
+    params: any = {}
+  ): Promise<PaginatedResponse<Validator>> {
+    const response = await httpGet(`${API_BASE_URL}/masternodes/map/`, {
+      page: page,
+      ...params,
+    });
+    const data: any = response.parsedBody;
+
+    const results = [];
+
+    for (let result of data["results"]) {
+      results.push(new Validator(result));
+    }
+
+    return new PaginatedResponse<Validator>(
+      data["count"],
+      data["page"],
+      data["num_pages"],
+      results
+    );
+  }
+
+
+
   async activeCount(): Promise<number> {
     const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       limit: 1,
@@ -50,7 +77,7 @@ export class ValidatorService {
   ): Promise<PaginatedResponse<Validator>> {
     const response = await httpGet(`${API_BASE_URL}/masternodes/`, {
       page: page,
-      search: q, 
+      search: q,
     });
     const data: any = response.parsedBody;
 
