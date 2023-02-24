@@ -27,7 +27,7 @@ const BlockListPage: NextPage = () => {
         </nav>
       </div>
 
-      <BlockListContainer />
+      <BlockListContainer initialBlocks={[]} />
     </div>
   );
 };
