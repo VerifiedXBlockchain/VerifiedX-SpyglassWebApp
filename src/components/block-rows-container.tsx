@@ -69,7 +69,7 @@ export const BlockRowsContainer = (props: Props) => {
   return (
     <div className="">
       <InfiniteScroll
-        pageStart={1}
+        pageStart={props.initialBlocks.length < 1 ? 0 : 1}
         loadMore={fetchPage}
         hasMore={canLoadMore}
         initialLoad={true}
