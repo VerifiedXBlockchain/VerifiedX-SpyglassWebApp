@@ -6,10 +6,12 @@ import { BlockList } from "./block-list";
 
 interface Props {
   validatorAddress?: string;
+  initialBlocks: Block[];
+
 }
 
 export const BlockListContainer = (props: Props) => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
   const fetchPage = async (p: number) => {

@@ -6,8 +6,13 @@ import InfiniteScroll from "react-infinite-scroller";
 import { BlockList } from "./block-list";
 import { isMobile } from "react-device-detect";
 
-export const BlockRowsContainer = () => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+interface Props {
+  initialBlocks: Block[];
+}
+
+export const BlockRowsContainer = (props: Props) => {
+
+  const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
   const fetchPage = async (p: number) => {
@@ -56,7 +61,7 @@ export const BlockRowsContainer = () => {
 
     const interval = setInterval(() => {
       poll();
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [blocks]);
@@ -64,7 +69,7 @@ export const BlockRowsContainer = () => {
   return (
     <div className="">
       <InfiniteScroll
-        pageStart={0}
+        pageStart={1}
         loadMore={fetchPage}
         hasMore={canLoadMore}
         initialLoad={true}
