@@ -66,7 +66,7 @@ export const BlockListContainer = (props: Props) => {
 
     const interval = setInterval(() => {
       poll();
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [blocks]);
@@ -74,7 +74,7 @@ export const BlockListContainer = (props: Props) => {
   return (
     <div className="container">
       <InfiniteScroll
-        pageStart={0}
+        pageStart={props.initialBlocks.length < 1 ? 0 : 1}
         loadMore={fetchPage}
         hasMore={canLoadMore}
         initialLoad={true}
