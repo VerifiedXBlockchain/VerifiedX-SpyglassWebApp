@@ -58,7 +58,7 @@ export const ValidatorDetail = (props: Props) => {
         <h4 className="mt-3">Blocks</h4>
       </div>
       <div>
-        <BlockListContainer validatorAddress={validator.address} />
+        <BlockListContainer initialBlocks={[]} validatorAddress={validator.address} />
       </div>
     </>
   );
