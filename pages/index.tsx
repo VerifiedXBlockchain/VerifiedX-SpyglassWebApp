@@ -32,6 +32,13 @@ export default Home;
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  return {
+    props: {
+      data: {
+        results: []
+      }
+    }
+  }
 
   res.setHeader(
     'Cache-Control',

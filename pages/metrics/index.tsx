@@ -69,17 +69,24 @@ const CirculationPage: NextPage = () => {
           {circulation ? (
             <>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Circulating Supply
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} RBX</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
                 Lifetime Supply
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} RBX</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total Assured
+                Circulating Supply
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} RBX</span>
+              </li>
+
+              <li className="list-group-item d-flex justify-content-between align-items-center">
+                Amount Assured
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} RBX</span>
               </li>
+
+              <li className="list-group-item d-flex justify-content-between align-items-center">
+                Effective Circulating Supply
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance - circulation.totalStaked)} RBX</span>
+              </li>
+
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Total Burned Fees
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} RBX</span>
