@@ -25,7 +25,7 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
       <div className="p-2">
 
         <div className="alert alert-warning">
-          <p className="mb-0">Due to an infrastructure issue, we are currently experiencing technical difficulties. Follow the status <a href="https://status.heroku.com/incidents/2524" className="alert-link">here</a>.</p>
+          <p className="mb-0">Due to an infrastructure issue, we are currently experiencing technical difficulties. Follow the status <a href="https://status.heroku.com/incidents/2524" className="alert-link" target={"_blank"} rel="noreferrer" >here</a>.</p>
         </div>
       </div>
 
