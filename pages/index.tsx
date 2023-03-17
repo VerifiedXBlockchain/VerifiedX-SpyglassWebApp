@@ -22,13 +22,6 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
         <meta name="description" content="ReserveBlock Explorer: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="p-2">
-
-        <div className="alert alert-warning">
-          {/* <p className="mb-0">Due to an infrastructure issue, we are currently experiencing technical difficulties. This is explorer related only, the RBX network is online. Follow the status <a href="https://status.heroku.com/incidents/2524" className="alert-link" target={"_blank"} rel="noreferrer" >here</a>.</p> */}
-          <p className="mb-0"><strong>The RBX network is online with no issues.</strong> The explorer is currently experiencing an issue with its upstream infrastructure provider. Follow the status <a href="https://status.heroku.com/incidents/2524" className="alert-link" target={"_blank"} rel="noreferrer" >here</a>.</p>
-        </div>
-      </div>
 
       {isMobile ? <BlockListContainer initialBlocks={blocks} /> : <BlockRowsContainer initialBlocks={blocks} />}
     </div>
