@@ -7,6 +7,7 @@ export class Circulation {
   activeMasterNodes: number;
   totalMasterNodes: number;
   cliVersion: string;
+  totalAddresses: number;
 
   constructor(d: any) {
     this.balance = d["balance"];
@@ -17,5 +18,6 @@ export class Circulation {
     this.activeMasterNodes = d["active_master_nodes"];
     this.totalMasterNodes = d["total_master_nodes"];
     this.cliVersion = d["cli_version"];
+    this.totalAddresses = d["total_addresses"];
   }
 }
