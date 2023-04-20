@@ -13,23 +13,25 @@ export const Search = (props: Props) => {
 
   const handleSearch = () => {
     if (query) {
-      router.push(`/search?q=${query}`);
+
+      // router.push(`/search?q=${query}`);
+      window.location.href = `/search?q=${query}`
     }
   };
 
-  useEffect(() => {
-    const listener = (event: any) => {
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
-        handleSearch();
-        event.preventDefault();
-        // callMyFunction();
-      }
-    };
-    document.addEventListener("keydown", listener);
-    return () => {
-      document.removeEventListener("keydown", listener);
-    };
-  }, [handleSearch]);
+  // useEffect(() => {
+  //   const listener = (event: any) => {
+  //     if (event.code === "Enter" || event.code === "NumpadEnter") {
+  //       handleSearch();
+  //       event.preventDefault();
+  //       // callMyFunction();
+  //     }
+  //   };
+  //   document.addEventListener("keydown", listener);
+  //   return () => {
+  //     document.removeEventListener("keydown", listener);
+  //   };
+  // }, [handleSearch]);
 
   return (
     // <div className="container">
@@ -40,14 +42,16 @@ export const Search = (props: Props) => {
         placeholder={props.placeholder || "Search"}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        style={props.mini ? { height: 32, fontSize:12, borderColor: 'rgba(255,255,255,.4)'}: {}}
+        onKeyDown={e => e.key === "Enter" ? handleSearch() : null}
+        // onKeyDown={e => console.log(e.key)}
+        style={props.mini ? { height: 32, fontSize: 12, borderColor: 'rgba(255,255,255,.4)' } : {}}
       />
       <button
         className="btn btn-secondary"
         type="button"
         disabled={!query}
         onClick={handleSearch}
-        style={props.mini ? {height: 32, paddingTop: 5, fontSize: 12,}: {}}
+        style={props.mini ? { height: 32, paddingTop: 5, fontSize: 12, } : {}}
       >
         Search
       </button>

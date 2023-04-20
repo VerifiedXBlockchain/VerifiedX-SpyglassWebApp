@@ -7,6 +7,8 @@ import { IS_TESTNET } from "../../../src/constants";
 import { Nft } from "../../../src/models/nft";
 import { NftService } from "../../../src/services/nft-service";
 import { formatBytes } from "../../../src/utils/formatting";
+import { Transaction } from "../../../src/models/transaction";
+import { TransactionCard } from "../../../src/components/transaction-card";
 
 const NftDetailPage: NextPage = () => {
   const router = useRouter();
@@ -14,6 +16,9 @@ const NftDetailPage: NextPage = () => {
   const { id } = router.query;
 
   const [nft, setNft] = useState<Nft | undefined>(undefined);
+  const [history, setHistory] = useState<Transaction[]>([]);
+
+
   useEffect(() => {
     if (!id) return;
 
@@ -23,6 +28,11 @@ const NftDetailPage: NextPage = () => {
       console.log(data);
       setNft(data);
     });
+
+    service.history(id.toString()).then((data) => {
+      setHistory(data);
+    });
+
   }, [id]);
 
   if (!nft) return <></>;
@@ -116,6 +126,23 @@ const NftDetailPage: NextPage = () => {
             {nft.dataDataFormatted}
           </pre>
         </div>
+        {history.length && (
+          <div className="mt-3">
+            <h4>Transaction History</h4>
+            <div className="row">
+
+              {history.map(tx => {
+                return (
+                  <div key={tx.hash} className="col-12 col-md-4" >
+                    <TransactionCard transaction={tx} />
+                  </div>
+                )
+              })}
+
+
+            </div>
+          </div>)}
+
       </div>
 
 

@@ -35,12 +35,12 @@ export const TransactionCard = (props: Props) => {
           {transaction.amount} RBX
         </span>
       </li>
-      <li className="list-group-item d-flex justify-content-between">
-        From:
+      <li className="list-group-item">
+        From:<br />
         <small>{transaction.fromAddress}</small>
       </li>
-      <li className="list-group-item  d-flex justify-content-between">
-        To:
+      <li className="list-group-item ">
+        To:<br />
         <small>{transaction.toAddress}</small>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">

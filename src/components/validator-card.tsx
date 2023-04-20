@@ -64,9 +64,10 @@ export const ValidatorCard = (props: Props) => {
           </div>
         </li> */}
       </ul>
-      <div className="card-footer text-muted text-center">
+
+      {/* <div className="card-footer text-muted text-center">
         Connected: {validator.dateLabel}
-      </div>
+      </div> */}
     </div>
   );
 };

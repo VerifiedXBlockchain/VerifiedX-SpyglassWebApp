@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "../constants";
 import { Nft } from "../models/nft";
 import { PaginatedResponse } from "../models/paginated-response";
+import { Transaction } from "../models/transaction";
 import { httpGet } from "../utils/network";
 
 export class NftService {
@@ -55,5 +56,21 @@ export class NftService {
       results
     );
   }
- 
+
+  async history(id: string): Promise<Transaction[]> {
+    const response = await httpGet(`${API_BASE_URL}/nft/${id}/history`, {});
+    const data: any = response.parsedBody;
+
+    const results = [];
+
+    for (let result of data["results"]) {
+      results.push(new Transaction(result));
+    }
+
+    return results;
+
+  }
+
+
+
 }

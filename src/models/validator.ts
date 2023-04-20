@@ -11,6 +11,7 @@ export class Validator {
   city?: string;
   latitude?: number;
   longitude?: number;
+  locationName?: string;
 
 
   constructor(d: any) {
@@ -23,6 +24,7 @@ export class Validator {
     this.country = d['country'];
     this.latitude = d['latitude'];
     this.longitude = d['longitude'];
+    this.locationName = d['location_name'];
   }
 
   get dateLabel(): string {
@@ -42,12 +44,16 @@ export class Validator {
     return this.uniqueName;
   }
 
-  get locationLabel():string {
-    if(this.country && this.city) {
+  get locationLabel(): string {
+    if (this.locationName) {
+      return this.locationName;
+    }
+
+    if (this.country && this.city) {
       return `${this.city}, ${this.country}`;
     }
 
-    if(this.country) {
+    if (this.country) {
       return this.country;
     }
 

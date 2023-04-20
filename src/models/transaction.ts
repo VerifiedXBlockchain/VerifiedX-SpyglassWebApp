@@ -55,9 +55,10 @@ export class Transaction {
       return "-";
     }
 
-    if (this.transactionType == 6) {
-      return "-";
-    }
+    // if (this.transactionType == 6) {
+
+    //   return "-";
+    // }
 
     if (!Array.isArray(data)) {
       data = [data];
@@ -87,9 +88,9 @@ export class Transaction {
     const items = [];
 
 
-    if (this.transactionType == 6) {
-      return "-";
-    }
+    // if (this.transactionType == 6) {
+    //   return "-";
+    // }
 
     if (!Array.isArray(data)) {
       data = [data];

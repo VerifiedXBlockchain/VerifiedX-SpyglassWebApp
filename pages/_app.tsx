@@ -11,6 +11,8 @@ import { IS_TESTNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
 import { useState } from "react";
 
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
@@ -81,6 +83,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Validators
                 </a>
 
+                <a
+                  className="nav-link text-secondary"
+                  href="/domains"
+                >
+                  Domains
+                </a>
+
                 {!IS_TESTNET ? (
 
                   <a
@@ -101,6 +110,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null}
 
+
+                <a
+                  className="nav-link text-secondary"
+                  href="/search"
+                >
+                  Search
+                </a>
+
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
                 <a
                   className="nav-link text-secondary "
@@ -120,9 +137,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
               </div>
             </div>
-            <form className="d-flex  d-none d-lg-block">
+            <div className="d-flex  d-none d-lg-block">
               <Search />
-            </form>
+            </div>
           </div>
         </nav>
       </header>

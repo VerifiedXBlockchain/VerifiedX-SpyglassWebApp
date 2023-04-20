@@ -10,6 +10,13 @@ export class BlockService {
 
     return new Block(data);
   }
+
+  async retrieveByHash(hash: string): Promise<Block> {
+    const response = await httpGet(`${API_BASE_URL}/blocks/hash/${hash}`, {});
+    const data: any = response.parsedBody;
+
+    return new Block(data);
+  }
   async list(
     page: number = 1,
     params: any = {}
@@ -38,6 +45,26 @@ export class BlockService {
     const response = await httpGet(`${API_BASE_URL}/blocks/`, {
       page: page,
       search: q,
+    });
+    const data: any = response.parsedBody;
+
+    const results = [];
+
+    for (let result of data["results"]) {
+      results.push(new Block(result));
+    }
+
+    return new PaginatedResponse<Block>(
+      data["count"],
+      data["page"],
+      data["num_pages"],
+      results
+    );
+  }
+
+  async address(address: string, page: number = 1): Promise<PaginatedResponse<Block>> {
+    const response = await httpGet(`${API_BASE_URL}/blocks/address/${address}`, {
+      page: page,
     });
     const data: any = response.parsedBody;
 
