@@ -101,6 +101,10 @@ const NewSearchPage: NextPage = () => {
 
     const valueToSearchType = (val: string) => {
 
+        if (val.length == 34 && val.startsWith('xRBX')) {
+            return SearchType.address;
+        }
+
         if (val.length == 34 && val[0].toUpperCase() == (IS_TESTNET ? "X" : "R")) {
             return SearchType.address;
         }
@@ -351,6 +355,8 @@ const NewSearchPage: NextPage = () => {
 
                     <div className="mt-4 alert bg-success text-center">
                         Balance: {address.balance} RBX<br />
+                        Locked Balance: {address.balanceLocked} RBX<br />
+                        Total Balance: {address.balanceTotal} RBX<br />
                         {address.adnr != null ? `RBX Domain: ${address.adnr}` : ``}
                     </div>
                     : null}
