@@ -76,6 +76,24 @@ export class Transaction {
     return JSON.stringify(items, null, 4);
   }
 
+  nftDataValue(key: string) {
+    const d = this.nftDataFormatted;
+
+    if (d == "-") {
+      return null;
+    }
+
+    const data = JSON.parse(d)[0];
+
+
+    return data[key];
+
+
+  }
+
+
+
+
   get nftDataDataFormatted() {
     if (this.nftData == null || this.nftData == "") {
       return "";
@@ -138,6 +156,15 @@ export class Transaction {
       case 4:
         return "NFT Burn";
       case 5:
+        const saleFunc = this.nftDataValue("Function");
+        if (saleFunc == "Sale_Start()") {
+          return "NFT Sale Start"
+        }
+
+        if (saleFunc == "Sale_Complete()") {
+          return "NFT Sale Complete";
+        }
+
         return "NFT Sale";
       case 6:
         return "ADNR";
@@ -147,6 +174,18 @@ export class Transaction {
         return "Topic";
       case 9:
         return "Topic Vote";
+      case 10:
+        const reserveFunc = this.nftDataValue("Function");
+        if (reserveFunc == "CallBack()") {
+          return "Reserve (Callback)";
+        }
+        if (reserveFunc == "Register()") {
+          return "Reserve (Register)";
+        }
+        if (reserveFunc == "Recover()") {
+          return "Reserve (Recover)";
+        }
+        return "Reserve";
       default:
         return "-";
     }
