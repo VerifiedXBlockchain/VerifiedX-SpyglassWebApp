@@ -7,13 +7,13 @@ import { BlockListContainer } from "../src/components/block-list-container";
 import { API_BASE_URL, IS_TESTNET } from "../src/constants";
 import { Block } from "../src/models/block";
 
-const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage = () => {
   if (typeof window === "undefined") {
     return null;
   }
 
-  const results: any[] = data.results;
-  const blocks: Block[] = results.map(b => new Block(b));
+  // const results: any[] = data.results;
+  // const blocks: Block[] = results.map(b => new Block(b));
 
   return (
     <div>
@@ -23,7 +23,7 @@ const Home: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSi
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      {isMobile ? <BlockListContainer initialBlocks={blocks} /> : <BlockRowsContainer initialBlocks={blocks} />}
+      {isMobile ? <BlockListContainer initialBlocks={[]} /> : <BlockRowsContainer initialBlocks={[]} />}
     </div>
   );
 };
