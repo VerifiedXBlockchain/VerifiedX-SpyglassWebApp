@@ -189,6 +189,53 @@ const TransactionDetailPage: NextPage = () => {
           ) : null}
         </div>
 
+        {transaction.callbackDetails ? (
+          <div>
+            <h4>Callback Details</h4>
+
+            <div className="row">
+              <div className="col-12 col-md-4 py-2">
+                <TransactionCard transaction={transaction.callbackDetails} />
+
+              </div>
+            </div>
+
+
+          </div>
+        ) : null}
+
+        {transaction.recoveryDetails ? (
+          <div>
+            <h4>Recovery Details</h4>
+
+            <pre className="bg-black p-2">
+              Original Address: {transaction.recoveryDetails.originalAddress}<br />
+              New Address: {transaction.recoveryDetails.newAddress}<br />
+              Amount: {transaction.recoveryDetails.amount}<br />
+            </pre>
+
+            {transaction.recoveryDetails ? (
+
+              <>
+                <h4>Outstanding Transactions</h4>
+                <div className="row">
+
+                  {transaction.recoveryDetails.outstandingTransactions.map(tx => {
+                    return (
+                      <div key={tx.hash} className="col-12 col-md-4 py-2">
+                        <TransactionCard transaction={tx} />
+
+                      </div>
+                    );
+                  })}
+
+
+                </div></>) : null}
+
+
+          </div>
+        ) : null}
+
 
       </div>
     </div>
