@@ -1,6 +1,7 @@
 import { isToday } from "../utils/dates";
 import pako from "pako";
 import { Nft } from "./nft";
+import { Recovery } from "./recovery";
 
 export class Transaction {
   hash: string;
@@ -15,6 +16,8 @@ export class Transaction {
   height: number;
   transactionType: number;
   nft?: Nft;
+  callbackDetails?: Transaction;
+  recoveryDetails?: Recovery;
 
   constructor(d: any) {
     this.hash = d["hash"];
@@ -29,6 +32,8 @@ export class Transaction {
     this.height = d["height"];
     this.transactionType = d["transaction_type"] ?? d["type"] ?? 0;
     this.nft = d['nft'] != null ? new Nft(d['nft']) : undefined;
+    this.callbackDetails = d['callback_details'] != null ? new Transaction(d['callback_details']) : undefined;
+    this.recoveryDetails = d['recovery_details'] != null ? new Recovery(d['recovery_details']) : undefined;
   }
 
   hashPreview(n: number = 16): string {
