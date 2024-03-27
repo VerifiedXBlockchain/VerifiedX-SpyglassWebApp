@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     'public, s-maxage=60, stale-while-revalidate=120'
   )
 
-  const url = `${API_BASE_URL}/masternodes/?is_active=true&compact=true`;
+  const url = `${API_BASE_URL}/masternodes/?is_active=true&compact=true&foo=bar`;
   const result = await fetch(url)
   const data: any[] = await result.json()
 
