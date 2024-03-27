@@ -110,6 +110,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null}
 
+                {IS_TESTNET ? (
+
+                  <a
+                    className="nav-link text-secondary"
+                    href="/faucet"
+                  >
+                    Faucet
+                  </a>
+                ) : null}
+
 
                 <a
                   className="nav-link text-secondary"
