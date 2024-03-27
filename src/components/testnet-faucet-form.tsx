@@ -96,7 +96,7 @@ const TestnetFaucetForm = (props: Props) => {
 
                     <li className="list-group-item">Available Funds: {info.available} RBX</li>
                     <li className="list-group-item">Minimum Request Amount: {info.minAmount} RBX</li>
-                    <li className="list-group-item">Maxiumum Request Amount: {info.maxAmount} RBX</li>
+                    <li className="list-group-item">Maximum Request Amount: {info.maxAmount} RBX</li>
                     <li className="list-group-item">Sender Address: {info.address}</li>
                 </ul>
 
