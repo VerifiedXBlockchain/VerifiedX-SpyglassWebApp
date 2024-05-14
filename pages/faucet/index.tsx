@@ -21,15 +21,13 @@ const FaucetPage: NextPage = () => {
         })
     }, [])
 
-    if (!IS_TESTNET) {
-        return <p>Only available on testnet</p>
-    }
+
 
 
     return (
         <div>
             <div className="container">
-                <h3 className="mt-3 text-center">RBX Testnet Faucet</h3>
+                <h3 className="mt-3 text-center">RBX {IS_TESTNET && 'Testnet '}Faucet</h3>
                 <div className="py-1"></div>
 
 
