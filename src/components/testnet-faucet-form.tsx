@@ -19,7 +19,7 @@ const TestnetFaucetForm = (props: Props) => {
 
 
     const [verificationUuid, setVerificationUuid] = useState("");
-    const [verificationCode, setVerificationCode] = useState("");
+    const [verificationCode, setVerificationCode] = useState(IS_TESTNET ? "1234" : "");
 
 
 
@@ -112,7 +112,7 @@ const TestnetFaucetForm = (props: Props) => {
     const handleVerify = async () => {
         setVerificationCodeInvalid(false);
 
-        if (verificationCode.length < 6) {
+        if (verificationCode.length < 4) {
             setVerificationCodeInvalid(true);
             return;
         }
@@ -171,7 +171,7 @@ const TestnetFaucetForm = (props: Props) => {
                     <div className="card-body">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Verification Code</span>
+                                <span className="input-group-text" id="basic-addon3">Verification Code {IS_TESTNET ? '(For Testnet just use 1234)' : ''}</span>
                             </div>
                             <input type="text" placeholder="1234" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>
