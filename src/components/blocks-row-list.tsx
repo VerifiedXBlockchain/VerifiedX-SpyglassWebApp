@@ -21,8 +21,8 @@ export const BlockRowList = (props: Props) => {
           <th>Hash</th>
           <th className="text-center">Size</th>
           <th className="text-center">Transactions</th>
-          <th className="text-end">Total Amount</th>
-          <th className="text-end">Total Reward</th>
+          <th className="text-end">Amount</th>
+          <th className="text-end">Fee</th>
           <th className="text-center">Actions</th>
         </tr>
       </thead>
