@@ -70,32 +70,32 @@ const CirculationPage: NextPage = () => {
             <>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Lifetime Supply
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} VFX</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Circulating Supply
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} VFX</span>
               </li>
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Amount Assured
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} VFX</span>
               </li>
 
               {/* <li className="list-group-item d-flex justify-content-between align-items-center">
                 Effective Circulating Supply
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance - circulation.totalStaked)} RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance - circulation.totalStaked)} VFX</span>
               </li> */}
               {/* 
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Founder Assured
-                <span className="badge bg-secondary badge-lg text-black">58,000,000 RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">58,000,000 VFX</span>
               </li> */}
 
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Total Burned Fees
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} RBX</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} VFX</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Total Transactions
@@ -115,7 +115,7 @@ const CirculationPage: NextPage = () => {
               </li> */}
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total RBX Addresses
+                Total VFX Addresses
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalAddresses)}</span>
               </li>
 

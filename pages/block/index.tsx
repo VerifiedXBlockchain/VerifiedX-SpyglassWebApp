@@ -15,7 +15,7 @@ const BlockListPage: NextPage = ({ data }: InferGetServerSidePropsType<typeof ge
   return (
     <div>
       <Head>
-        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer: Blocks" />
         <link rel="icon" href="/favicon.png" />
       </Head>

@@ -11,7 +11,7 @@ const MapPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta
           name="description"
           content="ReserveBlock Explorer: Validator Map"

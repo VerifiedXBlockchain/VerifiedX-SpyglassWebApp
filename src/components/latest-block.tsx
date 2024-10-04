@@ -61,8 +61,8 @@ export const LatestBlock = (props: Props) => {
                     </div>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <LineItem title="Amount" value={`${block.totalAmount} RBX`}></LineItem>
-                    <LineItem title="Fee" value={`${block.totalReward} RBX`}></LineItem>
+                    <LineItem title="Amount" value={`${block.totalAmount} VFX`}></LineItem>
+                    <LineItem title="Fee" value={`${block.totalReward} VFX`}></LineItem>
 
                 </div>
 

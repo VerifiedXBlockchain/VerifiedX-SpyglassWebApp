@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
       <>
         <Head>
-          <title>RBX Explorer{IS_TESTNET ? ' TESTNET' : ''}</title>
+          <title>VFX Explorer{IS_TESTNET ? ' TESTNET' : ''}</title>
           <meta name="description" content="ReserveBlock Explorer: Home" />
           <link rel="icon" href="/favicon.png" />
         </Head>
@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 className="me-1"
                 style={{ width: 40, height: 40, position: "relative", top: -2 }}
               />
-              <span>RBX{IS_TESTNET ? <span style={{ fontWeight: 500, color: "#67ad5f" }}>  Testnet</span> : <span> Explorer</span>}</span>
+              <span>VFX{IS_TESTNET ? <span style={{ fontWeight: 500, color: "#67ad5f" }}>  Testnet</span> : <span> Explorer</span>}</span>
             </a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation" onClick={handleNavCollapse}>

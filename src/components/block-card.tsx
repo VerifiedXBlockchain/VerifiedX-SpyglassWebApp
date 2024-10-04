@@ -68,13 +68,13 @@ export const BlockCard = (props: Props) => {
         <li className="list-group-item d-flex justify-content-between align-items-center">
           Total Amount
           <span className="badge bg-primary rounded-pill">
-            {block.totalAmount} RBX
+            {block.totalAmount} VFX
           </span>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
           Fee
           <span className="badge bg-primary rounded-pill">
-            {block.totalReward} RBX
+            {block.totalReward} VFX
           </span>
         </li>
       </ul>
