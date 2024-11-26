@@ -147,10 +147,10 @@ const TestnetFaucetForm = (props: Props) => {
 
                 <ul className="list-group">
                     {IS_TESTNET && (
-                        <li className="list-group-item">Available Funds: {info.available} RBX</li>
+                        <li className="list-group-item">Available Funds: {info.available} VFX</li>
                     )}
-                    <li className="list-group-item">Minimum Request Amount: {info.minAmount} RBX</li>
-                    <li className="list-group-item">Maximum Request Amount: {info.maxAmount} RBX</li>
+                    <li className="list-group-item">Minimum Request Amount: {info.minAmount} VFX</li>
+                    <li className="list-group-item">Maximum Request Amount: {info.maxAmount} VFX</li>
                     {IS_TESTNET && (
                         <li className="list-group-item">Sender Address: {info.address}</li>
                     )}
@@ -194,7 +194,7 @@ const TestnetFaucetForm = (props: Props) => {
                     <div className="card-body">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">RBX {IS_TESTNET && 'Testnet '}Address</span>
+                                <span className="input-group-text" id="basic-addon3">VFX {IS_TESTNET && 'Testnet '}Address</span>
                             </div>
                             <input type="text" placeholder={IS_TESTNET ? `xArscSBw9qk3xuMErGDEXXcbxigfccQvqD` : `RArscSBw9qk3xuMErGDEXXcbxigfccQvqD`} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>

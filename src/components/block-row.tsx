@@ -85,10 +85,10 @@ export const BlockRow = (props: Props) => {
         )}
       </td>
       <td className="text-end">
-        <div className="badge badge-lg  ps-0">{block.totalAmount} RBX</div>
+        <div className="badge badge-lg  ps-0">{block.totalAmount} VFX</div>
       </td>
       <td className="text-end">
-        <div className="badge badge-lg  ps-0">{block.totalReward} RBX</div>
+        <div className="badge badge-lg  ps-0">{block.totalReward} VFX</div>
       </td>
       <td className="text-center">
         <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">

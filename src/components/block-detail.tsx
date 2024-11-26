@@ -33,13 +33,13 @@ export const BlockDetail = (props: Props) => {
 
             <DetailItem
               label="Amount"
-              value={`${block.totalAmount} RBX`}
+              value={`${block.totalAmount} VFX`}
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
               label="Reward"
-              value={`${block.totalReward} RBX`}
+              value={`${block.totalReward} VFX`}
             ></DetailItem>
             <div className="p-1"></div>
 

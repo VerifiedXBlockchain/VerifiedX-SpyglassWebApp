@@ -8,8 +8,8 @@ const AdnrListPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
-                <meta name="description" content="ReserveBlock Explorer: RBX Domains" />
+                <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
+                <meta name="description" content="ReserveBlock Explorer: VFX Domains" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 

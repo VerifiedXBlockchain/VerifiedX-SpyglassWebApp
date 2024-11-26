@@ -9,7 +9,7 @@ const TransactionListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Explorer: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="ReserveBlock Explorer Transactions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
