@@ -27,7 +27,7 @@ export const BlockRowList = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-        {blocks.map((block) => (
+        {blocks.sort((a, b) => a.height > b.height ? -1 : 1).map((block) => (
           <BlockRow block={block} key={block.height} />
         ))}
       </tbody>

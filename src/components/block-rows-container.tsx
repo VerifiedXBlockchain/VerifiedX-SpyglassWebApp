@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
 import { BlockRowList } from "./blocks-row-list";
 import InfiniteScroll from "react-infinite-scroller";
-import { BlockList } from "./block-list";
-import { isMobile } from "react-device-detect";
 import { SOCKET_HOST } from "../constants";
 import { io, Socket } from "socket.io-client";
 
@@ -25,83 +23,96 @@ export const BlockRowsContainer = (props: Props) => {
   const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
+  const [pollCancelled, setPollCancelled] = useState<boolean>(false)
 
-  //SOCKET
-  const [messages, setMessages] = useState<string[]>([]);
+
   const [socket, setSocket] = useState<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
 
   useEffect(() => {
-    // Initialize socket connection
-    const socketConnection: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOST); // Replace with your socket server URL
+    const socketConnection: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOST);
     setSocket(socketConnection);
 
-    // Listen for events
     socketConnection.on("connect", () => {
       console.log("Connected to socket server");
     });
 
-    socketConnection.on("message", (message) => {
-      console.log("Received message:", message);
-      setMessages((prevMessages) => [...prevMessages, message]);
+    socketConnection.onAny((_, event) => {
+      const { type, data } = event;
+
+      switch (type) {
+        case "new_block": {
+          const block = new Block(data);
+
+          setBlocks((prevBlocks) => {
+            const latestCurrentBlock = prevBlocks[0];
+            if (latestCurrentBlock && latestCurrentBlock.height + 1 === block.height) {
+              setPollCancelled(true);
+            }
+
+            const exists = prevBlocks.some((b) => b.height === block.height);
+
+            return exists ? prevBlocks : [...prevBlocks, block];
+          });
+
+          break;
+        }
+        default:
+          break;
+      }
     });
 
-    // Clean up on component unmount
     return () => {
       socketConnection.disconnect();
     };
   }, []);
 
-  const fetchPage = async (p: number) => {
-    const service = new BlockService();
-    try {
-      const data = await service.list(p);
-      if (data.page == 1) {
-        setBlocks(data.results);
-      } else {
-        const results = [];
-        for (const result of data.results) {
-          const exists = blocks.some((b) => b.height == result.height);
-          if (!exists) {
-            results.push(result);
-          }
-        }
-
-        setBlocks([...blocks, ...results]);
-      }
-
-      setCanLoadMore(data.numPages > data.page);
-    } catch (e) {
-      console.log(e);
-      setCanLoadMore(false);
-    }
-  };
-
+  // Polling effect
   useEffect(() => {
-    const poll = () => {
+    const poll = async () => {
+      if (pollCancelled) {
+        return;
+      }
+      console.log("poll");
+
       const service = new BlockService();
-      service.list(1).then((data) => {
-        const newBlocks = [];
-        for (const block of data.results) {
-          const exists = blocks.some((b) => b.height == block.height);
-
-          if (!exists) {
-            newBlocks.push(block);
-          }
-        }
-
-        if (newBlocks.length > 0) {
-          setBlocks([...newBlocks, ...blocks]);
-        }
-      });
+      try {
+        const data = await service.list(1);
+        setBlocks((prevBlocks) => {
+          const newBlocks = data.results.filter(
+            (block) => !prevBlocks.some((b) => b.height === block.height)
+          );
+          return [...prevBlocks, ...newBlocks];
+        });
+      } catch (error) {
+        console.error("Error during polling:", error);
+      }
     };
 
     const interval = setInterval(() => {
       poll();
-    }, 10000);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, [blocks]);
+  }, [pollCancelled]);
+
+  // Fetch Page
+  const fetchPage = async (p: number) => {
+    const service = new BlockService();
+    try {
+      const data = await service.list(p);
+      setBlocks((prevBlocks) => {
+        const newBlocks = data.results.filter(
+          (block) => !prevBlocks.some((b) => b.height === block.height)
+        );
+        return [...prevBlocks, ...newBlocks];
+      });
+      setCanLoadMore(data.numPages > data.page);
+    } catch (e) {
+      console.error("Error fetching page:", e);
+      setCanLoadMore(false);
+    }
+  };
 
   return (
     <div className="">
