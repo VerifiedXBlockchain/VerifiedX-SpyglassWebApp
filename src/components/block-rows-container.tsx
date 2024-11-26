@@ -5,6 +5,16 @@ import { BlockRowList } from "./blocks-row-list";
 import InfiniteScroll from "react-infinite-scroller";
 import { BlockList } from "./block-list";
 import { isMobile } from "react-device-detect";
+import { SOCKET_HOST } from "../constants";
+import { io, Socket } from "socket.io-client";
+
+interface ServerToClientEvents {
+  message: (message: string) => void; // Add more events as needed
+}
+
+interface ClientToServerEvents {
+  // Add events that the client emits to the server here
+}
 
 interface Props {
   initialBlocks: Block[];
@@ -14,6 +24,33 @@ export const BlockRowsContainer = (props: Props) => {
 
   const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
+
+
+  //SOCKET
+  const [messages, setMessages] = useState<string[]>([]);
+  const [socket, setSocket] = useState<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
+
+
+  useEffect(() => {
+    // Initialize socket connection
+    const socketConnection: Socket<ServerToClientEvents, ClientToServerEvents> = io(SOCKET_HOST); // Replace with your socket server URL
+    setSocket(socketConnection);
+
+    // Listen for events
+    socketConnection.on("connect", () => {
+      console.log("Connected to socket server");
+    });
+
+    socketConnection.on("message", (message) => {
+      console.log("Received message:", message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    // Clean up on component unmount
+    return () => {
+      socketConnection.disconnect();
+    };
+  }, []);
 
   const fetchPage = async (p: number) => {
     const service = new BlockService();
