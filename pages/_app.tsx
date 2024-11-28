@@ -90,6 +90,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                   Domains
                 </a>
 
+                <a
+                  className="nav-link text-secondary"
+                  href="/vbtc-token"
+                >
+                  vBTC Tokens
+                </a>
+
                 {!IS_TESTNET ? (
 
                   <a
