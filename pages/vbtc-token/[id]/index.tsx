@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
