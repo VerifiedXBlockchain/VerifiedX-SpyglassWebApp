@@ -62,6 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <a className="nav-link text-secondary" href="/block">
                   Blocks
                 </a>
+
                 <a
                   className="nav-link text-secondary"
                   href="/transaction"
@@ -71,41 +72,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link text-secondary"
-                  href="/nfts"
-                >
-                  NFT Data
-                </a>
-
-                <a
-                  className="nav-link text-secondary"
                   href="/validators"
                 >
                   Validators
                 </a>
-
-                <a
-                  className="nav-link text-secondary"
-                  href="/domains"
-                >
-                  Domains
-                </a>
-
-                <a
-                  className="nav-link text-secondary"
-                  href="/vbtc-token"
-                >
-                  vBTC Tokens
-                </a>
-
-                {!IS_TESTNET ? (
-
-                  <a
-                    className="nav-link text-secondary"
-                    href="/map"
-                  >
-                    Map
-                  </a>
-                ) : null}
 
                 {!IS_TESTNET ? (
 
@@ -117,6 +87,53 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null}
 
+                <a
+                  className="nav-link text-secondary"
+                  href="/domains"
+                >
+                  Domains
+                </a>
+
+
+                <a
+                  className="nav-link text-secondary"
+                  href="/vbtc-token"
+                >
+                  vBTC
+                </a>
+
+                <a
+                  className="nav-link text-secondary"
+                  href={IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/"}
+                  target="_blank"
+                >
+                  BTC Explorer
+                </a>
+
+                <a
+                  className="nav-link text-secondary"
+                  href="#"
+                >
+                  Fungible Tokens
+                </a>
+
+                <a
+                  className="nav-link text-secondary"
+                  href="/nfts"
+                >
+                  NFTs
+                </a>
+
+                {/* {!IS_TESTNET ? (
+
+                  <a
+                    className="nav-link text-secondary"
+                    href="/map"
+                  >
+                    Map
+                  </a>
+                ) : null} */}
+
                 {IS_TESTNET ? (
 
                   <a
@@ -127,7 +144,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null}
 
-
                 <a
                   className="nav-link text-secondary"
                   href="/search"
@@ -136,13 +152,22 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
 
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
+
                 <a
                   className="nav-link text-secondary "
-                  href="https://reserveblock.io"
+                  href="https://wiki.verifiedx.io"
                   target="blank"
                   rel="noreferrer"
                 >
-                  ReserveBlock.io
+                  Wiki
+                </a>
+                <a
+                  className="nav-link text-secondary "
+                  href="https://verifiedx.io"
+                  target="blank"
+                  rel="noreferrer"
+                >
+                  VerifiedX.io
                 </a>
                 <a
                   className="nav-link text-secondary "
@@ -151,6 +176,15 @@ function MyApp({ Component, pageProps }: AppProps) {
                   rel="noreferrer"
                 >
                   Github
+                </a>
+
+                <a
+                  className="nav-link text-secondary "
+                  href="https://discord.com/invite/PnS2HRETDh"
+                  target="blank"
+                  rel="noreferrer"
+                >
+                  Discord
                 </a>
               </div>
             </div>
