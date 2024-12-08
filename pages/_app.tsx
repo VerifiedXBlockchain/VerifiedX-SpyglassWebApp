@@ -113,7 +113,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link text-secondary"
-                  href="#"
+                  href="/fungible-token"
                 >
                   Fungible Tokens
                 </a>
