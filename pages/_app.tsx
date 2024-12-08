@@ -106,6 +106,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link text-secondary"
                   href={IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/"}
                   target="_blank"
+                  rel="noreferrer"
                 >
                   BTC Explorer
                 </a>
