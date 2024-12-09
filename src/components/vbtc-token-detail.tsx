@@ -47,7 +47,7 @@ export const VbtcTokenDetail = (props: Props) => {
                 <h5>Balances</h5>
                 {Object.keys(token.addresses).map((address) => (
                     <div key={address} className="d-block d-md-flex justify-start py-1">
-                        <a href={`/address/${address}`}>{address}</a>
+                        <a href={`/search?q=${address}`}>{address}</a>
                         <div className="p-1"></div>
                         <span className="badge bg-primary" style={{ paddingTop: 6 }}>{token.addresses[address]} vBTC</span>
                     </div>
