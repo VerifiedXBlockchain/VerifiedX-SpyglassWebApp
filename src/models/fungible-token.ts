@@ -33,3 +33,8 @@ export class FungibleToken {
         this.banned_addresses = data.banned_addresses || [];
     }
 }
+
+export interface FungibleTokenDetailResponse {
+    token: FungibleToken;
+    holders: { [key: string]: number; }
+}

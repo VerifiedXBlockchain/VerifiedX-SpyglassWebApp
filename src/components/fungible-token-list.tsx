@@ -27,7 +27,7 @@ export const FungibleTokenList = (props: Props) => {
                     {tokens.map((token) => (
                         <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
                             <td>
-                                <a href={`/vbtc-token/${token.sc_identifier}`}>
+                                <a href={`/fungible-token/${token.sc_identifier}`}>
                                     <img src={token.image_url} alt={token.name} width={48} height={48} style={{ borderRadius: 24 }} />
                                 </a>
                             </td>

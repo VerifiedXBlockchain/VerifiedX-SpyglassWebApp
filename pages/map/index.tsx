@@ -14,7 +14,7 @@ const MapPage: NextPage = () => {
         <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta
           name="description"
-          content="ReserveBlock Explorer: Validator Map"
+          content="VerifiedX Explorer: Validator Map"
         />
         <link rel="icon" href="/favicon.png" />
       </Head>

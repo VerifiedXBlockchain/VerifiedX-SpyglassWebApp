@@ -11,7 +11,7 @@ const NftListPage: NextPage = () => {
     <div>
       <Head>
         <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="ReserveBlock Explorer: NFTs" />
+        <meta name="description" content="VerifiedX Explorer: NFTs" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 

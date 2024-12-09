@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants";
-import { FungibleToken } from "../models/fungible-token";
+import { FungibleToken, FungibleTokenDetailResponse } from "../models/fungible-token";
 import { PaginatedResponse } from "../models/paginated-response";
 import { VbtcToken } from "../models/vbtc-token";
 import { httpGet } from "../utils/network";
@@ -18,12 +18,15 @@ export class FungibleTokenService {
         return new PaginatedResponse<FungibleToken>(data["count"], data["page"], data["num_pages"], results);
     }
 
-    async retrieve(sc_identifier: string): Promise<FungibleToken> {
+    async retrieve(sc_identifier: string): Promise<FungibleTokenDetailResponse> {
         const response = await httpGet(`${API_BASE_URL}/fungible-tokens/${sc_identifier}/`, {});
 
         const data: any = response.parsedBody;
 
-        return new FungibleToken(data);
+        return {
+            token: new FungibleToken(data.token),
+            holders: data.holders,
+        }
     }
 
 

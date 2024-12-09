@@ -10,7 +10,7 @@ const TransactionListPage: NextPage = () => {
     <div>
       <Head>
         <title>VFX Explorer: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="ReserveBlock Explorer Transactions" />
+        <meta name="description" content="VerifiedX Explorer Transactions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="container">

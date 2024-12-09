@@ -20,7 +20,7 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
     <>
       <Head>
         <title>VFX Explorer: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="ReserveBlock Explorer: Home" />
+        <meta name="description" content="VerifiedX Explorer: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       {isMobile ?

@@ -9,7 +9,7 @@ const AdnrListPage: NextPage = () => {
         <div>
             <Head>
                 <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
-                <meta name="description" content="ReserveBlock Explorer: VFX Domains" />
+                <meta name="description" content="VerifiedX Explorer: VFX Domains" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 

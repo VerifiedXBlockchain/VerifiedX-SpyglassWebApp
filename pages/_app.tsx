@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <>
         <Head>
           <title>VFX Explorer{IS_TESTNET ? ' TESTNET' : ''}</title>
-          <meta name="description" content="ReserveBlock Explorer: Home" />
+          <meta name="description" content="VerifiedX Explorer: Home" />
           <link rel="icon" href="/favicon.png" />
         </Head>
         <div className="p-5 text-center">
