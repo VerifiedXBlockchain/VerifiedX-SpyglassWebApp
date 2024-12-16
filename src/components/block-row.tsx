@@ -48,10 +48,6 @@ export const BlockRow = (props: Props) => {
         </div>
       </td>
 
-
-      {/* <td className="text-center">
-        <div className=" ps-0">{block.sizeLabel}</div>
-      </td> */}
       <td className="text-center">
         {block.transactions.length > 0 ? (
           block.transactions.length == 1 ? (
