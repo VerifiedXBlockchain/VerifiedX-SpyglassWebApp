@@ -37,7 +37,7 @@ const FungibleTokenDetailPage: NextPage = () => {
         <Head>
 
             <meta name="description" />
-            <title>{`VFX Explorer: Fungible Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+            <title>{`VFX Spyglass: Fungible Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
             <link rel="icon" href="/favicon.png" />
         </Head>
 

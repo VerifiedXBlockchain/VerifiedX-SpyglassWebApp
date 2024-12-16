@@ -8,8 +8,8 @@ const FungibleTokenPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: Fungible Tokens</title>
-                <meta name="description" content="VerifiedX Explorer: VFX Fungible Tokens" />
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Fungible Tokens</title>
+                <meta name="description" content="VerifiedX Spyglass: VFX Fungible Tokens" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 

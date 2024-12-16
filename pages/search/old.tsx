@@ -160,10 +160,10 @@ const SearchPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta
           name="description"
-          content="VerifiedX Explorer: Search Results"
+          content="VerifiedX Spyglass: Search Results"
         />
         <link rel="icon" href="/favicon.png" />
       </Head>

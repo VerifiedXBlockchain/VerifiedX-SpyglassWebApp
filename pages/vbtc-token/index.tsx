@@ -8,8 +8,8 @@ const VbtcTokensPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: vBTC Tokens</title>
-                <meta name="description" content="VerifiedX Explorer: VFX vBTC Tokens" />
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: vBTC Tokens</title>
+                <meta name="description" content="VerifiedX Spyglass: VFX vBTC Tokens" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 

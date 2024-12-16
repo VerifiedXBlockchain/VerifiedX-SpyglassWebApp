@@ -15,8 +15,8 @@ const BlockListPage: NextPage = ({ data }: InferGetServerSidePropsType<typeof ge
   return (
     <div>
       <Head>
-        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="VerifiedX Explorer: Blocks" />
+        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <meta name="description" content="VerifiedX Spyglass: Blocks" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 

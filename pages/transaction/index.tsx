@@ -9,8 +9,8 @@ const TransactionListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Explorer: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="VerifiedX Explorer Transactions" />
+        <title>VFX Spyglass: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <meta name="description" content="VerifiedX Spyglass Transactions" />
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="container">

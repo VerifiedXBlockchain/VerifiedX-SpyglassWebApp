@@ -27,8 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
       <>
         <Head>
-          <title>VFX Explorer{IS_TESTNET ? ' TESTNET' : ''}</title>
-          <meta name="description" content="VerifiedX Explorer: Home" />
+          <title>VFX Spyglass{IS_TESTNET ? ' TESTNET' : ''}</title>
+          <meta name="description" content="VerifiedX Spyglass: Home" />
           <link rel="icon" href="/favicon.png" />
         </Head>
         <div className="p-5 text-center">
@@ -48,9 +48,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 src="/cube.gif"
                 alt="cube icon"
                 className="me-1"
-                style={{ width: 40, height: 40, position: "relative", top: -2 }}
+                style={{ width: 32, height: 32, position: "relative", top: -2 }}
               />
-              <span>VFX{IS_TESTNET ? <span style={{ fontWeight: 500, color: "#67ad5f" }}>  Testnet</span> : <span> Explorer</span>}</span>
+              <span>Verified<span className="text-secondary" style={{ fontWeight: '600' }}>X</span> <span style={{ opacity: 0.8 }}>Spyglass</span></span>
             </a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation" onClick={handleNavCollapse}>
@@ -108,7 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  BTC Explorer
+                  BTC Spyglass
                 </a>
 
                 <a

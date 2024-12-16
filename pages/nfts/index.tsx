@@ -10,8 +10,8 @@ const NftListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="VerifiedX Explorer: NFTs" />
+        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <meta name="description" content="VerifiedX Spyglass: NFTs" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 

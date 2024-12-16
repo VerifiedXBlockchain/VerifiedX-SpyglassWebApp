@@ -13,8 +13,8 @@ const ValidatorPoolPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Explorer: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-                <meta name="description" content="VerifiedX Explorer: Home" />
+                <title>VFX Spyglass: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+                <meta name="description" content="VerifiedX Spyglass: Home" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
             {isMobile ? <ValidatorListContainer /> : <ValidatorRowsContainer />}

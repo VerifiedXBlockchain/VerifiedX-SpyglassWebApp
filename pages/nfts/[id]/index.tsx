@@ -41,7 +41,7 @@ const NftDetailPage: NextPage = () => {
     <>
       <Head>
         <meta name="description" />
-        <title>{`VFX Explorer: NFT ${id}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>{`VFX Spyglass: NFT ${id}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="container">

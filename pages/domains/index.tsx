@@ -8,8 +8,8 @@ const AdnrListPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
-                <meta name="description" content="VerifiedX Explorer: VFX Domains" />
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
+                <meta name="description" content="VerifiedX Spyglass: VFX Domains" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 

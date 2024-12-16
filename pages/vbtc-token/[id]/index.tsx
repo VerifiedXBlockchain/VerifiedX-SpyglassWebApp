@@ -35,7 +35,7 @@ const VbtcTokenDetailPage: NextPage = () => {
         <Head>
 
             <meta name="description" />
-            <title>{`VFX Explorer: vBTC Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+            <title>{`VFX Spyglass: vBTC Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
             <link rel="icon" href="/favicon.png" />
         </Head>
 

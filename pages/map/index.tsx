@@ -11,10 +11,10 @@ const MapPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta
           name="description"
-          content="VerifiedX Explorer: Validator Map"
+          content="VerifiedX Spyglass: Validator Map"
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
