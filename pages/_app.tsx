@@ -9,14 +9,17 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { IS_TESTNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import Script from "next/script";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmVzZXJ2ZWJsb2NrIiwiYSI6ImNsMXV2dWN6NjAyaTMzaW1xMXhqd243dG0ifQ.J6Sjh7N5mgmHAbhVytO_WQ";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+
 
 
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
@@ -50,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 className="me-1"
                 style={{ width: 32, height: 32, position: "relative", top: -2 }}
               />
-              <span>Verified<span className="text-secondary" style={{ fontWeight: '600' }}>X</span> <span style={{ opacity: 0.8 }}>Spyglass</span></span>
+              <span>Verified<span className="text-secondary" style={{ fontWeight: '600' }}>X</span> <span style={{ opacity: 0.85, fontWeight: 200 }}>Spyglass</span></span>
             </a>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation" onClick={handleNavCollapse}>
@@ -195,13 +198,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </nav>
       </header>
-      <div style={{ height: 64 }}></div>
+      <div style={{ height: 54 }}></div>
 
       <div className=" d-block d-lg-none">
         <div className="container">
           <Search />
         </div>
       </div>
+
       <Component {...pageProps} />
     </div>
   );

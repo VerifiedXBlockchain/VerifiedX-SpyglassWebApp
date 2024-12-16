@@ -11,19 +11,26 @@ export const BlockRow = (props: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <tr>
+    <tr onClick={() => window.location.href = `/block/${block.height}`}>
       <td className="text-center">
-        <div className="badge badge-lg  ps-0">{block.height}</div>
-      </td>
-      <td>
-        <div className="badge badge-lg  ps-0">{block.timestampLabel}</div>
-      </td>
-      <td className="text-center">
-        <div className={`badge bg-${block.craftTimeAccent}`}>
-          {block.craftTime}ms
+        <div>
+
+          {block.height.toLocaleString()}
         </div>
       </td>
       <td>
+        <div className=" ps-0" title={block.hash}>{block.hashPreview()}</div>
+      </td>
+
+
+      <td className="text-end">
+        <div className=" ps-0">{block.totalAmount} VFX</div>
+      </td>
+      <td className="text-end">
+        <div className=" ps-0">{block.totalReward} VFX</div>
+      </td>
+
+      <td className="text-center">
         {block.masternode ? (
           <div>
             <a href={`/validators/${block.masternode.address}`}>
@@ -31,34 +38,32 @@ export const BlockRow = (props: Props) => {
             </a>
           </div>
         ) : (
-          <div className="badge badge-lg  ps-0">{block.validator}</div>
+          <div className=" ps-0">{block.validator}</div>
         )}
       </td>
 
       <td>
-        <div className="badge badge-lg  ps-0">
+        <div className=" ps-0">
           {block.masternode?.locationLabel || "-"}
         </div>
       </td>
-      <td>
-        <div className="badge badge-lg  ps-0">{block.hashPreview()}</div>
-      </td>
 
-      <td className="text-center">
-        <div className="badge badge-lg  ps-0">{block.sizeLabel}</div>
-      </td>
+
+      {/* <td className="text-center">
+        <div className=" ps-0">{block.sizeLabel}</div>
+      </td> */}
       <td className="text-center">
         {block.transactions.length > 0 ? (
           block.transactions.length == 1 ? (
-            <div className="badge badge-lg  ps-0 d-block">
-              <a href={`/transaction/${block.transactions[0].hash}`}>
+            <div className=" ps-0 d-block">
+              <a href={`/transaction/${block.transactions[0].hash}`} title={block.transactions[0].hash}>
                 {block.transactions[0].hashPreview()}
               </a>
             </div>
           ) : (
             <>
               <div
-                className="badge badge-lg  ps-0"
+                className=" ps-0"
                 onClick={() => setExpanded(!expanded)}
                 style={{ cursor: "pointer" }}
               >
@@ -72,8 +77,8 @@ export const BlockRow = (props: Props) => {
               {expanded ? (
                 <div>
                   {block.transactions.map((t) => (
-                    <div className="badge badge-lg  ps-0 d-block" key={t.hash}>
-                      <a href={`/transaction/${t.hash}`}>{t.hashPreview()}</a>
+                    <div className=" ps-0 d-block" key={t.hash}>
+                      <a href={`/transaction/${t.hash}`} title={t.hash}>{t.hashPreview()}</a>
                     </div>
                   ))}
                 </div>
@@ -84,17 +89,23 @@ export const BlockRow = (props: Props) => {
           "-"
         )}
       </td>
-      <td className="text-end">
-        <div className="badge badge-lg  ps-0">{block.totalAmount} VFX</div>
+
+      <td className="text-start" >
+        <div className=" ps-0">{block.timestampLabel}</div>
       </td>
-      <td className="text-end">
-        <div className="badge badge-lg  ps-0">{block.totalReward} VFX</div>
-      </td>
+
       <td className="text-center">
+        <div>
+          {block.craftTime}ms
+        </div>
+      </td>
+
+
+      {/* <td className="text-center">
         <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">
           Details
         </a>
-      </td>
+      </td> */}
     </tr>
   );
 };
