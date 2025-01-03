@@ -19,7 +19,7 @@ const TestnetFaucetForm = (props: Props) => {
 
 
     const [verificationUuid, setVerificationUuid] = useState("");
-    const [verificationCode, setVerificationCode] = useState(IS_TESTNET ? "1234" : "");
+    const [verificationCode, setVerificationCode] = useState("");
 
 
 
