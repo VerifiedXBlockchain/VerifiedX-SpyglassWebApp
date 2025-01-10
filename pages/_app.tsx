@@ -62,19 +62,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample07XL">
               <div className="navbar-nav">
-                <a className="nav-link text-secondary" href="/block">
+                <a className="nav-link" href="/block">
                   Blocks
                 </a>
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/transaction"
                 >
                   Transactions
                 </a>
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/validators"
                 >
                   Validators
@@ -83,7 +83,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 {!IS_TESTNET ? (
 
                   <a
-                    className="nav-link text-secondary"
+                    className="nav-link"
                     href="/metrics"
                   >
                     Metrics
@@ -91,7 +91,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 ) : null}
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/domains"
                 >
                   Domains
@@ -99,14 +99,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link btc-link"
                   href="/vbtc-token"
                 >
                   vBTC
                 </a>
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link btc-link"
                   href={IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/"}
                   target="_blank"
                   rel="noreferrer"
@@ -115,14 +115,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/fungible-token"
                 >
                   Fungible Tokens
                 </a>
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/nfts"
                 >
                   NFTs
@@ -131,7 +131,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 {/* {!IS_TESTNET ? (
 
                   <a
-                    className="nav-link text-secondary"
+                    className="nav-link"
                     href="/map"
                   >
                     Map
@@ -141,7 +141,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 {IS_TESTNET ? (
 
                   <a
-                    className="nav-link text-secondary"
+                    className="nav-link"
                     href="/faucet"
                   >
                     Faucet
@@ -149,24 +149,15 @@ function MyApp({ Component, pageProps }: AppProps) {
                 ) : null}
 
                 <a
-                  className="nav-link text-secondary"
+                  className="nav-link"
                   href="/search"
                 >
                   Search
                 </a>
 
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
-
                 <a
-                  className="nav-link text-secondary "
-                  href="https://wiki.verifiedx.io"
-                  target="blank"
-                  rel="noreferrer"
-                >
-                  Wiki
-                </a>
-                <a
-                  className="nav-link text-secondary "
+                  className="nav-link "
                   href="https://verifiedx.io"
                   target="blank"
                   rel="noreferrer"
@@ -174,8 +165,17 @@ function MyApp({ Component, pageProps }: AppProps) {
                   VerifiedX.io
                 </a>
                 <a
-                  className="nav-link text-secondary "
-                  href="https://github.com/ReserveBlockIO"
+                  className="nav-link "
+                  href="https://docs.verifiedx.io"
+                  target="blank"
+                  rel="noreferrer"
+                >
+                  Docs
+                </a>
+
+                <a
+                  className="nav-link "
+                  href="https://github.com/VerifiedXBlockchain"
                   target="blank"
                   rel="noreferrer"
                 >
@@ -183,12 +183,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
 
                 <a
-                  className="nav-link text-secondary "
-                  href="https://discord.com/invite/PnS2HRETDh"
+                  className="nav-link "
+                  href="https://discord.gg/7cd5ebDQCj"
                   target="blank"
                   rel="noreferrer"
                 >
                   Discord
+                </a>
+
+                <a
+                  className="nav-link "
+                  href="https://x.com/VFXBlockchain"
+                  target="blank"
+                  rel="noreferrer"
+                >
+                  X
                 </a>
               </div>
             </div>

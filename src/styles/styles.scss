@@ -48,6 +48,21 @@
 
 .navbar .nav-link {
     font-size: 0.9rem;
+    color: #fff !important;
+
+    &.btc-link {
+        color: #F7931A !important;
+    }
+
+    &:hover {
+        color: $secondary !important;
+        text-decoration: underline;
+    }
+
+    &.text-muted {
+        color: #666 !important;
+        pointer-events: none;
+    }
 
 
 }
