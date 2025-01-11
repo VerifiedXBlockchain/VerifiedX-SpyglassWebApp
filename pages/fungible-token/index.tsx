@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import type { NextPage } from "next";
 import Head from "next/head";
-import { AdnrListContainer } from "../../src/components/adnr-list.container";
 import { IS_TESTNET } from "../../src/constants";
+import { FungibleTokenListContainer } from "../../src/components/fungible-token-list-container";
 
-const AdnrListPage: NextPage = () => {
+const FungibleTokenPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
-                <meta name="description" content="VerifiedX Spyglass: VFX Domains" />
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Fungible Tokens</title>
+                <meta name="description" content="VerifiedX Spyglass: VFX Fungible Tokens" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 
@@ -20,17 +20,17 @@ const AdnrListPage: NextPage = () => {
                             <a href="/">Home</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/domains">Domains</a>
+                            <a href="/fungible-token">Fungible Tokens</a>
                         </li>
                     </ol>
                 </nav>
 
             </div>
-            <AdnrListContainer />
+            <FungibleTokenListContainer />
 
 
         </div>
     );
 };
 
-export default AdnrListPage;
+export default FungibleTokenPage;

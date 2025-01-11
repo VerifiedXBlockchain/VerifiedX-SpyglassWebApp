@@ -36,7 +36,7 @@ const BlockDetailPage: NextPage = () => {
       <Head>
 
         <meta name="description" />
-        <title>{`RBX Explorer: Block ${block.height}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>{`VFX Spyglass: Block ${block.height}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div>

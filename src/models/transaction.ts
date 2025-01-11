@@ -155,8 +155,14 @@ export class Transaction {
       case 1:
         return "Node";
       case 2:
+        if (this.nftDataValue("Function") == "TokenDeploy()") {
+          return "NFT Mint (Tokenized)";
+        }
         return "NFT Mint";
       case 3:
+        if (this.nftDataValue("Function") == "Transfer()") {
+          return "NFT Transfer";
+        }
         return "NFT Tx";
       case 4:
         return "NFT Burn";
@@ -166,13 +172,36 @@ export class Transaction {
           return "NFT Sale Start"
         }
 
+        if (saleFunc == "M_Sale_Start()") {
+          return "NFT Sale Start (Manual)";
+        }
+
         if (saleFunc == "Sale_Complete()") {
           return "NFT Sale Complete";
         }
 
+        if (saleFunc == "M_Sale_Complete()") {
+          return "NFT Sale Complete (Manual)";
+        }
+
         return "NFT Sale";
       case 6:
-        return "ADNR";
+        switch (this.nftDataValue("Function")) {
+          case "AdnrCreate()":
+            return "ADNR Create";
+          case "AdnrTransfer()":
+            return "ADNR Transfer";
+          case "AdnrDelete()":
+            return "ADNR Delete";
+          case "BTCAdnrCreate()":
+            return "BTC ADNR Create";
+          case "BTCAdnrTransfer()":
+            return "BTC ADNR Transfer";
+          case "BTCAdnrDelete()":
+            return "BTC ADNR Delete";
+          default:
+            return "ADNR";
+        }
       case 7:
         return "DST Registration";
       case 8:
@@ -182,15 +211,80 @@ export class Transaction {
       case 10:
         const reserveFunc = this.nftDataValue("Function");
         if (reserveFunc == "CallBack()") {
-          return "Reserve (Callback)";
+          return "Vault (Callback)";
         }
         if (reserveFunc == "Register()") {
-          return "Reserve (Register)";
+          return "Vault (Register)";
         }
         if (reserveFunc == "Recover()") {
-          return "Reserve (Recover)";
+          return "Vault (Recover)";
         }
-        return "Reserve";
+        return "Vault";
+      case 11:
+        return "Smart Contract Mint";
+      case 12:
+        return "Smart Contract TX";
+      case 13:
+        return "Smart Contract Burn";
+      case 14:
+        return "Fungible Token Mint";
+      case 15:
+        let amount = this.nftDataValue("Amount")
+        let ticker = this.nftDataValue("TokenTicker")
+
+        let valueString = "";
+        if (amount != null && ticker != null) {
+          valueString = ` (${amount} ${ticker})`;
+        }
+
+        let tickerString = "";
+        if (ticker != null) {
+          tickerString = ` ${ticker}`;
+        }
+
+        switch (this.nftDataValue("Function")) {
+          case "TokenMint()":
+            return `Fungible Token Mint${valueString}`;
+          case "TokenBurn()":
+            return `Fungible Token Burn${valueString}`
+          case "TokenTransfer()":
+            return `Fungible Token Transfer${valueString}`
+          case "TokenContractOwnerChange()":
+            return `Fungible Token Ownership Change${tickerString}`
+          case "TokenPause()":
+            const isPause = this.nftDataValue("Pause") == "true";
+            return `Fungible Token ${isPause ? 'Pause' : 'Resume'}${tickerString}`;
+          case "TokenVoteTopicCast()":
+            return `Fungible Token Vote Cast${tickerString}`
+          case "TokenVoteTopicCreate()":
+            return `Fungible Token Topic Created${tickerString}`
+          default:
+            return "Fungible Token TX"
+
+        }
+      case 16:
+        return "Fungible Token Burn";
+      case 17:
+        if (this.nftDataValue("Function") == "TokenDeploy()") {
+          return "Fungible Token Deploy"
+        }
+        return "Tokenization Mint";
+      case 18:
+        if (this.nftDataValue("Function") == "TransferCoin()") {
+          return `vBTC Transfer Coin (${this.nftDataValue('Amount')} vBTC)`;
+        }
+        if (this.nftDataValue("Function") == "Transfer()") {
+          return "vBTC Token Ownership Transfer";
+        }
+        return "Tokenization TX";
+      case 19:
+        return "Tokenization Burn";
+      case 20:
+        return "Tokenization Withdrawl";
+      case 21:
+        return "Tokenization Withdrawl";
+
+
       default:
         return "-";
     }

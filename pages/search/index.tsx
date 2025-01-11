@@ -301,10 +301,10 @@ const NewSearchPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
                 <meta
                     name="description"
-                    content="ReserveBlock Explorer: Search Results"
+                    content="VerifiedX Spyglass: Search Results"
                 />
                 <link rel="icon" href="/favicon.png" />
             </Head>
@@ -354,10 +354,10 @@ const NewSearchPage: NextPage = () => {
                 {address ?
 
                     <div className="mt-4 alert bg-success text-center">
-                        Balance: {address.balance} RBX<br />
-                        Locked Balance: {address.balanceLocked} RBX<br />
-                        Total Balance: {address.balanceTotal} RBX<br />
-                        {address.adnr != null ? `RBX Domain: ${address.adnr}` : ``}
+                        Balance: {address.balance} VFX<br />
+                        Locked Balance: {address.balanceLocked} VFX<br />
+                        Total Balance: {address.balanceTotal} VFX<br />
+                        {address.adnr != null ? `VFX Domain: ${address.adnr}` : ``}
                     </div>
                     : null}
 

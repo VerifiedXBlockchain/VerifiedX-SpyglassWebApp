@@ -21,8 +21,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>RBX Explorer{IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="ReserveBlock Explorer: Home" />
+        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <meta name="description" content="VerifiedX Spyglass: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 

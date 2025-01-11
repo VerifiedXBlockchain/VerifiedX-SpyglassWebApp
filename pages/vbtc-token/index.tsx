@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import type { NextPage } from "next";
 import Head from "next/head";
-import { AdnrListContainer } from "../../src/components/adnr-list.container";
 import { IS_TESTNET } from "../../src/constants";
+import { VbtcTokenListContainer } from "../../src/components/vbtc-token-list-container";
 
-const AdnrListPage: NextPage = () => {
+const VbtcTokensPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
-                <meta name="description" content="VerifiedX Spyglass: VFX Domains" />
+                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: vBTC Tokens</title>
+                <meta name="description" content="VerifiedX Spyglass: VFX vBTC Tokens" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 
@@ -20,17 +20,17 @@ const AdnrListPage: NextPage = () => {
                             <a href="/">Home</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/domains">Domains</a>
+                            <a href="/vbtc-token">vBTC Tokens</a>
                         </li>
                     </ol>
                 </nav>
 
             </div>
-            <AdnrListContainer />
+            <VbtcTokenListContainer />
 
 
         </div>
     );
 };
 
-export default AdnrListPage;
+export default VbtcTokensPage;
