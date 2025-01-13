@@ -99,7 +99,7 @@ const CirculationPage: NextPage = () => {
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Total Transactions
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurned)}</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalTransactions)}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <span style={{ textDecoration: 'underline' }}>Network</span>
