@@ -164,16 +164,12 @@ const CirculationPage: NextPage = () => {
         </ul>
 
         <div className="row">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-6 offset-3">
             <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
             <LatestBlock />
           </div>
 
-          {circulation ?
-            <div className="col-12 col-md-6">
-              <h3 className="mt-3 mb-4 text-center">Block Rewards Calculator</h3>
-              <BlockRewardsCalculator totalValidators={circulation.activeMasterNodes} />
-            </div> : null}
+
         </div>
 
 
