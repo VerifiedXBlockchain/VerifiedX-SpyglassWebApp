@@ -20,7 +20,7 @@ export const FungibleTokenDetail = (props: Props) => {
 
                 </div>
 
-                {token.nsfw ? <div style={{ width: 128, height: 128, borderRadius: 64, backgroundColor: "#aaaaaa" }}></div> : <img src={token.image_url} alt={token.name} width={128} height={128} style={{ borderRadius: 64 }} />}
+                {token.nsfw ? <div style={{ width: 128, height: 128, borderRadius: 64, backgroundColor: "#222222" }}></div> : <img src={token.image_url} alt={token.name} width={128} height={128} style={{ borderRadius: 64 }} />}
                 <div className="p-2"></div>
 
                 <div className="d-block d-md-flex justify-start">

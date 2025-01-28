@@ -28,7 +28,7 @@ export const FungibleTokenList = (props: Props) => {
                         <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
                             <td>
                                 <a href={`/fungible-token/${token.sc_identifier}`}>
-                                    {token.nsfw ? <div style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: "#aaaaaa" }}></div> : <img src={token.image_url} alt={token.name} width={48} height={48} style={{ borderRadius: 24 }} />}
+                                    {token.nsfw ? <div style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: "#222222" }}></div> : <img src={token.image_url} alt={token.name} width={48} height={48} style={{ borderRadius: 24 }} />}
 
                                 </a>
                             </td>
