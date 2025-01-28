@@ -15,6 +15,7 @@ export class FungibleToken {
     image_url: string;
     is_paused: boolean;
     banned_addresses: string[];
+    nsfw: boolean;
 
     constructor(data: Partial<FungibleToken>) {
         this.sc_identifier = data.sc_identifier || '';
@@ -31,6 +32,7 @@ export class FungibleToken {
         this.image_url = data.image_url || '';
         this.is_paused = data.is_paused ?? false;
         this.banned_addresses = data.banned_addresses || [];
+        this.nsfw = data.nsfw || false;
     }
 }
 
