@@ -119,7 +119,7 @@ const TransactionDetailPage: NextPage = () => {
         <div>
           {transaction.nft ? (
             <div className="mt-3">
-              <h4>NFT Details</h4>
+              <h4>Smart Contract Details</h4>
               <table className="table table-striped">
                 <tbody>
 
