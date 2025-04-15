@@ -18,11 +18,11 @@ export class AddressService {
   }
 
   async topHolders(): Promise<TopHolder[]> {
-    const response = await httpGet(`${API_BASE_URL}/addresses/top-holders/`, {});
+    const response = await httpGet(`${API_BASE_URL}/addresses/`, { ordering: '-balance', limit: 100 });
     const data: any = response.parsedBody;
 
     const results: TopHolder[] = [];
-    for (let result of data) {
+    for (let result of data['results']) {
       results.push(new TopHolder(result));
     }
 
