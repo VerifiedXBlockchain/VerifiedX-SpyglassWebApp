@@ -14,3 +14,19 @@ export class Address {
     this.adnr = d['adnr']
   }
 }
+
+
+export class TopHolder {
+  address: string;
+  balance: number;
+  received: number;
+  sent: number;
+
+  constructor(d: any) {
+    this.address = d["address"];
+    this.balance = d["balance"];
+    this.received = d["received"];
+    this.sent = d["sent"];
+  }
+
+}
