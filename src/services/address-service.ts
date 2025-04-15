@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants";
-import { Address } from "../models/address";
+import { Address, TopHolder } from "../models/address";
 import { httpGet } from "../utils/network";
 
 export class AddressService {
@@ -15,5 +15,17 @@ export class AddressService {
     const data: any = response.parsedBody;
 
     return new Address(data);
+  }
+
+  async topHolders(): Promise<TopHolder[]> {
+    const response = await httpGet(`${API_BASE_URL}/addresses/top-holders/`, {});
+    const data: any = response.parsedBody;
+
+    const results: TopHolder[] = [];
+    for (let result of data) {
+      results.push(new TopHolder(result));
+    }
+
+    return results;
   }
 }
