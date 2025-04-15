@@ -1,17 +1,4 @@
 import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroller";
-import { Adnr } from "../models/adnr";
-import { Block } from "../models/block";
-import { Nft } from "../models/nft";
-import { Validator } from "../models/validator";
-import { AdnrService } from "../services/adnr-service";
-import { BlockService } from "../services/block-service";
-import { NftService } from "../services/nft-service";
-import { ValidatorService } from "../services/validator-service";
-import { BlockList } from "./block-list";
-import { NftCardList } from "./nft-list";
-import { ValidatorCardList } from "./validator-card-list";
-import { ValidatorList } from "./validator-list";
 import { AddressService } from "../services/address-service";
 import { TopHolder } from "../models/address";
 
@@ -41,8 +28,6 @@ export const TopHoldersList = () => {
     return (
         <div>
             <div className="container">
-
-
 
                 <table className="table table-striped table-dark">
                     <thead>

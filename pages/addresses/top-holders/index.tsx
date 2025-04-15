@@ -1,10 +1,8 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from "next";
 import Head from "next/head";
-
 import { IS_TESTNET } from "../../../src/constants";
 import { TopHoldersList } from "../../../src/components/top-holders-list";
-
-
 
 
 const TopHoldersPage: NextPage = () => {
@@ -32,10 +30,6 @@ const TopHoldersPage: NextPage = () => {
             </div>
 
             <TopHoldersList />
-
-
-
-
 
         </div>
     );
