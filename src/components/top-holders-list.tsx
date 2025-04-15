@@ -33,6 +33,7 @@ export const TopHoldersList = () => {
                     <thead>
                         <tr>
                             <th scope="col">Address</th>
+                            <th scope="col">Domain</th>
                             <th scope="col" className="text-end">Balance</th>
                         </tr>
                     </thead>
@@ -43,6 +44,8 @@ export const TopHoldersList = () => {
                                 <td style={{ verticalAlign: 'middle' }}>
                                     <a href={`/search?q=${result.address}`}>{result.address}</a>
                                 </td>
+                                <td className="" style={{ fontFamily: 'monospace' }}>{result.adnr || ''} </td>
+
                                 <td className="text-end " style={{ fontFamily: 'monospace' }}>{result.balance} VFX</td>
                             </tr>
                         ))}
