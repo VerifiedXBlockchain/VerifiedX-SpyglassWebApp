@@ -1,3 +1,5 @@
+import { Adnr } from "./adnr";
+
 export class Address {
   address: string;
   balance: number;
@@ -19,12 +21,12 @@ export class Address {
 export class TopHolder {
   address: string;
   balance: number;
-  adnr?: string;
+  adnr?: Adnr | null;
 
   constructor(d: any) {
     this.address = d["address"];
     this.balance = d["balance"];
-    this.adnr = d["adnr"];
+    this.adnr = d["adnr"] ? new Adnr(d['adnr']) : null;
   }
 
 }
