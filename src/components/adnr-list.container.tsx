@@ -12,6 +12,7 @@ import { BlockList } from "./block-list";
 import { NftCardList } from "./nft-list";
 import { ValidatorCardList } from "./validator-card-list";
 import { ValidatorList } from "./validator-list";
+import { IS_TESTNET } from "../constants";
 
 export const AdnrListContainer = () => {
   const [adnrs, setAdnrs] = useState<Adnr[]>([]);
@@ -69,7 +70,6 @@ export const AdnrListContainer = () => {
 
     return () => clearInterval(interval);
   }, [adnrs]);
-
   return (
     <div>
       <div className="container">
@@ -103,11 +103,20 @@ export const AdnrListContainer = () => {
               {adnrs.map((adnr) => (
                 <tr key={adnr.domain}>
                   <td style={{ verticalAlign: 'middle' }}>
-
                     {adnr.domain}
                   </td>
                   <td style={{ verticalAlign: 'middle' }}>
-                    <a href={`/search?q=${adnr.address}`}>{adnr.address}</a>
+                    {adnr.isBtcDomain ? (
+                      <a 
+                        href={`https://mempool.space/${IS_TESTNET ? 'testnet4/' : ''}address/${adnr.btc_address}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        {adnr.btc_address}
+                      </a>
+                    ) : (
+                      <a href={`/search?q=${adnr.address}`}>{adnr.address}</a>
+                    )}
                   </td>
                   {/* <td>{adnr.address}</td> */}
                   {/* <td>{adnr.create_transaction.hash}</td> */}
