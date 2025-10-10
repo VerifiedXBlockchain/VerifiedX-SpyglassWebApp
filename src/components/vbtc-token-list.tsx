@@ -27,7 +27,16 @@ export const VbtcTokenList = (props: Props) => {
                         <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
                             <td>
                                 <a href={`/vbtc-token/${token.sc_identifier}`}>
-                                    <img src={token.image_url} alt={token.name} width={48} height={48} style={{ borderRadius: 24 }} />
+                                    <img
+                                        src={token.image_url}
+                                        alt={token.name}
+                                        width={48}
+                                        height={48}
+                                        style={{ borderRadius: 24 }}
+                                        onError={(e) => {
+                                            e.currentTarget.src = '/vbtc-fallback.gif';
+                                        }}
+                                    />
                                 </a>
                             </td>
                             <td>

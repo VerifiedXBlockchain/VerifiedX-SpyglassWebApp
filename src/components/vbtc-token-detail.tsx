@@ -18,7 +18,16 @@ export const VbtcTokenDetail = (props: Props) => {
 
                 </div>
 
-                <img src={token.image_url} alt={token.name} width={128} height={128} style={{ borderRadius: 64 }} />
+                <img
+                    src={token.image_url}
+                    alt={token.name}
+                    width={128}
+                    height={128}
+                    style={{ borderRadius: 64 }}
+                    onError={(e) => {
+                        e.currentTarget.src = '/vbtc-fallback.gif';
+                    }}
+                />
                 <div className="p-2"></div>
 
                 <div className="d-block d-md-flex justify-start">
