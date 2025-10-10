@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaucetService } from "../services/faucet-service";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { IS_TESTNET } from "../constants";
+import { isValidPhoneNumber, AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
 
 const faucetService = new FaucetService();
 
@@ -16,6 +17,7 @@ const TestnetFaucetForm = (props: Props) => {
     const [address, setAddress] = useState("");
     const [amount, setAmount] = useState("");
     const [phone, setPhone] = useState("");
+    const [formattedPhone, setFormattedPhone] = useState("");
 
 
     const [verificationUuid, setVerificationUuid] = useState("");
@@ -32,6 +34,16 @@ const TestnetFaucetForm = (props: Props) => {
     const [hash, setHash] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
 
+    // Format phone number as user types
+    const handlePhoneChange = (value: string) => {
+        setPhone(value);
+        setPhoneInvalid(false);
+        
+        // Use AsYouType formatter for real-time formatting
+        const formatter = new AsYouType('US'); // Default to US, but will auto-detect international
+        const formatted = formatter.input(value);
+        setFormattedPhone(formatted);
+    }
 
     // const handleAmountChange = (value: string) => {
     //     let result = parseFloat(value.replace(/[^0-9.]/g, ''));
@@ -69,14 +81,20 @@ const TestnetFaucetForm = (props: Props) => {
 
 
 
-        let phoneParsed = phone.replace(/[\s-]/g, ''); // Remove spaces and hyphens
-        if (phoneParsed.length >= 10) {
-            if (phoneParsed.length === 10) {
-                phoneParsed = '+1' + phoneParsed;
+        let phoneParsed = '';
+        try {
+            const phoneNumber = parsePhoneNumberWithError(phone);
+            
+            if (phoneNumber && isValidPhoneNumber(phoneNumber.number)) {
+                phoneParsed = phoneNumber.number; // Get the international format
+            } else {
+                console.log('Invalid phone number');
+                setPhoneInvalid(true);
+                hasError = true;
             }
-        } else {
-            console.log('Invalid phone number');
-            setPhoneInvalid(true)
+        } catch (error) {
+            console.log('Invalid phone number format:', error);
+            setPhoneInvalid(true);
             hasError = true;
         }
 
@@ -215,7 +233,13 @@ const TestnetFaucetForm = (props: Props) => {
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon3">Phone Number</span>
                             </div>
-                            <input type="text" value={phone ?? ''} placeholder="1234567890" onChange={(e) => setPhone(e.target.value)} className="form-control bg-dark text-light" />
+                            <input 
+                                type="tel" 
+                                value={phone ?? ''} 
+                                placeholder="+1 (555) 123-4567" 
+                                onChange={(e) => handlePhoneChange(e.target.value)} 
+                                className="form-control bg-dark text-light" 
+                            />
                         </div>
 
                         <div className="text-muted"><small>Your phone number is required to prevent abuse of this service. Once the verification code is sent, only a hash of the phone number is stored.</small></div>
