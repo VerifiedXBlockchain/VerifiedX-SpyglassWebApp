@@ -16,12 +16,16 @@ export const DetailItem = (props: Props) => {
         style={
           props.dontBreak
             ? { whiteSpace: "nowrap" }
-            : props.preserveNewlines
-            ? { whiteSpace: "pre-line", wordBreak: "break-word" }
             : { wordBreak: "break-all" }
         }
       >
-        {props.href ? <a href={props.href!}>{props.value}</a> : props.value}
+        {props.href ? (
+          <a href={props.href!}>{props.value}</a>
+        ) : props.preserveNewlines ? (
+          <span dangerouslySetInnerHTML={{ __html: props.value.replace(/\n/g, '<br />') }} />
+        ) : (
+          props.value
+        )}
       </div>
     </div>
   );
