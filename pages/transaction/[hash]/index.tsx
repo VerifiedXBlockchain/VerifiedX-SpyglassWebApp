@@ -133,7 +133,7 @@ const TransactionDetailPage: NextPage = () => {
                   </tr>
                   <tr>
                     <th>Description:</th>
-                    <td dangerouslySetInnerHTML={{ __html: transaction.nft.description.replace(/\n/g, '<br />') }}></td>
+                    <td dangerouslySetInnerHTML={{ __html: transaction.nft.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />') }}></td>
                   </tr>
 
                   <tr>

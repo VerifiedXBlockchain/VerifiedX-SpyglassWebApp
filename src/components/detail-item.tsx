@@ -22,7 +22,7 @@ export const DetailItem = (props: Props) => {
         {props.href ? (
           <a href={props.href!}>{props.value}</a>
         ) : props.preserveNewlines ? (
-          <span dangerouslySetInnerHTML={{ __html: props.value.replace(/\n/g, '<br />') }} />
+          <span dangerouslySetInnerHTML={{ __html: props.value.replace(/\\n/g, '<br />').replace(/\n/g, '<br />') }} />
         ) : (
           props.value
         )}
