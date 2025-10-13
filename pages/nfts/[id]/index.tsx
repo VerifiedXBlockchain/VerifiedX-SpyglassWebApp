@@ -77,7 +77,7 @@ const NftDetailPage: NextPage = () => {
             </tr>
             <tr>
               <th>Description:</th>
-              <td>{nft.description}</td>
+              <td style={{ whiteSpace: "pre-line" }}>{nft.description}</td>
             </tr>
 
             <tr>

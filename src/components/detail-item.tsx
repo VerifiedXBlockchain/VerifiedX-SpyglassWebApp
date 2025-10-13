@@ -4,6 +4,7 @@ interface Props {
   smallValue?: boolean;
   href?: string;
   dontBreak?: boolean;
+  preserveNewlines?: boolean;
 }
 
 export const DetailItem = (props: Props) => {
@@ -15,6 +16,8 @@ export const DetailItem = (props: Props) => {
         style={
           props.dontBreak
             ? { whiteSpace: "nowrap" }
+            : props.preserveNewlines
+            ? { whiteSpace: "pre-line", wordBreak: "break-word" }
             : { wordBreak: "break-all" }
         }
       >

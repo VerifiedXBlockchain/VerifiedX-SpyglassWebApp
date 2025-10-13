@@ -37,7 +37,7 @@ export const VbtcTokenDetail = (props: Props) => {
                     <DetailItem label="Name" value={token.name}></DetailItem>
                     <div className="p-1"></div>
 
-                    <DetailItem label="Description" value={token.description} ></DetailItem>
+                    <DetailItem label="Description" value={token.description} preserveNewlines ></DetailItem>
 
                 </div>
                 <div className="p-1"></div>

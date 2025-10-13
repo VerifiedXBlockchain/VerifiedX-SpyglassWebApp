@@ -133,7 +133,7 @@ const TransactionDetailPage: NextPage = () => {
                   </tr>
                   <tr>
                     <th>Description:</th>
-                    <td>{transaction.nft.description}</td>
+                    <td style={{ whiteSpace: "pre-line" }}>{transaction.nft.description}</td>
                   </tr>
 
                   <tr>
