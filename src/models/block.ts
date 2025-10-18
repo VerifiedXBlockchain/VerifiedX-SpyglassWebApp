@@ -60,11 +60,17 @@ export class Block {
   }
 
   hashPreview(n: number = 16): string {
+    if (!this.hash) {
+      return "Pending...";
+    }
     const amount = Math.floor(n / 2);
     return `${this.hash.slice(0, amount)}...${this.hash.slice(-amount)}`;
   }
 
   validatorPreview(n: number = 16): string {
+    if (!this.validator) {
+      return "Pending...";
+    }
     const amount = Math.floor(n / 2);
     return `${this.validator.slice(0, amount)}...${this.validator.slice(
       -amount

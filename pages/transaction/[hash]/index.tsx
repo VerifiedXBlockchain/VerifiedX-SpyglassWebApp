@@ -1,31 +1,34 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { DetailItem } from "../../../src/components/detail-item";
 import { TransactionCard } from "../../../src/components/transaction-card";
-import { Transaction } from "../../../src/models/transaction";
-
-import { TransactionService } from "../../../src/services/transaction-service";
+import { LoadingSpinner } from "../../../src/components/loading-spinner";
+import { useTransactionPolling } from "../../../src/hooks/useTransactionPolling";
+import { LAYOUT_HEIGHTS } from "../../../src/constants/ui";
 
 const TransactionDetailPage: NextPage = () => {
   const router = useRouter();
   const { hash } = router.query;
 
-  const [transaction, setTransaction] = useState<Transaction | undefined>(
-    undefined
-  );
+  const { transaction, loading, error, isPolling } = useTransactionPolling(hash);
 
-  useEffect(() => {
-    if (!hash) return;
-
-    const service = new TransactionService();
-
-    service.retrieve(hash.toString()).then((data) => {
-      console.log(data);
-      setTransaction(data);
-    });
-  }, [hash]);
+  if (loading || error) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: LAYOUT_HEIGHTS.PENDING_MIN_HEIGHT }}>
+        <div className="text-center">
+          <h4 className="text-light mb-3">Transaction Pending</h4>
+          <p className="text-muted mb-4">
+            This transaction has not reflected on chain yet. Stand by.
+          </p>
+          
+          {(isPolling || loading) && (
+            <LoadingSpinner variant="light" message="Loading..." />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (!transaction) return <></>;
 
@@ -42,7 +45,7 @@ const TransactionDetailPage: NextPage = () => {
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/transaction/${transaction.hash}`}>
+              <a href={`/transaction/${transaction.hash || hash}`}>
                 {transaction.hashPreview()}
               </a>
             </li>
@@ -66,7 +69,7 @@ const TransactionDetailPage: NextPage = () => {
             <div className="p-1"></div>
             <DetailItem
               label="Hash"
-              value={transaction.hash}
+              value={transaction.hash || "Pending broadcast..."}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
