@@ -4,7 +4,7 @@ import { BlockRowsContainer } from "../src/components/block-rows-container";
 import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
 import { BlockListContainer } from "../src/components/block-list-container";
-import { API_BASE_URL, IS_TESTNET } from "../src/constants";
+import { API_BASE_URL, IS_TESTNET, IS_DEVNET } from "../src/constants";
 import { Block } from "../src/models/block";
 
 const Home: NextPage = () => {
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="VerifiedX Spyglass: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BlockDetail } from "../../../src/components/block-detail";
-import { IS_TESTNET } from "../../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import { Block } from "../../../src/models/block";
 import { BlockService } from "../../../src/services/block-service";
 
@@ -36,7 +36,7 @@ const BlockDetailPage: NextPage = () => {
       <Head>
 
         <meta name="description" />
-        <title>{`VFX Spyglass: Block ${block.height}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>{`VFX Spyglass: Block ${block.height}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div>

@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import type { NextPage } from "next";
 import Head from "next/head";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 import { FungibleTokenListContainer } from "../../src/components/fungible-token-list-container";
 
 const FungibleTokenPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Fungible Tokens</title>
+                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}: Fungible Tokens</title>
                 <meta name="description" content="VerifiedX Spyglass: VFX Fungible Tokens" />
                 <link rel="icon" href="/favicon.png" />
             </Head>

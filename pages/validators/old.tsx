@@ -3,7 +3,7 @@ import Head from "next/head";
 import { isMobile } from "react-device-detect";
 import { ValidatorListContainer } from "../../src/components/validator-list-container";
 import { ValidatorRowsContainer } from "../../src/components/validator-rows-container";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 const ValidatorPoolPage: NextPage = () => {
     if (typeof window === "undefined") {
@@ -13,7 +13,7 @@ const ValidatorPoolPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+                <title>VFX Spyglass: Validator Pool{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
                 <meta name="description" content="VerifiedX Spyglass: Home" />
                 <link rel="icon" href="/favicon.png" />
             </Head>

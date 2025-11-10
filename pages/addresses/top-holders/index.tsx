@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { NextPage } from "next";
 import Head from "next/head";
-import { IS_TESTNET } from "../../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import { TopHoldersList } from "../../../src/components/top-holders-list";
 
 
@@ -10,7 +10,7 @@ const TopHoldersPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Top Holders</title>
+                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}: Top Holders</title>
                 <meta name="description" content="VerifiedX Spyglass: VFX Domains" />
                 <link rel="icon" href="/favicon.png" />
             </Head>

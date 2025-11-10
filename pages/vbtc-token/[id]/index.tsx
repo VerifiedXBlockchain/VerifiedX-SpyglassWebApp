@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { VbtcToken } from "../../../src/models/vbtc-token";
 import { VbtcTokenService } from "../../../src/services/vbtc-service";
-import { IS_TESTNET } from "../../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import Head from "next/head";
 import { VbtcTokenDetail } from "../../../src/components/vbtc-token-detail";
 
@@ -35,7 +35,7 @@ const VbtcTokenDetailPage: NextPage = () => {
         <Head>
 
             <meta name="description" />
-            <title>{`VFX Spyglass: vBTC Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+            <title>{`VFX Spyglass: vBTC Token: ${token.name}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
             <link rel="icon" href="/favicon.png" />
         </Head>
 

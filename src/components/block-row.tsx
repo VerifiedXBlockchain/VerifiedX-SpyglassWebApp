@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { IS_TESTNET } from "../constants";
 import { Block } from "../models/block";
 
 interface Props {
