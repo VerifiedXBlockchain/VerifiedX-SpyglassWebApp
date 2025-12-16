@@ -4,6 +4,7 @@ interface Props {
   smallValue?: boolean;
   href?: string;
   dontBreak?: boolean;
+  preserveNewlines?: boolean;
 }
 
 export const DetailItem = (props: Props) => {
@@ -18,7 +19,13 @@ export const DetailItem = (props: Props) => {
             : { wordBreak: "break-all" }
         }
       >
-        {props.href ? <a href={props.href!}>{props.value}</a> : props.value}
+        {props.href ? (
+          <a href={props.href!}>{props.value}</a>
+        ) : props.preserveNewlines ? (
+          <span dangerouslySetInnerHTML={{ __html: props.value.replace(/\\n/g, '<br />').replace(/\n/g, '<br />') }} />
+        ) : (
+          props.value
+        )}
       </div>
     </div>
   );

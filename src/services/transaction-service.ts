@@ -7,7 +7,18 @@ import { httpGet } from "../utils/network";
 export class TransactionService {
   async retrieve(id: string): Promise<Transaction> {
     const response = await httpGet(`${API_BASE_URL}/transaction/${id}`, {});
+    
+    // Check for HTTP errors (404, 500, etc.)
+    if (!response.ok) {
+      throw new Error(`Transaction not found (HTTP ${response.status})`);
+    }
+    
     const data: any = response.parsedBody;
+    
+    // Check if response data is valid
+    if (!data || typeof data !== 'object') {
+      throw new Error("Invalid transaction data received");
+    }
 
     return new Transaction(data);
   }

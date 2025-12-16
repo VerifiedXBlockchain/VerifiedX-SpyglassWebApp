@@ -37,8 +37,16 @@ export class Transaction {
   }
 
   hashPreview(n: number = 16): string {
+    if (!this.hash) {
+      return "Pending...";
+    }
     const amount = Math.floor(n / 2);
     return `${this.hash.slice(0, amount)}...${this.hash.slice(-amount)}`;
+  }
+
+  isComplete(): boolean {
+    // Check if transaction has essential fields indicating it's been broadcasted
+    return !!(this.hash && this.fromAddress && this.toAddress && this.dateCrafted);
   }
 
 
