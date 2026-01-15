@@ -1,4 +1,3 @@
-import { IS_TESTNET } from "../constants";
 import { Block } from "../models/block";
 import { BlockCard } from "./block-card";
 import { BlockRow } from "./block-row";

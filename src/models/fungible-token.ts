@@ -4,6 +4,7 @@ export class FungibleToken {
     sc_identifier: string;
     name: string;
     ticker: string;
+    description: string;
     owner_address: string;
     can_mint: boolean;
     can_burn: boolean;
@@ -20,6 +21,7 @@ export class FungibleToken {
         this.sc_identifier = data.sc_identifier || '';
         this.name = data.name || '';
         this.ticker = data.ticker || '';
+        this.description = data.description || '';
         this.owner_address = data.owner_address || '';
         this.can_mint = data.can_mint ?? false;
         this.can_burn = data.can_burn ?? false;

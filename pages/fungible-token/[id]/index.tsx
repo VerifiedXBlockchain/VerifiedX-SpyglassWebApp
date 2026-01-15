@@ -3,7 +3,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { IS_TESTNET } from "../../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import Head from "next/head";
 import { FungibleToken, FungibleTokenDetailResponse } from "../../../src/models/fungible-token";
 import { FungibleTokenService } from "../../../src/services/fungible-token-service";
@@ -37,7 +37,7 @@ const FungibleTokenDetailPage: NextPage = () => {
         <Head>
 
             <meta name="description" />
-            <title>{`VFX Spyglass: Fungible Token: ${token.name}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+            <title>{`VFX Spyglass: Fungible Token: ${token.name}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
             <link rel="icon" href="/favicon.png" />
         </Head>
 

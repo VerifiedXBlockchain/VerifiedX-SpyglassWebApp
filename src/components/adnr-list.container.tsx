@@ -12,7 +12,7 @@ import { BlockList } from "./block-list";
 import { NftCardList } from "./nft-list";
 import { ValidatorCardList } from "./validator-card-list";
 import { ValidatorList } from "./validator-list";
-import { IS_TESTNET } from "../constants";
+import { IS_TESTNET, IS_DEVNET } from "../constants";
 
 export const AdnrListContainer = () => {
   const [adnrs, setAdnrs] = useState<Adnr[]>([]);
@@ -107,9 +107,9 @@ export const AdnrListContainer = () => {
                   </td>
                   <td style={{ verticalAlign: 'middle' }}>
                     {adnr.isBtcDomain ? (
-                      <a 
-                        href={`https://mempool.space/${IS_TESTNET ? 'testnet4/' : ''}address/${adnr.btc_address}`}
-                        target="_blank" 
+                      <a
+                        href={`https://mempool.space/${IS_DEVNET || IS_TESTNET ? 'testnet4/' : ''}address/${adnr.btc_address}`}
+                        target="_blank"
                         rel="noopener noreferrer"
                       >
                         {adnr.btc_address}

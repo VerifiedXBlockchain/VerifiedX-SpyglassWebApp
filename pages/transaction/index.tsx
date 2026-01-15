@@ -3,13 +3,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Search } from "../../src/components/search";
 import { TransactionListContainer } from "../../src/components/transaction-list-container";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 const TransactionListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Spyglass: Transactions{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass: Transactions{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="VerifiedX Spyglass Transactions" />
         <link rel="icon" href="/favicon.png" />
       </Head>

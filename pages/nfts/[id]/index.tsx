@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { IS_TESTNET } from "../../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import { Nft } from "../../../src/models/nft";
 import { NftService } from "../../../src/services/nft-service";
 import { formatBytes } from "../../../src/utils/formatting";
@@ -41,7 +41,7 @@ const NftDetailPage: NextPage = () => {
     <>
       <Head>
         <meta name="description" />
-        <title>{`VFX Spyglass: NFT ${id}`}{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>{`VFX Spyglass: NFT ${id}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="container">
