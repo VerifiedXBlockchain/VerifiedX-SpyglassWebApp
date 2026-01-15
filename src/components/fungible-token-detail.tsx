@@ -61,11 +61,14 @@ export const FungibleTokenDetail = (props: Props) => {
                 <div className="p-1"></div>
 
                 {token.description && (
-                    <>
-                        <hr />
-                        <h5>Description</h5>
-                        <p dangerouslySetInnerHTML={{ __html: token.description.replace(/\\n/g, '<br>') }} />
-                    </>
+                    <div className="bg-black border-light border px-2 py-1 w-100">
+                        <div className="text-start h6 text-muted">Description</div>
+                        <div
+                            className="text-start m-0"
+                            style={{ wordBreak: "break-all" }}
+                            dangerouslySetInnerHTML={{ __html: token.description.replace(/\\n/g, '<br>') }}
+                        />
+                    </div>
                 )}
                 <div className="p-1"></div>
 
