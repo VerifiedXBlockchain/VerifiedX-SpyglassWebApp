@@ -23,7 +23,7 @@ export const VbtcTokenList = (props: Props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {tokens.map((token) => (
+                    {tokens.filter((t) => t.global_balance > 0).map((token) => (
                         <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
                             <td>
                                 <a href={`/vbtc-token/${token.sc_identifier}`}>

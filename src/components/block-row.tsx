@@ -10,7 +10,7 @@ export const BlockRow = (props: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <tr onClick={() => window.location.href = `/block/${block.height}`}>
+    <tr onClick={(e) => { window.location.href = `/block/${block.height}` }}>
       <td className="text-center">
         <div>
 
@@ -59,7 +59,7 @@ export const BlockRow = (props: Props) => {
             <>
               <div
                 className=" ps-0"
-                onClick={() => setExpanded(!expanded)}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setExpanded(!expanded); }}
                 style={{ cursor: "pointer" }}
               >
                 {block.transactions.length} Txs{" "}

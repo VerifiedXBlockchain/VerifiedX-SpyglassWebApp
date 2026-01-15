@@ -99,7 +99,7 @@ const CirculationPage: NextPage = () => {
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 Total Transactions
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurned)}</span>
+                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalTransactions)}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <span style={{ textDecoration: 'underline' }}>Network</span>
@@ -164,16 +164,12 @@ const CirculationPage: NextPage = () => {
         </ul>
 
         <div className="row">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-6 offset-3">
             <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
             <LatestBlock />
           </div>
 
-          {circulation ?
-            <div className="col-12 col-md-6">
-              <h3 className="mt-3 mb-4 text-center">Block Rewards Calculator</h3>
-              <BlockRewardsCalculator totalValidators={circulation.activeMasterNodes} />
-            </div> : null}
+
         </div>
 
 
