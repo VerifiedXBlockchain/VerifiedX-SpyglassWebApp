@@ -4,7 +4,7 @@ import TestnetFaucetForm from "../../src/components/testnet-faucet-form";
 import { useEffect, useState } from "react";
 import { TestnetFaucetInfo } from "../../src/models/testnet-faucet-info";
 import { FaucetService } from "../../src/services/faucet-service";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 
 const faucetService = new FaucetService();
@@ -27,7 +27,7 @@ const FaucetPage: NextPage = () => {
     return (
         <div>
             <div className="container">
-                <h3 className="mt-3 text-center">VFX {IS_TESTNET && 'Testnet '}Faucet</h3>
+                <h3 className="mt-3 text-center">VFX {IS_DEVNET ? 'Devnet ' : IS_TESTNET ? 'Testnet ' : ''}Faucet</h3>
                 <div className="py-1"></div>
 
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { isMobile } from "react-device-detect";
 import { ValidatorCardList } from "../../src/components/validator-card-list";
 import { ValidatorList } from "../../src/components/validator-list";
-import { API_BASE_URL, IS_TESTNET } from "../../src/constants";
+import { API_BASE_URL, IS_TESTNET, IS_DEVNET } from "../../src/constants";
 import { Validator } from "../../src/models/validator";
 
 
@@ -19,7 +19,7 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
   return (
     <>
       <Head>
-        <title>VFX Spyglass: Validator Pool{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass: Validator Pool{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="VerifiedX Spyglass: Home" />
         <link rel="icon" href="/favicon.png" />
       </Head>

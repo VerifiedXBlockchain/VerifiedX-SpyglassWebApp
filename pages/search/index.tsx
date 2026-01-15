@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { BlockCard } from "../../src/components/block-card";
 import { TransactionCard } from "../../src/components/transaction-card";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 import { Address } from "../../src/models/address";
 import { Block } from "../../src/models/block";
 import { PaginatedResponse } from "../../src/models/paginated-response";
@@ -105,7 +105,7 @@ const NewSearchPage: NextPage = () => {
             return SearchType.address;
         }
 
-        if (val.length == 34 && val[0].toUpperCase() == (IS_TESTNET ? "X" : "R")) {
+        if (val.length == 34 && val[0].toUpperCase() == (IS_DEVNET ? "X" : IS_TESTNET ? "X" : "R")) {
             return SearchType.address;
         }
 
@@ -301,7 +301,7 @@ const NewSearchPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
                 <meta
                     name="description"
                     content="VerifiedX Spyglass: Search Results"

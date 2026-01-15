@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaucetService } from "../services/faucet-service";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
-import { IS_TESTNET } from "../constants";
+import { IS_TESTNET, IS_DEVNET } from "../constants";
 import { isValidPhoneNumber, AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
 
 const faucetService = new FaucetService();
@@ -164,12 +164,12 @@ const TestnetFaucetForm = (props: Props) => {
 
 
                 <ul className="list-group">
-                    {IS_TESTNET && (
+                    {(IS_DEVNET || IS_TESTNET) && (
                         <li className="list-group-item">Available Funds: {info.available} VFX</li>
                     )}
                     <li className="list-group-item">Minimum Request Amount: {info.minAmount} VFX</li>
                     <li className="list-group-item">Maximum Request Amount: {info.maxAmount} VFX</li>
-                    {IS_TESTNET && (
+                    {(IS_DEVNET || IS_TESTNET) && (
                         <li className="list-group-item">Sender Address: {info.address}</li>
                     )}
                 </ul>
@@ -212,9 +212,9 @@ const TestnetFaucetForm = (props: Props) => {
                     <div className="card-body">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">VFX {IS_TESTNET && 'Testnet '}Address</span>
+                                <span className="input-group-text" id="basic-addon3">VFX {IS_DEVNET ? 'Devnet ' : IS_TESTNET ? 'Testnet ' : ''}Address</span>
                             </div>
-                            <input type="text" placeholder={IS_TESTNET ? `xArscSBw9qk3xuMErGDEXXcbxigfccQvqD` : `RArscSBw9qk3xuMErGDEXXcbxigfccQvqD`} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
+                            <input type="text" placeholder={IS_DEVNET || IS_TESTNET ? `xArscSBw9qk3xuMErGDEXXcbxigfccQvqD` : `RArscSBw9qk3xuMErGDEXXcbxigfccQvqD`} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>
 
                         {addressInvalid && <p className="text-danger">Invalid Address</p>}
@@ -255,8 +255,8 @@ const TestnetFaucetForm = (props: Props) => {
                 </div>
 
             )}
-            {IS_TESTNET && (
-                <p className="py-2 text-center"><strong>Please send testnet coin back to <code>{info.address}</code> when you don&apos;t need them anymore.<br />By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers.</strong></p>
+            {(IS_DEVNET || IS_TESTNET) && (
+                <p className="py-2 text-center"><strong>Please send {IS_DEVNET ? 'devnet' : 'testnet'} coin back to <code>{info.address}</code> when you don&apos;t need them anymore.<br />By returning the {IS_DEVNET ? 'devnet' : 'testnet'} coins, you contribute to the {IS_DEVNET ? 'devnet' : 'testnet'} ecosystem and help maintain its functionality for other developers and testers.</strong></p>
             )}
         </>
     )

@@ -2,13 +2,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { AdnrListContainer } from "../../src/components/adnr-list.container";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 const AdnrListPage: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
+                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}: Domains</title>
                 <meta name="description" content="VerifiedX Spyglass: VFX Domains" />
                 <link rel="icon" href="/favicon.png" />
             </Head>

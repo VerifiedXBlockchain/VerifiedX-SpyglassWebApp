@@ -7,7 +7,7 @@ import { Search } from "../src/components/search";
 import { isMobile } from "react-device-detect";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { IS_TESTNET, MAINTENENCE_MODE } from "../src/constants";
+import { IS_TESTNET, IS_DEVNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -107,7 +107,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link btc-link"
-                  href={IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/"}
+                  href={IS_DEVNET ? "https://mempool.space/testnet4" : IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/"}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -138,7 +138,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </a>
                 ) : null} */}
 
-                {IS_TESTNET ? (
+                {IS_DEVNET || IS_TESTNET ? (
 
                   <a
                     className="nav-link"

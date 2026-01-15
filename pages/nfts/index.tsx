@@ -4,13 +4,13 @@ import Head from "next/head";
 import { BlockListContainer } from "../../src/components/block-list-container";
 import { NftListContainer } from "../../src/components/nft-list-container";
 import { Search } from "../../src/components/search";
-import { IS_TESTNET } from "../../src/constants";
+import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 const NftListPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>VFX Spyglass{IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
         <meta name="description" content="VerifiedX Spyglass: NFTs" />
         <link rel="icon" href="/favicon.png" />
       </Head>
