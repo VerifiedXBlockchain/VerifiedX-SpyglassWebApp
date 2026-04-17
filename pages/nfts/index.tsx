@@ -1,17 +1,21 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { BlockListContainer } from "../../src/components/block-list-container";
 import { NftListContainer } from "../../src/components/nft-list-container";
 import { Search } from "../../src/components/search";
 import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 
 const NftListPage: NextPage = () => {
+  const { t } = useTranslation(["nft", "common"]);
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
   return (
     <div>
       <Head>
-        <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="VerifiedX Spyglass: NFTs" />
+        <title>{`${t("nft:list.pageTitle")}${netTag}`}</title>
+        <meta name="description" content={t("nft:list.metaDescription") as string} />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
@@ -19,10 +23,10 @@ const NftListPage: NextPage = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <a href="/">{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/nfts">NFTs</a>
+              <a href="/nfts">{t("nft:list.breadcrumbCurrent")}</a>
             </li>
           </ol>
         </nav>
@@ -34,5 +38,11 @@ const NftListPage: NextPage = () => {
     </div>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft'])),
+  },
+});
 
 export default NftListPage;

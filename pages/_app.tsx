@@ -71,14 +71,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link"
                   href="/transaction"
                 >
-                  Transactions
+                  {t("nav.transactions")}
                 </a>
 
                 <a
                   className="nav-link"
                   href="/validators"
                 >
-                  Validators
+                  {t("nav.validators")}
                 </a>
 
                 {!IS_TESTNET ? (
@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     className="nav-link"
                     href="/metrics"
                   >
-                    Metrics
+                    {t("nav.metrics")}
                   </a>
                 ) : null}
 
@@ -95,7 +95,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link"
                   href="/domains"
                 >
-                  Domains
+                  {t("nav.domains")}
                 </a>
 
 
@@ -103,7 +103,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link btc-link"
                   href="/vbtc-token"
                 >
-                  vBTC
+                  {t("nav.vbtc")}
                 </a>
 
                 <a
@@ -112,21 +112,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  BTC Spyglass
+                  {t("nav.btcSpyglass")}
                 </a>
 
                 <a
                   className="nav-link"
                   href="/fungible-token"
                 >
-                  Fungible Tokens
+                  {t("nav.fungibleTokens")}
                 </a>
 
                 <a
                   className="nav-link"
                   href="/nfts"
                 >
-                  NFTs
+                  {t("nav.nfts")}
                 </a>
 
                 {/* {!IS_TESTNET ? (
@@ -135,7 +135,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     className="nav-link"
                     href="/map"
                   >
-                    Map
+                    {t("nav.map")}
                   </a>
                 ) : null} */}
 
@@ -145,7 +145,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     className="nav-link"
                     href="/faucet"
                   >
-                    Faucet
+                    {t("nav.faucet")}
                   </a>
                 ) : null}
 
@@ -153,7 +153,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   className="nav-link"
                   href="/search"
                 >
-                  Search
+                  {t("nav.search")}
                 </a>
 
                 <span className="nav-link text-muted d-none d-lg-block">|</span>
@@ -163,7 +163,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="blank"
                   rel="noreferrer"
                 >
-                  VerifiedX.io
+                  {t("nav.verifiedXSite")}
                 </a>
                 <a
                   className="nav-link "
@@ -171,7 +171,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="blank"
                   rel="noreferrer"
                 >
-                  Docs
+                  {t("nav.docs")}
                 </a>
 
                 <a
@@ -180,7 +180,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="blank"
                   rel="noreferrer"
                 >
-                  Github
+                  {t("nav.github")}
                 </a>
 
                 <a
@@ -189,7 +189,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="blank"
                   rel="noreferrer"
                 >
-                  Discord
+                  {t("nav.discord")}
                 </a>
 
                 <a
@@ -198,7 +198,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   target="blank"
                   rel="noreferrer"
                 >
-                  X
+                  {t("nav.x")}
                 </a>
               </div>
             </div>

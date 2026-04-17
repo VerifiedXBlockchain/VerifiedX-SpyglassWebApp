@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import TestnetFaucetForm from "../../src/components/testnet-faucet-form";
 import { useEffect, useState } from "react";
 import { TestnetFaucetInfo } from "../../src/models/testnet-faucet-info";
@@ -11,6 +13,7 @@ const faucetService = new FaucetService();
 
 
 const FaucetPage: NextPage = () => {
+    const { t } = useTranslation(["faucet", "common"]);
 
     const [info, setInfo] = useState<TestnetFaucetInfo | null>(null);
 
@@ -21,13 +24,12 @@ const FaucetPage: NextPage = () => {
         })
     }, [])
 
-
-
+    const title = IS_DEVNET ? t("faucet:pageTitleDevnet") : IS_TESTNET ? t("faucet:pageTitleTestnet") : t("faucet:pageTitleMainnet");
 
     return (
         <div>
             <div className="container">
-                <h3 className="mt-3 text-center">VFX {IS_DEVNET ? 'Devnet ' : IS_TESTNET ? 'Testnet ' : ''}Faucet</h3>
+                <h3 className="mt-3 text-center">{title}</h3>
                 <div className="py-1"></div>
 
 
@@ -37,5 +39,11 @@ const FaucetPage: NextPage = () => {
         </div>
     );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'faucet'])),
+  },
+});
 
 export default FaucetPage;

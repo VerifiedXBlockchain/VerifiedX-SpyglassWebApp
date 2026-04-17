@@ -1,15 +1,19 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
 import { VbtcTokenListContainer } from "../../src/components/vbtc-token-list-container";
 
 const VbtcTokensPage: NextPage = () => {
+    const { t } = useTranslation(["vbtcToken", "common"]);
+    const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
     return (
         <div>
             <Head>
-                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}: vBTC Tokens</title>
-                <meta name="description" content="VerifiedX Spyglass: VFX vBTC Tokens" />
+                <title>{`${t("vbtcToken:list.pageTitle")}${netTag}`}</title>
+                <meta name="description" content={t("vbtcToken:list.metaDescription") as string} />
                 <link rel="icon" href="/favicon.png" />
             </Head>
 
@@ -17,10 +21,10 @@ const VbtcTokensPage: NextPage = () => {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb align-items-center">
                         <li className="breadcrumb-item">
-                            <a href="/">Home</a>
+                            <a href="/">{t("common:breadcrumb.home")}</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/vbtc-token">vBTC Tokens</a>
+                            <a href="/vbtc-token">{t("vbtcToken:list.breadcrumbCurrent")}</a>
                         </li>
                     </ol>
                 </nav>
@@ -32,5 +36,11 @@ const VbtcTokensPage: NextPage = () => {
         </div>
     );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'vbtcToken'])),
+  },
+});
 
 export default VbtcTokensPage;

@@ -1,0 +1,74 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass",
+    "metaDescription": "VerifiedX Spyglass: Blocks",
+    "breadcrumbCurrent": "Blocks"
+  },
+  "detail": {
+    "pageTitle": "VFX Spyglass: Block {{height}}",
+    "heading": "Block Details",
+    "transactionsHeading": "Transactions",
+    "fields": {
+      "blockHeight": "Block Height",
+      "transactions": "Transactions",
+      "size": "Size",
+      "amount": "Amount",
+      "reward": "Reward",
+      "validator": "Validator",
+      "hash": "Hash",
+      "previousHash": "Previous Hash",
+      "chainRefId": "Chain Ref ID",
+      "merkleRoot": "Merkle Root",
+      "stateRoot": "State Root",
+      "validatorSignature": "Validator Signature"
+    }
+  },
+  "card": {
+    "title": "Block {{height}}",
+    "hash": "Hash",
+    "validatedBy": "Validated By:",
+    "validatorLocation": "Validator Location:",
+    "locationFallback": "-",
+    "transactions": "Transactions",
+    "totalAmount": "Total Amount",
+    "fee": "Fee"
+  },
+  "row": {
+    "height": "Height",
+    "hash": "Hash",
+    "amount": "Amount",
+    "fee": "Fee",
+    "validator": "Validator",
+    "validatorLocation": "Validator Location",
+    "transactions": "Transactions",
+    "crafted": "Crafted",
+    "craftTime": "Craft Time",
+    "txsCount_one": "{{count}} Tx",
+    "txsCount_other": "{{count}} Txs",
+    "craftTimeMs": "{{ms}}ms",
+    "locationFallback": "-"
+  },
+  "rewardsCalculator": {
+    "yourValidators": "Your Validators (v)",
+    "totalValidators": "Total Validators (t)",
+    "per": "Per (d)",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "estimateDisclaimer": "This is just an estimate and rewards are not guaranteed.",
+    "rewardUnit": "RBX"
+  },
+  "latest": {
+    "title": "Block {{height}}",
+    "hash": "Hash",
+    "craftTime": "Craft Time",
+    "craftTimeValue": "{{ms}} ms",
+    "size": "Size",
+    "txCount": "# of Txs",
+    "viewTx": "View Tx {{index}}",
+    "amount": "Amount",
+    "fee": "Fee",
+    "validatedBy": "Validated By"
+  }
+}

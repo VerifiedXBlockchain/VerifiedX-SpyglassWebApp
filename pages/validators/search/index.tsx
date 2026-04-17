@@ -1,11 +1,14 @@
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ValidatorCardList } from "../../../src/components/validator-card-list";
 import { Validator } from "../../../src/models/validator";
 import { ValidatorService } from "../../../src/services/validator-service";
 
 
 const ValidatorSearch: NextPage = () => {
+    const { t } = useTranslation(["validator", "common"]);
 
     const [query, setQuery] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +47,7 @@ const ValidatorSearch: NextPage = () => {
         <>
             <div className="container mt-4">
 
-                <h4 className="text-center">Validator Status Checker</h4>
+                <h4 className="text-center">{t("validator:search.heading")}</h4>
 
                 <div className="row">
 
@@ -52,13 +55,13 @@ const ValidatorSearch: NextPage = () => {
 
                         <div className="form-group">
                             <label htmlFor="">
-                                Validator Name or Address
+                                {t("validator:search.label")}
                             </label>
 
                             <input
                                 type="text"
                                 className="form-control bg-dark text-light"
-                                placeholder={"RBnw8...."}
+                                placeholder={t("validator:search.placeholder") as string}
                                 value={query}
                                 onChange={(event) => setQuery(event.target.value)}
                             />
@@ -66,7 +69,7 @@ const ValidatorSearch: NextPage = () => {
                             <div className="text-end mt-2">
                                 <button className="btn btn-primary" onClick={handleSearch}>
 
-                                    Check Status</button>
+                                    {t("validator:search.cta")}</button>
                             </div>
                         </div>
                     </div>
@@ -84,5 +87,11 @@ const ValidatorSearch: NextPage = () => {
 
     )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'validator'])),
+  },
+});
 
 export default ValidatorSearch;

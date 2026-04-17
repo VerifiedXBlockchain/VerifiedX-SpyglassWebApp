@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { DetailItem } from "../../../src/components/detail-item";
 import { TransactionCard } from "../../../src/components/transaction-card";
 import { LoadingSpinner } from "../../../src/components/loading-spinner";
@@ -10,6 +12,7 @@ import { LAYOUT_HEIGHTS } from "../../../src/constants/ui";
 const TransactionDetailPage: NextPage = () => {
   const router = useRouter();
   const { hash } = router.query;
+  const { t } = useTranslation(["transaction", "common"]);
 
   const { transaction, loading, error, isPolling } = useTransactionPolling(hash);
 
@@ -17,13 +20,13 @@ const TransactionDetailPage: NextPage = () => {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: LAYOUT_HEIGHTS.PENDING_MIN_HEIGHT }}>
         <div className="text-center">
-          <h4 className="text-light mb-3">Transaction Pending</h4>
+          <h4 className="text-light mb-3">{t("transaction:detail.pendingHeading")}</h4>
           <p className="text-muted mb-4">
-            This transaction has not reflected on chain yet. Stand by.
+            {t("transaction:detail.pendingBody")}
           </p>
-          
+
           {(isPolling || loading) && (
-            <LoadingSpinner variant="light" message="Loading..." />
+            <LoadingSpinner variant="light" message={t("common:status.loading") as string} />
           )}
         </div>
       </div>
@@ -38,10 +41,10 @@ const TransactionDetailPage: NextPage = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <a href="/">{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/transaction">Transactions</a>
+              <a href="/transaction">{t("common:nav.transactions")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
@@ -51,7 +54,7 @@ const TransactionDetailPage: NextPage = () => {
             </li>
           </ol>
         </nav>
-        <h4>Transaction Details</h4>
+        <h4>{t("transaction:detail.heading")}</h4>
         <div className="bg-dark p-2">
           <div className="d-block d-md-flex">
             <DetailItem
@@ -244,5 +247,11 @@ const TransactionDetailPage: NextPage = () => {
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'transaction'])),
+  },
+});
 
 export default TransactionDetailPage;

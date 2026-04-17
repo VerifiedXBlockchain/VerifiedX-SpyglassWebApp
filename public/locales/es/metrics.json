@@ -1,0 +1,25 @@
+{
+  "heading": "Métricas",
+  "spyglassHeading": "Spyglass",
+  "labels": {
+    "lifetimeSupply": "Suministro histórico",
+    "circulatingSupply": "Suministro circulante",
+    "amountAssured": "Monto asegurado",
+    "totalBurnedFees": "Comisiones quemadas totales",
+    "totalTransactions": "Transacciones totales",
+    "network": "Red",
+    "cliVersion": "Versión de CLI",
+    "totalVfxAddresses": "Direcciones VFX totales",
+    "activeValidatorPool": "Pool activo de validadores",
+    "networkMetrics": "Métricas de red",
+    "blockDifferenceAverage": "Diferencia promedio entre bloques",
+    "blockLastDelay": "Retraso del último bloque",
+    "blockAverages": "Promedios de bloques"
+  },
+  "search": {
+    "placeholder": "Buscar dirección"
+  },
+  "units": {
+    "seconds": "s"
+  }
+}

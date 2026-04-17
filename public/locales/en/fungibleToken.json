@@ -1,0 +1,30 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Fungible Tokens",
+    "metaDescription": "VerifiedX Spyglass: VFX Fungible Tokens",
+    "breadcrumbCurrent": "Fungible Tokens",
+    "table": {
+      "ticker": "Ticker",
+      "name": "Name",
+      "smartContract": "Smart Contract",
+      "owner": "Owner",
+      "deployedAt": "Deployed At",
+      "circulatingSupply": "Circulating Supply"
+    }
+  },
+  "detail": {
+    "pageTitle": "VFX Spyglass: Fungible Token: {{name}}",
+    "fields": {
+      "name": "Name",
+      "ticker": "Ticker",
+      "smartContractId": "Smart Contract ID",
+      "owner": "Owner",
+      "circulatingSupply": "Circulating Supply",
+      "mintable": "Mintable",
+      "burnable": "Burnable",
+      "supportsVoting": "Supports Voting"
+    },
+    "descriptionHeading": "Description",
+    "balancesHeading": "Balances"
+  }
+}

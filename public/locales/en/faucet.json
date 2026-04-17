@@ -1,0 +1,40 @@
+{
+  "pageTitleDevnet": "VFX Devnet Faucet",
+  "pageTitleTestnet": "VFX Testnet Faucet",
+  "pageTitleMainnet": "VFX Faucet",
+  "info": {
+    "available": "Available Funds: {{amount}} VFX",
+    "min": "Minimum Request Amount: {{amount}} VFX",
+    "max": "Maximum Request Amount: {{amount}} VFX",
+    "sender": "Sender Address: {{address}}"
+  },
+  "success": {
+    "broadcast": "Success, TX Broadcasted!",
+    "hash": "Transaction Hash: {{hash}}"
+  },
+  "errors": {
+    "generic": "Error",
+    "invalidAddress": "Invalid Address",
+    "invalidAmount": "Invalid Amount",
+    "invalidPhone": "Invalid Phone Number",
+    "invalidCode": "Invalid Code"
+  },
+  "form": {
+    "verificationCodeLabel": "Verification Code",
+    "verificationCodePlaceholder": "1234",
+    "verifyCta": "Verify",
+    "addressLabelDevnet": "VFX Devnet Address",
+    "addressLabelTestnet": "VFX Testnet Address",
+    "addressLabelMainnet": "VFX Address",
+    "addressPlaceholderTestnet": "xArscSBw9qk3xuMErGDEXXcbxigfccQvqD",
+    "addressPlaceholderMainnet": "RArscSBw9qk3xuMErGDEXXcbxigfccQvqD",
+    "amountLabel": "Amount Requested",
+    "amountPlaceholder": "10",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "+1 (555) 123-4567",
+    "phoneHelp": "Your phone number is required to prevent abuse of this service. Once the verification code is sent, only a hash of the phone number is stored.",
+    "requestCta": "Request Funds"
+  },
+  "returnCoinsDevnet": "Please send devnet coin back to {{address}} when you don't need them anymore. By returning the devnet coins, you contribute to the devnet ecosystem and help maintain its functionality for other developers and testers.",
+  "returnCoinsTestnet": "Please send testnet coin back to {{address}} when you don't need them anymore. By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers."
+}

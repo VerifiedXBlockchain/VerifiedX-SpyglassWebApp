@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { BlockDetail } from "../../../src/components/block-detail";
 import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import { Block } from "../../../src/models/block";
@@ -12,6 +14,7 @@ import { BlockService } from "../../../src/services/block-service";
 const BlockDetailPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { t } = useTranslation(["block", "common"]);
 
   const [block, setBlock] = useState<Block | undefined>(undefined);
 
@@ -30,13 +33,14 @@ const BlockDetailPage: NextPage = () => {
 
   const next = block.height + 1;
   const prev = block.height - 1;
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
 
   return (
     <>
       <Head>
 
         <meta name="description" />
-        <title>{`VFX Spyglass: Block ${block.height}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
+        <title>{`${t("block:detail.pageTitle", { height: block.height })}${netTag}`}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div>
@@ -44,10 +48,10 @@ const BlockDetailPage: NextPage = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb align-items-center">
               <li className="breadcrumb-item">
-                <a href="/">Home</a>
+                <a href="/">{t("common:breadcrumb.home")}</a>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                <a href="/block">Blocks</a>
+                <a href="/block">{t("common:nav.blocks")}</a>
               </li>
 
               <li className="breadcrumb-item active" aria-current="page">
@@ -60,14 +64,14 @@ const BlockDetailPage: NextPage = () => {
                       href={`/block/${prev}`}
                       className="btn btn-dark btn-sm border"
                     >
-                      Prev
+                      {t("common:action.prev")}
                     </a>
                   ) : null}
                   <a
                     href={`/block/${next}`}
                     className="btn btn-dark btn-sm border"
                   >
-                    Next
+                    {t("common:action.next")}
                   </a>
                 </div>
               </div>
@@ -80,5 +84,11 @@ const BlockDetailPage: NextPage = () => {
     </>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'block', 'transaction', 'search'])),
+  },
+});
 
 export default BlockDetailPage;

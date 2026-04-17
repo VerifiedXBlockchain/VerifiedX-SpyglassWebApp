@@ -1,0 +1,25 @@
+{
+  "heading": "Metrics",
+  "spyglassHeading": "Spyglass",
+  "labels": {
+    "lifetimeSupply": "Lifetime Supply",
+    "circulatingSupply": "Circulating Supply",
+    "amountAssured": "Amount Assured",
+    "totalBurnedFees": "Total Burned Fees",
+    "totalTransactions": "Total Transactions",
+    "network": "Network",
+    "cliVersion": "CLI Version",
+    "totalVfxAddresses": "Total VFX Addresses",
+    "activeValidatorPool": "Active Validator Pool",
+    "networkMetrics": "Network Metrics",
+    "blockDifferenceAverage": "Block Difference Average",
+    "blockLastDelay": "Block Last Delay",
+    "blockAverages": "Block Averages"
+  },
+  "search": {
+    "placeholder": "Search Address"
+  },
+  "units": {
+    "seconds": "s"
+  }
+}

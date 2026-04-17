@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { LatestBlock } from "../../src/components/latest-block";
 import { Search } from "../../src/components/search";
 import { Circulation } from "../../src/models/circulation";
@@ -14,6 +16,7 @@ import BlockRewardsCalculator from "../../src/components/block-rewards-calculato
 
 
 const CirculationPage: NextPage = () => {
+  const { t } = useTranslation(["metrics", "common"]);
   const router = useRouter();
   const { hash } = router.query;
 
@@ -62,23 +65,23 @@ const CirculationPage: NextPage = () => {
   return (
     <div>
       <div className="container">
-        <h3 className="mt-3 text-center">Metrics</h3>
+        <h3 className="mt-3 text-center">{t("metrics:heading")}</h3>
 
 
         <ul className="list-group my-5">
           {circulation ? (
             <>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Lifetime Supply
+                {t("metrics:labels.lifetimeSupply")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} VFX</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Circulating Supply
+                {t("metrics:labels.circulatingSupply")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} VFX</span>
               </li>
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Amount Assured
+                {t("metrics:labels.amountAssured")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} VFX</span>
               </li>
 
@@ -94,19 +97,19 @@ const CirculationPage: NextPage = () => {
 
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total Burned Fees
+                {t("metrics:labels.totalBurnedFees")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} VFX</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total Transactions
+                {t("metrics:labels.totalTransactions")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalTransactions)}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                <span style={{ textDecoration: 'underline' }}>Network</span>
+                <span style={{ textDecoration: 'underline' }}>{t("metrics:labels.network")}</span>
                 <span className="badge bg-secondary badge-lg text-black">{ }</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                CLI Version
+                {t("metrics:labels.cliVersion")}
                 <span className="badge bg-secondary badge-lg text-black">{circulation.cliVersion}</span>
               </li>
               {/* <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -115,7 +118,7 @@ const CirculationPage: NextPage = () => {
               </li> */}
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total VFX Addresses
+                {t("metrics:labels.totalVfxAddresses")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalAddresses)}</span>
               </li>
 
@@ -123,25 +126,25 @@ const CirculationPage: NextPage = () => {
                 <div className="d-flex align-items-start  flex-column">
                   <div className="">
 
-                    Active&nbsp;Validator&nbsp;Pool
+                    {t("metrics:labels.activeValidatorPool")}
                   </div>
                 </div>
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.activeMasterNodes)}</span>
               </li>
 
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Search placeholder="Search Address" mini />
+                <Search placeholder={t("metrics:search.placeholder") as string} mini />
               </li>
             </>
           ) : null}
           {metrics ? (
             <>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                <span style={{ textDecoration: 'underline' }}>Network Metrics</span>
+                <span style={{ textDecoration: 'underline' }}>{t("metrics:labels.networkMetrics")}</span>
                 <span className="badge bg-secondary badge-lg text-black">{ }</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Block Difference Average
+                {t("metrics:labels.blockDifferenceAverage")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.blockDifferenceAverage)} s</span>
               </li>
               {/* <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -149,7 +152,7 @@ const CirculationPage: NextPage = () => {
                 <span className="badge bg-secondary badge-lg text-black">{timeago.format(metrics.blockLastReceived)}</span>
               </li> */}
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Block Last Delay
+                {t("metrics:labels.blockLastDelay")}
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.blockLastDelay)} s</span>
               </li>
               {/* <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -157,7 +160,7 @@ const CirculationPage: NextPage = () => {
                 <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.timeSinceLastBlock)} s</span>
               </li> */}
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                Block Averages
+                {t("metrics:labels.blockAverages")}
                 <span className="badge bg-secondary badge-lg text-black">{metrics.blocksAverages}</span>
               </li>
             </>) : null}
@@ -165,7 +168,7 @@ const CirculationPage: NextPage = () => {
 
         <div className="row">
           <div className="col-12 col-md-6 offset-3">
-            <h3 className="mt-3 mb-4 text-center">Spyglass</h3>
+            <h3 className="mt-3 mb-4 text-center">{t("metrics:spyglassHeading")}</h3>
             <LatestBlock />
           </div>
 
@@ -180,5 +183,11 @@ const CirculationPage: NextPage = () => {
     </div>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'metrics'])),
+  },
+});
 
 export default CirculationPage;
