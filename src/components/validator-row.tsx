@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { Validator } from "../models/validator";
 
 interface Props {
@@ -5,15 +6,16 @@ interface Props {
 }
 
 export const ValidatorRow = (props: Props) => {
+  const { t } = useTranslation("common");
   const { validator } = props;
 
   return (
     <tr>
       <td>
         {validator.isActive ? (
-          <div className="badge bg-success">Active</div>
+          <div className="badge bg-success">{t("status.active")}</div>
         ) : (
-          <div className="badge bg-danger">Inactive</div>
+          <div className="badge bg-danger">{t("status.inactive")}</div>
         )}
       </td>
       <td>
@@ -40,7 +42,7 @@ export const ValidatorRow = (props: Props) => {
           href={`/validators/${validator.address}`}
           className="btn btn-primary btn-sm"
         >
-          View Details
+          {t("action.viewDetails")}
         </a>
       </td>
     </tr>

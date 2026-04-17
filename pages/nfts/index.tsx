@@ -41,7 +41,7 @@ const NftListPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft', 'search'])),
   },
 });
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "next-i18next";
 import { Block } from "../models/block";
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export const BlockRow = (props: Props) => {
+  const { t } = useTranslation("block");
   const { block } = props;
   const [expanded, setExpanded] = useState(false);
 
@@ -43,7 +45,7 @@ export const BlockRow = (props: Props) => {
 
       <td>
         <div className=" ps-0">
-          {block.masternode?.locationLabel || "-"}
+          {block.masternode?.locationLabel || t("row.locationFallback")}
         </div>
       </td>
 
@@ -62,7 +64,7 @@ export const BlockRow = (props: Props) => {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setExpanded(!expanded); }}
                 style={{ cursor: "pointer" }}
               >
-                {block.transactions.length} Txs{" "}
+                {t("row.txsCount", { count: block.transactions.length })}{" "}
                 <i
                   className={`bi ${expanded ? `bi-chevron-up` : "bi-chevron-down"
                     }`}
@@ -71,9 +73,9 @@ export const BlockRow = (props: Props) => {
 
               {expanded ? (
                 <div>
-                  {block.transactions.map((t) => (
-                    <div className=" ps-0 d-block" key={t.hash}>
-                      <a href={`/transaction/${t.hash}`} title={t.hash}>{t.hashPreview()}</a>
+                  {block.transactions.map((tx) => (
+                    <div className=" ps-0 d-block" key={tx.hash}>
+                      <a href={`/transaction/${tx.hash}`} title={tx.hash}>{tx.hashPreview()}</a>
                     </div>
                   ))}
                 </div>
@@ -81,7 +83,7 @@ export const BlockRow = (props: Props) => {
             </>
           )
         ) : (
-          "-"
+          t("row.locationFallback")
         )}
       </td>
 
@@ -91,7 +93,7 @@ export const BlockRow = (props: Props) => {
 
       <td className="text-center">
         <div>
-          {block.craftTime}ms
+          {t("row.craftTimeMs", { ms: block.craftTime })}
         </div>
       </td>
 

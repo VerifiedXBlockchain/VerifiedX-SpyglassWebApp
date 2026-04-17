@@ -60,7 +60,7 @@ const ValidatorDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'validator', 'block'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'validator', 'block', 'search'])),
   },
 });
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import { FaucetService } from "../services/faucet-service";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { IS_TESTNET, IS_DEVNET } from "../constants";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TestnetFaucetForm = (props: Props) => {
+    const { t } = useTranslation("faucet");
 
     const { info } = props;
 
@@ -113,7 +115,7 @@ const TestnetFaucetForm = (props: Props) => {
             setPhone("");
             setVerificationUuid(result.uuid)
         } else {
-            setError(result.message ?? "Error")
+            setError(result.message ?? (t("errors.generic") as string))
         }
         // if (result.hash) {
         //     setAddress("");
@@ -144,7 +146,7 @@ const TestnetFaucetForm = (props: Props) => {
 
             setHash(result.hash);
         } else {
-            setError(result.message ?? "Error")
+            setError(result.message ?? (t("errors.generic") as string))
         }
 
 
@@ -165,12 +167,12 @@ const TestnetFaucetForm = (props: Props) => {
 
                 <ul className="list-group">
                     {(IS_DEVNET || IS_TESTNET) && (
-                        <li className="list-group-item">Available Funds: {info.available} VFX</li>
+                        <li className="list-group-item">{t("info.available", { amount: info.available })}</li>
                     )}
-                    <li className="list-group-item">Minimum Request Amount: {info.minAmount} VFX</li>
-                    <li className="list-group-item">Maximum Request Amount: {info.maxAmount} VFX</li>
+                    <li className="list-group-item">{t("info.min", { amount: info.minAmount })}</li>
+                    <li className="list-group-item">{t("info.max", { amount: info.maxAmount })}</li>
                     {(IS_DEVNET || IS_TESTNET) && (
-                        <li className="list-group-item">Sender Address: {info.address}</li>
+                        <li className="list-group-item">{t("info.sender", { address: info.address })}</li>
                     )}
                 </ul>
 
@@ -179,7 +181,7 @@ const TestnetFaucetForm = (props: Props) => {
             </div>
 
 
-            {hash && <div className="alert alert-success" >Success, TX Broadcasted!<br />Transaction Hash: {hash}</div>}
+            {hash && <div className="alert alert-success" >{t("success.broadcast")}<br />{t("success.hash", { hash })}</div>}
             {error && <div className="alert alert-danger" >{error}</div>}
 
             {verificationUuid && (
@@ -189,18 +191,18 @@ const TestnetFaucetForm = (props: Props) => {
                     <div className="card-body">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Verification Code</span>
+                                <span className="input-group-text" id="basic-addon3">{t("form.verificationCodeLabel")}</span>
                             </div>
-                            <input type="text" placeholder="1234" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
+                            <input type="text" placeholder={t("form.verificationCodePlaceholder") as string} value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>
 
-                        {verificationCodeInvalid && <p className="text-danger">Invalid Code</p>}
+                        {verificationCodeInvalid && <p className="text-danger">{t("errors.invalidCode")}</p>}
 
 
                     </div>
 
                     <div className="card-footer">
-                        <button className="btn btn-secondary" disabled={processing} onClick={handleVerify}>Verify</button>
+                        <button className="btn btn-secondary" disabled={processing} onClick={handleVerify}>{t("form.verifyCta")}</button>
                     </div>
 
                 </div>
@@ -212,51 +214,51 @@ const TestnetFaucetForm = (props: Props) => {
                     <div className="card-body">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">VFX {IS_DEVNET ? 'Devnet ' : IS_TESTNET ? 'Testnet ' : ''}Address</span>
+                                <span className="input-group-text" id="basic-addon3">{IS_DEVNET ? t("form.addressLabelDevnet") : IS_TESTNET ? t("form.addressLabelTestnet") : t("form.addressLabelMainnet")}</span>
                             </div>
-                            <input type="text" placeholder={IS_DEVNET || IS_TESTNET ? `xArscSBw9qk3xuMErGDEXXcbxigfccQvqD` : `RArscSBw9qk3xuMErGDEXXcbxigfccQvqD`} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
+                            <input type="text" placeholder={(IS_DEVNET || IS_TESTNET) ? (t("form.addressPlaceholderTestnet") as string) : (t("form.addressPlaceholderMainnet") as string)} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>
 
-                        {addressInvalid && <p className="text-danger">Invalid Address</p>}
+                        {addressInvalid && <p className="text-danger">{t("errors.invalidAddress")}</p>}
 
 
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Amount Requested</span>
+                                <span className="input-group-text" id="basic-addon3">{t("form.amountLabel")}</span>
                             </div>
-                            <input type="number" placeholder="10" value={amount ?? ''} onChange={(e) => setAmount(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
+                            <input type="number" placeholder={t("form.amountPlaceholder") as string} value={amount ?? ''} onChange={(e) => setAmount(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                         </div>
 
-                        {amountInvalid && <p className="text-danger">Invalid Amount</p>}
+                        {amountInvalid && <p className="text-danger">{t("errors.invalidAmount")}</p>}
 
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Phone Number</span>
+                                <span className="input-group-text" id="basic-addon3">{t("form.phoneLabel")}</span>
                             </div>
-                            <input 
-                                type="tel" 
-                                value={phone ?? ''} 
-                                placeholder="+1 (555) 123-4567" 
-                                onChange={(e) => handlePhoneChange(e.target.value)} 
-                                className="form-control bg-dark text-light" 
+                            <input
+                                type="tel"
+                                value={phone ?? ''}
+                                placeholder={t("form.phonePlaceholder") as string}
+                                onChange={(e) => handlePhoneChange(e.target.value)}
+                                className="form-control bg-dark text-light"
                             />
                         </div>
 
-                        <div className="text-muted"><small>Your phone number is required to prevent abuse of this service. Once the verification code is sent, only a hash of the phone number is stored.</small></div>
+                        <div className="text-muted"><small>{t("form.phoneHelp")}</small></div>
 
-                        {phoneInvalid && <p className="text-danger">Invalid Phone Number</p>}
+                        {phoneInvalid && <p className="text-danger">{t("errors.invalidPhone")}</p>}
 
 
                     </div>
 
                     <div className="card-footer">
-                        <button className="btn btn-secondary" disabled={processing} onClick={handleFormSubmit}>Request Funds</button>
+                        <button className="btn btn-secondary" disabled={processing} onClick={handleFormSubmit}>{t("form.requestCta")}</button>
                     </div>
                 </div>
 
             )}
             {(IS_DEVNET || IS_TESTNET) && (
-                <p className="py-2 text-center"><strong>Please send {IS_DEVNET ? 'devnet' : 'testnet'} coin back to <code>{info.address}</code> when you don&apos;t need them anymore.<br />By returning the {IS_DEVNET ? 'devnet' : 'testnet'} coins, you contribute to the {IS_DEVNET ? 'devnet' : 'testnet'} ecosystem and help maintain its functionality for other developers and testers.</strong></p>
+                <p className="py-2 text-center"><strong>{IS_DEVNET ? t("returnCoinsDevnet", { address: info.address }) : t("returnCoinsTestnet", { address: info.address })}</strong></p>
             )}
         </>
     )

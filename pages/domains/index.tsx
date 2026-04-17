@@ -39,7 +39,7 @@ const AdnrListPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'domains'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'domains', 'search'])),
   },
 });
 

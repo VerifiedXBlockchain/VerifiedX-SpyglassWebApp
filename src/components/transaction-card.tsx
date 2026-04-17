@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { Transaction } from "../models/transaction";
 
 interface Props {
@@ -5,6 +6,7 @@ interface Props {
 }
 
 export const TransactionCard = (props: Props) => {
+  const { t } = useTranslation("transaction");
   const { transaction } = props;
 
   return (
@@ -18,33 +20,33 @@ export const TransactionCard = (props: Props) => {
         </a>
       </div>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Tx Type:
+        {t("card.txType")}
         <span className="badge bg-primary rounded-pill">
           {transaction.transactionTypeLabel}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Height:
+        {t("card.height")}
         <span className="badge bg-primary rounded-pill">
           {transaction.height}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Amount:
+        {t("card.amount")}
         <span className="badge bg-primary rounded-pill">
           {transaction.amount} VFX
         </span>
       </li>
       <li className="list-group-item">
-        From:<br />
+        {t("card.from")}<br />
         <small>{transaction.fromAddress}</small>
       </li>
       <li className="list-group-item ">
-        To:<br />
+        {t("card.to")}<br />
         <small>{transaction.toAddress}</small>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Fee:
+        {t("card.fee")}
         <span className="badge bg-primary rounded-pill">
           {transaction.fee} VFX
         </span>

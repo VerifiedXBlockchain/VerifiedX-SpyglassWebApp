@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { VbtcToken } from "../models/vbtc-token";
 
 
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export const VbtcTokenList = (props: Props) => {
+    const { t } = useTranslation("vbtcToken");
     const { tokens } = props;
 
 
@@ -15,15 +17,15 @@ export const VbtcTokenList = (props: Props) => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Name</th>
-                        <th>Smart Contract</th>
-                        <th>Owner</th>
-                        <th>Minted At</th>
-                        <th style={{ textAlign: 'right' }}>Global Balance</th>
+                        <th>{t("list.table.name")}</th>
+                        <th>{t("list.table.smartContract")}</th>
+                        <th>{t("list.table.owner")}</th>
+                        <th>{t("list.table.mintedAt")}</th>
+                        <th style={{ textAlign: 'right' }}>{t("list.table.globalBalance")}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {tokens.filter((t) => t.global_balance > 0).map((token) => (
+                    {tokens.filter((tok) => tok.global_balance > 0).map((token) => (
                         <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
                             <td>
                                 <a href={`/vbtc-token/${token.sc_identifier}`}>

@@ -37,7 +37,7 @@ const TransactionListPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'transaction'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'transaction', 'search'])),
   },
 });
 

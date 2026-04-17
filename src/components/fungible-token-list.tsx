@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { FungibleToken } from "../models/fungible-token";
 
 
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export const FungibleTokenList = (props: Props) => {
+    const { t } = useTranslation("fungibleToken");
     const { tokens } = props;
 
 
@@ -15,12 +17,12 @@ export const FungibleTokenList = (props: Props) => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Ticker</th>
-                        <th>Name</th>
-                        <th>Smart Contract</th>
-                        <th>Owner</th>
-                        <th>Deployed At</th>
-                        <th style={{ textAlign: 'right' }}>Circulating Supply</th>
+                        <th>{t("list.table.ticker")}</th>
+                        <th>{t("list.table.name")}</th>
+                        <th>{t("list.table.smartContract")}</th>
+                        <th>{t("list.table.owner")}</th>
+                        <th>{t("list.table.deployedAt")}</th>
+                        <th style={{ textAlign: 'right' }}>{t("list.table.circulatingSupply")}</th>
                     </tr>
                 </thead>
                 <tbody>

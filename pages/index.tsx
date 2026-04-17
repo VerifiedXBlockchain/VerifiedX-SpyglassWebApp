@@ -38,7 +38,7 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'search'])),
       data: {
         results: []
       }

@@ -42,7 +42,7 @@ const FaucetPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'faucet'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'faucet', 'search'])),
   },
 });
 

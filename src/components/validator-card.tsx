@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { Validator } from "../models/validator";
 
 interface Props {
@@ -5,6 +6,7 @@ interface Props {
 }
 
 export const ValidatorCard = (props: Props) => {
+  const { t } = useTranslation(["validator", "common"]);
   const { validator } = props;
 
   return (
@@ -23,22 +25,22 @@ export const ValidatorCard = (props: Props) => {
           href={`/validators/${validator.address}`}
           className="btn btn-primary btn-sm"
         >
-          Details
+          {t("common:action.details")}
         </a>
       </div>
       <ul className="list-group">
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
-            <div>Status</div>
+            <div>{t("common:status.status")}</div>
             {validator.isActive ? (
-              <div className="badge bg-success">Active</div>
+              <div className="badge bg-success">{t("common:status.active")}</div>
             ) : (
-              <div className="badge bg-danger">Inactive</div>
+              <div className="badge bg-danger">{t("common:status.inactive")}</div>
             )}
           </div>
         </li>
         <li className="list-group-item ">
-          <div>Address</div>
+          <div>{t("common:field.address")}</div>
           <small
             style={{
               // wordBreak: "break-all",
@@ -52,7 +54,7 @@ export const ValidatorCard = (props: Props) => {
 
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
-            <div>Location</div>
+            <div>{t("common:field.location")}</div>
             <small>{validator.locationLabel}</small>
           </div>
         </li>

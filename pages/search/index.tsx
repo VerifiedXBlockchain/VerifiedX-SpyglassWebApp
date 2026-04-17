@@ -1,8 +1,10 @@
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { isMobile } from "react-device-detect";
 import { BlockCard } from "../../src/components/block-card";
 import { TransactionCard } from "../../src/components/transaction-card";
@@ -30,6 +32,7 @@ enum SearchResultType {
 }
 
 const NewSearchPage: NextPage = () => {
+    const { t } = useTranslation(["search", "common"]);
 
     const router = useRouter();
     const { q } = router.query;
@@ -312,10 +315,10 @@ const NewSearchPage: NextPage = () => {
             <nav aria-label="breadcrumb">
                 <ol className="breadcrumb align-items-center">
                     <li className="breadcrumb-item">
-                        <Link href="/">Home</Link>
+                        <Link href="/">{t("common:breadcrumb.home")}</Link>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                        <Link href="/search">Search</Link>
+                        <Link href="/search">{t("search:page.breadcrumbCurrent")}</Link>
                     </li>
                 </ol>
             </nav>
@@ -332,7 +335,7 @@ const NewSearchPage: NextPage = () => {
                             type="text"
                             autoFocus={true}
                             className="form-control py-2 bg-dark text-white"
-                            placeholder="Search for address, block, hash, or domain..."
+                            placeholder={t("search:page.inputPlaceholder") as string}
                             style={isMobile ? { fontSize: 12 } : { fontSize: 24 }}
                             ref={searchInput}
                             value={query}
@@ -340,13 +343,13 @@ const NewSearchPage: NextPage = () => {
                             onKeyDown={e => e.key === "Enter" ? handleSearch(query, 1) : null}
                         ></input>
 
-                        <button type="submit" className="btn btn-secondary">Search</button>
+                        <button type="submit" className="btn btn-secondary">{t("search:page.submit")}</button>
 
                         {query ?
                             <button className="btn"
                                 style={{ backgroundColor: 'transparent' }}
                                 onClick={() => handleClear()}
-                            >Clear</button> : null}
+                            >{t("search:page.clear")}</button> : null}
 
                     </div>
                 </form>
@@ -432,5 +435,11 @@ const NewSearchPage: NextPage = () => {
 
 }
 
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search'])),
+  },
+});
 
 export default NewSearchPage;

@@ -71,7 +71,7 @@ const VbtcTokenDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'vbtcToken'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'vbtcToken', 'search'])),
   },
 });
 

@@ -72,7 +72,7 @@ const FungibleTokenDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'fungibleToken'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'fungibleToken', 'search'])),
   },
 });
 

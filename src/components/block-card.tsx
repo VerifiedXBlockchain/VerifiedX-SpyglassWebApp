@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { Block } from "../models/block";
 
 interface Props {
@@ -5,27 +6,28 @@ interface Props {
 }
 
 export const BlockCard = (props: Props) => {
+  const { t } = useTranslation(["block", "common"]);
   const { block } = props;
   return (
     <div className="card">
       <div className="card-header d-flex justify-content-between align-items-center">
         <a href={`/block/${block.height}`} className="mb-0 h5 text-white">
-          Block {block.height}
+          {t("block:card.title", { height: block.height })}
         </a>
         <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">
-          View Details
+          {t("common:action.viewDetails")}
         </a>
       </div>
       <ul className="list-group">
         <li className="list-group-item ">
-          Hash
+          {t("block:card.hash")}
           <br />
           {/* <small>{block.hashPreview()}</small> */}
           <small>{block.hash}</small>
         </li>
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
-            <div>Validated By:</div>
+            <div>{t("block:card.validatedBy")}</div>
             {block.masternode ? (
               <div>
                 <a
@@ -42,20 +44,20 @@ export const BlockCard = (props: Props) => {
         </li>
         <li className="list-group-item ">
           <div className="d-flex justify-content-between align-items-center">
-            <div>Validator Location:</div>
+            <div>{t("block:card.validatorLocation")}</div>
 
             <small>
-              {block.masternode?.locationLabel || "-"}
+              {block.masternode?.locationLabel || t("block:card.locationFallback")}
             </small>
           </div>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
           <div>
-            Transactions
-            {block.transactions.map((t, i) =>
+            {t("block:card.transactions")}
+            {block.transactions.map((tx, i) =>
               i < 4 ? (
-                <div key={t.hash}>
-                  <a href={`/transaction/${t.hash}`}>{t.hashPreview()}</a>
+                <div key={tx.hash}>
+                  <a href={`/transaction/${tx.hash}`}>{tx.hashPreview()}</a>
                 </div>
               ) : null
             )}
@@ -66,13 +68,13 @@ export const BlockCard = (props: Props) => {
           </span>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
-          Total Amount
+          {t("block:card.totalAmount")}
           <span className="badge bg-primary rounded-pill">
             {block.totalAmount} VFX
           </span>
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">
-          Fee
+          {t("block:card.fee")}
           <span className="badge bg-primary rounded-pill">
             {block.totalReward} VFX
           </span>

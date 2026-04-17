@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import { AddressService } from "../services/address-service";
 import { TopHolder } from "../models/address";
 
 export const TopHoldersList = () => {
+    const { t } = useTranslation("search");
     const [results, setResults] = useState<TopHolder[]>([]);
 
     const fetch = async () => {
@@ -32,9 +34,9 @@ export const TopHoldersList = () => {
                 <table className="table table-striped table-dark">
                     <thead>
                         <tr>
-                            <th scope="col">Address</th>
-                            <th scope="col">Domain</th>
-                            <th scope="col" className="text-end">Balance</th>
+                            <th scope="col">{t("topHolders.table.address")}</th>
+                            <th scope="col">{t("topHolders.table.domain")}</th>
+                            <th scope="col" className="text-end">{t("topHolders.table.balance")}</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
+import { useTranslation } from "next-i18next";
 import { Nft } from "../models/nft";
 import { Validator } from "../models/validator";
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export const NftCard = (props: Props) => {
+  const { t } = useTranslation(["nft", "common"]);
   const { nft } = props;
 
   return (
@@ -25,23 +27,23 @@ export const NftCard = (props: Props) => {
           href={`/nfts/${nft.identifier}`}
           className="btn btn-primary btn-sm"
         >
-          View Details
+          {t("nft:card.viewDetails")}
         </a>
       </div>
       <ul className="list-group">
         <li className="list-group-item">
           <div className="d-flex justify-content-between align-items-center">
-            <div>Status</div>
+            <div>{t("nft:card.status")}</div>
             {nft.isBurned ? (
-              <div className="badge bg-danger">Burned</div>
+              <div className="badge bg-danger">{t("nft:card.burned")}</div>
             ) : (
-              <div className="badge bg-success">Active</div>
+              <div className="badge bg-success">{t("nft:card.active")}</div>
 
             )}
           </div>
         </li>
         <li className="list-group-item ">
-          <div>Name</div>
+          <div>{t("nft:card.name")}</div>
           <small
             style={{
               whiteSpace: "pre-line",
@@ -54,7 +56,7 @@ export const NftCard = (props: Props) => {
 
         <li className="list-group-item ">
           <div className="">
-            <div>Owner</div>
+            <div>{t("nft:card.owner")}</div>
             <small style={{
               whiteSpace: "pre-line",
               overflowWrap: "anywhere",
@@ -64,7 +66,7 @@ export const NftCard = (props: Props) => {
 
         <li className="list-group-item ">
           <div className="">
-            <div>Minter</div>
+            <div>{t("nft:card.minter")}</div>
             <small style={{
               whiteSpace: "pre-line",
               overflowWrap: "anywhere",
@@ -74,7 +76,7 @@ export const NftCard = (props: Props) => {
 
         <li className="list-group-item ">
           <div className="">
-            <div>Mint Tx</div>
+            <div>{t("nft:card.mintTx")}</div>
             <small style={{
               whiteSpace: "pre-line",
               overflowWrap: "anywhere",
@@ -90,7 +92,7 @@ export const NftCard = (props: Props) => {
 
       </ul>
       <div className="card-footer text-muted text-center">
-        Minted: {nft.timestampLabel}
+        {t("nft:card.minted", { date: nft.timestampLabel })}
       </div>
     </div>
   );
