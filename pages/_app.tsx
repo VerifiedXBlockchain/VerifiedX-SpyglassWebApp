@@ -10,6 +10,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { IS_TESTNET, IS_DEVNET, MAINTENENCE_MODE } from "../src/constants";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { appWithTranslation, useTranslation } from "next-i18next";
+import nextI18NextConfig from "../next-i18next.config";
 
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Script from "next/script";
@@ -19,8 +21,7 @@ mapboxgl.accessToken =
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-
-
+  const { t } = useTranslation("common");
 
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
@@ -35,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <link rel="icon" href="/favicon.png" />
         </Head>
         <div className="p-5 text-center">
-          Down for Maintenance. Come back soon!
+          {t("maintenance.message")}
         </div>
       </>
     );
@@ -63,7 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample07XL">
               <div className="navbar-nav">
                 <a className="nav-link" href="/block">
-                  Blocks
+                  {t("nav.blocks")}
                 </a>
 
                 <a
@@ -220,4 +221,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp, nextI18NextConfig);

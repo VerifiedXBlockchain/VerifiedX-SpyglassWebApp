@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "spyglass": "Spyglass",
+    "testnetSuffix": "TESTNET",
+    "devnetSuffix": "DEVNET"
+  },
+  "nav": {
+    "blocks": "Blocks",
+    "transactions": "Transactions",
+    "validators": "Validators",
+    "metrics": "Metrics",
+    "domains": "Domains",
+    "vbtc": "vBTC",
+    "btcSpyglass": "BTC Spyglass",
+    "fungibleTokens": "Fungible Tokens",
+    "nfts": "NFTs",
+    "map": "Map",
+    "faucet": "Faucet",
+    "search": "Search",
+    "verifiedXSite": "VerifiedX.io",
+    "docs": "Docs",
+    "github": "Github",
+    "discord": "Discord",
+    "x": "X"
+  },
+  "maintenance": {
+    "message": "Down for Maintenance. Come back soon!"
+  }
+}
