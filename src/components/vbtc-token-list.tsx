@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import { VbtcToken } from "../models/vbtc-token";
 
 
@@ -8,6 +9,7 @@ interface Props {
 
 export const VbtcTokenList = (props: Props) => {
     const { t } = useTranslation("vbtcToken");
+    const router = useRouter();
     const { tokens } = props;
 
 
@@ -54,7 +56,7 @@ export const VbtcTokenList = (props: Props) => {
                             <td>
                                 <a href={`/search?q=${token.owner_address}`}>{token.owner_address}</a>
                             </td>
-                            <td>{token.created_at ? token.created_at.toLocaleDateString() : '-'}</td>
+                            <td>{token.created_at ? token.created_at.toLocaleDateString(router.locale) : '-'}</td>
                             <td style={{ textAlign: 'right' }}>{token.global_balance} vBTC</td>
                         </tr>
                     ))}

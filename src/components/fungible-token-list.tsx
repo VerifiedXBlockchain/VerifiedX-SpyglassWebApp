@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 import { FungibleToken } from "../models/fungible-token";
 
 
@@ -8,6 +9,7 @@ interface Props {
 
 export const FungibleTokenList = (props: Props) => {
     const { t } = useTranslation("fungibleToken");
+    const router = useRouter();
     const { tokens } = props;
 
 
@@ -53,7 +55,7 @@ export const FungibleTokenList = (props: Props) => {
                             <td>
                                 <a href={`/search?q=${token.owner_address}`}>{token.owner_address}</a>
                             </td>
-                            <td>{token.created_at ? token.created_at.toLocaleDateString() : '-'}</td>
+                            <td>{token.created_at ? token.created_at.toLocaleDateString(router.locale) : '-'}</td>
                             <td style={{ textAlign: 'right' }}>{token.circulating_supply} {token.ticker}</td>
                         </tr>
                     ))}

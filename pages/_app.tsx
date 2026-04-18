@@ -3,11 +3,13 @@
 import "../src/styles/styles.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { Search } from "../src/components/search";
+import { LanguageSwitcher } from "../src/components/language-switcher";
 import { isMobile } from "react-device-detect";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { IS_TESTNET, IS_DEVNET, MAINTENENCE_MODE } from "../src/constants";
+import { IS_TESTNET, IS_DEVNET, MAINTENENCE_MODE, SITE_ORIGIN } from "../src/constants";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { appWithTranslation, useTranslation } from "next-i18next";
@@ -22,10 +24,15 @@ mapboxgl.accessToken =
 function MyApp({ Component, pageProps }: AppProps) {
 
   const { t } = useTranslation("common");
+  const router = useRouter();
+  const { locale, locales, defaultLocale, asPath } = router;
 
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+
+  const hreflangPath = asPath === "/" ? "" : asPath;
+  const canonicalPath = locale && locale !== defaultLocale ? `/${locale}${hreflangPath}` : hreflangPath;
 
   if (MAINTENENCE_MODE) {
     return (
@@ -202,16 +209,33 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </a>
               </div>
             </div>
-            <div className="d-flex  d-none d-lg-block">
+            <div className="d-none d-lg-flex align-items-center gap-2">
+              <LanguageSwitcher />
               <Search />
             </div>
           </div>
         </nav>
       </header>
+      <Head>
+        <link rel="canonical" href={`${SITE_ORIGIN}${canonicalPath || "/"}`} />
+        {locales?.map((loc) => {
+          const href = loc === defaultLocale ? hreflangPath : `/${loc}${hreflangPath}`;
+          return (
+            <link
+              key={loc}
+              rel="alternate"
+              hrefLang={loc}
+              href={`${SITE_ORIGIN}${href || "/"}`}
+            />
+          );
+        })}
+        <link rel="alternate" hrefLang="x-default" href={`${SITE_ORIGIN}${hreflangPath || "/"}`} />
+      </Head>
       <div style={{ height: 54 }}></div>
 
       <div className=" d-block d-lg-none">
-        <div className="container">
+        <div className="container d-flex align-items-center gap-2">
+          <LanguageSwitcher />
           <Search />
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { Block } from "../models/block";
 
@@ -8,6 +9,7 @@ interface Props {
 
 export const BlockRow = (props: Props) => {
   const { t } = useTranslation("block");
+  const router = useRouter();
   const { block } = props;
   const [expanded, setExpanded] = useState(false);
 
@@ -16,7 +18,7 @@ export const BlockRow = (props: Props) => {
       <td className="text-center">
         <div>
 
-          {block.height.toLocaleString()}
+          {block.height.toLocaleString(router.locale)}
         </div>
       </td>
       <td>
