@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
@@ -9,6 +10,7 @@ const LOCALE_LABELS: Record<string, string> = {
 
 export const LanguageSwitcher = () => {
   const router = useRouter();
+  const { t } = useTranslation("common");
   const { locales, locale: active, asPath } = router;
 
   if (!locales || locales.length < 2) return null;
@@ -20,7 +22,7 @@ export const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="nav-link p-0 d-flex align-items-center" role="group" aria-label="Language">
+    <div className="nav-link p-0 d-flex align-items-center" role="group" aria-label={t("nav.switcherAria") as string}>
       {locales.map((loc, i) => (
         <span key={loc} className="d-flex align-items-center">
           {i > 0 && <span className="text-muted px-1">/</span>}

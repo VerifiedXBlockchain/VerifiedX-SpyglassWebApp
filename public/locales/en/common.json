@@ -23,7 +23,8 @@
     "docs": "Docs",
     "github": "GitHub",
     "discord": "Discord",
-    "x": "X"
+    "x": "X",
+    "switcherAria": "Language"
   },
   "maintenance": {
     "message": "Down for Maintenance. Come back soon!"
