@@ -2,6 +2,7 @@ import { isToday } from "../utils/dates";
 import pako from "pako";
 import { Nft } from "./nft";
 import { Recovery } from "./recovery";
+import { SENTINEL_ADDRESSES } from "../constants";
 
 export class Transaction {
   hash: string;
@@ -288,13 +289,82 @@ export class Transaction {
       case 19:
         return "Tokenization Burn";
       case 20:
-        return "Tokenization Withdrawl";
+        return "Tokenization Withdrawal Request";
       case 21:
-        return "Tokenization Withdrawl";
-
-
+        return "Tokenization Withdrawal Complete";
+      case 22:
+        return "Validator Registration";
+      case 23:
+        return "Validator Heartbeat";
+      case 25:
+        return "vBTC V2 Mint";
+      case 26:
+        return "vBTC V2 Transfer";
+      case 27:
+        return "vBTC V2 Withdrawal Request";
+      case 28:
+        return "vBTC V2 Withdrawal Complete";
+      case 29:
+        return "vBTC V2 Withdrawal Cancel";
+      case 30:
+        return "vBTC V2 Withdrawal Vote";
+      case 31:
+        return "VFX Shield";
+      case 32:
+        return "VFX Unshield";
+      case 33:
+        return "VFX Private Transfer";
+      case 34:
+        return "vBTC Shield";
+      case 35:
+        return "vBTC Unshield";
+      case 36:
+        return "vBTC Private Transfer";
+      case 37:
+        return "vBTC Bridge Lock";
+      case 38:
+        return "vBTC Bridge Unlock";
       default:
         return "-";
     }
+  }
+
+  get displayAmount(): string {
+    switch (this.transactionType) {
+      case 26: // vBTC V2 Transfer
+      case 27: // vBTC V2 Withdrawal Request
+      case 28: // vBTC V2 Withdrawal Complete
+      case 37: // vBTC Bridge Lock
+      case 38: // vBTC Bridge Unlock
+        const btcAmount = this.nftDataValue("Amount");
+        if (btcAmount != null) return `${btcAmount} vBTC`;
+        return `${this.amount} VFX`;
+      case 34: // vBTC Shield
+      case 35: // vBTC Unshield
+        const vbtcAmt = this.nftDataValue("vbtc_amt");
+        if (vbtcAmt != null) return `${vbtcAmt} vBTC`;
+        return `${this.amount} VFX`;
+      case 33: // VFX Private Transfer
+      case 36: // vBTC Private Transfer
+        return "Hidden";
+      default:
+        return `${this.amount} VFX`;
+    }
+  }
+
+  get displayFromAddress(): string {
+    return SENTINEL_ADDRESSES[this.fromAddress] ?? this.fromAddress;
+  }
+
+  get displayToAddress(): string {
+    return SENTINEL_ADDRESSES[this.toAddress] ?? this.toAddress;
+  }
+
+  get isFromSentinel(): boolean {
+    return this.fromAddress in SENTINEL_ADDRESSES;
+  }
+
+  get isToSentinel(): boolean {
+    return this.toAddress in SENTINEL_ADDRESSES;
   }
 }

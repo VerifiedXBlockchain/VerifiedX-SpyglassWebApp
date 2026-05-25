@@ -8,3 +8,8 @@ export const SOCKET_HOST = process.env.NEXT_PUBLIC_SOCKET_HOST || "https://web-6
 
 
 export const MAINTENENCE_MODE = process.env.NEXT_PUBLIC_MAINTENENCE_MODE == "true" ? true : false;
+
+export const SENTINEL_ADDRESSES: Record<string, string> = {
+  "Shielded_Pool": "Shielded Pool",
+  "TW_Base": "Token Withdrawal Base",
+};
