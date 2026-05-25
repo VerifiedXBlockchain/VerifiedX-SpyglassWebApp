@@ -32,16 +32,20 @@ export const TransactionCard = (props: Props) => {
       <li className="list-group-item d-flex justify-content-between align-items-center">
         Amount:
         <span className="badge bg-primary rounded-pill">
-          {transaction.amount} VFX
+          {transaction.displayAmount}
         </span>
       </li>
       <li className="list-group-item">
         From:<br />
-        <small>{transaction.fromAddress}</small>
+        <small className={transaction.isFromSentinel ? "text-muted fst-italic" : ""}>
+          {transaction.displayFromAddress}
+        </small>
       </li>
       <li className="list-group-item ">
         To:<br />
-        <small>{transaction.toAddress}</small>
+        <small className={transaction.isToSentinel ? "text-muted fst-italic" : ""}>
+          {transaction.displayToAddress}
+        </small>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
         Fee:

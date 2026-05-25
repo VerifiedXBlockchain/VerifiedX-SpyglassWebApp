@@ -83,7 +83,7 @@ const TransactionDetailPage: NextPage = () => {
             <div className="p-1"></div>
             <DetailItem
               label="Amount"
-              value={`${transaction.amount} VFX`}
+              value={transaction.displayAmount}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
@@ -99,14 +99,14 @@ const TransactionDetailPage: NextPage = () => {
           <div className="d-block d-md-flex">
             <DetailItem
               label="From"
-              value={transaction.fromAddress}
+              value={transaction.displayFromAddress}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
               label="To"
-              value={transaction.toAddress}
+              value={transaction.displayToAddress}
               smallValue
             ></DetailItem>
           </div>
