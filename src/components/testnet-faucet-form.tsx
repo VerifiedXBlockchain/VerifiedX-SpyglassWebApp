@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaucetService } from "../services/faucet-service";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { IS_TESTNET, IS_DEVNET } from "../constants";
-import { isValidPhoneNumber, AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
+import { AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
 
 const faucetService = new FaucetService();
 
@@ -83,10 +83,11 @@ const TestnetFaucetForm = (props: Props) => {
 
         let phoneParsed = '';
         try {
-            const phoneNumber = parsePhoneNumberWithError(phone);
-            
-            if (phoneNumber && isValidPhoneNumber(phoneNumber.number)) {
-                phoneParsed = phoneNumber.number; // Get the international format
+            // Numbers without a country code are treated as US (+1); a leading + overrides this
+            const phoneNumber = parsePhoneNumberWithError(phone, 'US');
+
+            if (phoneNumber.isValid()) {
+                phoneParsed = phoneNumber.number; // E.164 format, e.g. +12223334444
             } else {
                 console.log('Invalid phone number');
                 setPhoneInvalid(true);
