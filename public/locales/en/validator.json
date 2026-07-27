@@ -1,0 +1,33 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Validator Pool",
+    "metaDescription": "VerifiedX Spyglass: Home",
+    "totalActive": "Total Active Validators: {{count}}",
+    "checkStatusCta": "Check Validator Status"
+  },
+  "detail": {
+    "heading": "Validator Details",
+    "blocksHeading": "Blocks",
+    "fields": {
+      "address": "Address",
+      "name": "Name",
+      "location": "Location",
+      "connectionDate": "Connection Date",
+      "status": "Status",
+      "blocksCrafted": "Blocks Crafted"
+    }
+  },
+  "table": {
+    "status": "Status",
+    "address": "Address",
+    "validatorName": "Validator Name",
+    "location": "Location",
+    "actions": "Actions"
+  },
+  "search": {
+    "heading": "Validator Status Checker",
+    "label": "Validator Name or Address",
+    "placeholder": "RBnw8....",
+    "cta": "Check Status"
+  }
+}

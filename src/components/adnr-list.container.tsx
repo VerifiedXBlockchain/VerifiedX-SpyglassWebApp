@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import InfiniteScroll from "react-infinite-scroller";
 import { Adnr } from "../models/adnr";
 import { Block } from "../models/block";
@@ -15,6 +17,8 @@ import { ValidatorList } from "./validator-list";
 import { IS_TESTNET, IS_DEVNET } from "../constants";
 
 export const AdnrListContainer = () => {
+  const { t } = useTranslation(["domains", "common"]);
+  const localized = useLocalized();
   const [adnrs, setAdnrs] = useState<Adnr[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -85,7 +89,7 @@ export const AdnrListContainer = () => {
               key={0}
             >
               <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+                <span className="visually-hidden">{t("common:status.loading")}</span>
               </div>
             </div>
           }
@@ -94,9 +98,9 @@ export const AdnrListContainer = () => {
           <table className="table table-striped table-dark">
             <thead>
               <tr>
-                <th scope="col" style={{ width: 300 }}>Domain</th>
-                <th scope="col">Address</th>
-                <th scope="col" className="text-center">Actions</th>
+                <th scope="col" style={{ width: 300 }}>{t("domains:list.table.domain")}</th>
+                <th scope="col">{t("domains:list.table.address")}</th>
+                <th scope="col" className="text-center">{t("domains:list.table.actions")}</th>
               </tr>
             </thead>
             <tbody>
@@ -115,13 +119,13 @@ export const AdnrListContainer = () => {
                         {adnr.btc_address}
                       </a>
                     ) : (
-                      <a href={`/search?q=${adnr.address}`}>{adnr.address}</a>
+                      <a href={localized(`/search?q=${adnr.address}`)}>{adnr.address}</a>
                     )}
                   </td>
                   {/* <td>{adnr.address}</td> */}
                   {/* <td>{adnr.create_transaction.hash}</td> */}
                   <td className="text-center" style={{ verticalAlign: 'middle' }}>
-                    <a href={`/transaction/${adnr.create_transaction.hash}`} className="btn btn-primary">View Transaction</a>
+                    <a href={localized(`/transaction/${adnr.create_transaction.hash}`)} className="btn btn-primary">{t("domains:list.table.viewTransaction")}</a>
                   </td>
                 </tr>
               ))}

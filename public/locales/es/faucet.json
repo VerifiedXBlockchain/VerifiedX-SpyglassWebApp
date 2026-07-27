@@ -1,0 +1,40 @@
+{
+  "pageTitleDevnet": "Faucet VFX Devnet",
+  "pageTitleTestnet": "Faucet VFX Testnet",
+  "pageTitleMainnet": "Faucet VFX",
+  "info": {
+    "available": "Fondos disponibles: {{amount}} VFX",
+    "min": "Monto mínimo solicitable: {{amount}} VFX",
+    "max": "Monto máximo solicitable: {{amount}} VFX",
+    "sender": "Dirección del remitente: {{address}}"
+  },
+  "success": {
+    "broadcast": "¡Éxito! TX transmitida",
+    "hash": "Hash de la transacción: {{hash}}"
+  },
+  "errors": {
+    "generic": "Error",
+    "invalidAddress": "Dirección inválida",
+    "invalidAmount": "Monto inválido",
+    "invalidPhone": "Número de teléfono inválido",
+    "invalidCode": "Código inválido"
+  },
+  "form": {
+    "verificationCodeLabel": "Código de verificación",
+    "verificationCodePlaceholder": "1234",
+    "verifyCta": "Verificar",
+    "addressLabelDevnet": "Dirección VFX Devnet",
+    "addressLabelTestnet": "Dirección VFX Testnet",
+    "addressLabelMainnet": "Dirección VFX",
+    "addressPlaceholderTestnet": "xArscSBw9qk3xuMErGDEXXcbxigfccQvqD",
+    "addressPlaceholderMainnet": "RArscSBw9qk3xuMErGDEXXcbxigfccQvqD",
+    "amountLabel": "Monto solicitado",
+    "amountPlaceholder": "10",
+    "phoneLabel": "Número de teléfono",
+    "phonePlaceholder": "+1 (555) 123-4567",
+    "phoneHelp": "Tu número de teléfono se solicita para evitar abusos de este servicio. Una vez enviado el código de verificación, solo se guarda un hash del número.",
+    "requestCta": "Solicitar fondos"
+  },
+  "returnCoinsDevnet": "Por favor, devuelve los fondos de devnet a {{address}} cuando ya no los necesites. Al devolver las monedas de devnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",
+  "returnCoinsTestnet": "Por favor, devuelve los fondos de testnet a {{address}} cuando ya no los necesites. Al devolver las monedas de testnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers."
+}

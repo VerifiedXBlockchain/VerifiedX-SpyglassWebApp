@@ -1,0 +1,72 @@
+{
+  "brand": {
+    "spyglass": "Spyglass",
+    "testnetSuffix": "TESTNET",
+    "devnetSuffix": "DEVNET",
+    "devnetTag": "[DEVNET]",
+    "testnetTag": "[TESTNET]"
+  },
+  "nav": {
+    "blocks": "Blocks",
+    "transactions": "Transactions",
+    "validators": "Validators",
+    "metrics": "Metrics",
+    "domains": "Domains",
+    "vbtc": "vBTC",
+    "btcSpyglass": "BTC Spyglass",
+    "fungibleTokens": "Fungible Tokens",
+    "nfts": "NFTs",
+    "map": "Map",
+    "faucet": "Faucet",
+    "search": "Search",
+    "verifiedXSite": "VerifiedX.io",
+    "docs": "Docs",
+    "github": "GitHub",
+    "discord": "Discord",
+    "x": "X",
+    "switcherAria": "Language"
+  },
+  "maintenance": {
+    "message": "Down for Maintenance. Come back soon!"
+  },
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "action": {
+    "search": "Search",
+    "clear": "Clear",
+    "details": "Details",
+    "viewDetails": "View Details",
+    "prev": "Prev",
+    "next": "Next",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "status": {
+    "loading": "Loading...",
+    "active": "Active",
+    "inactive": "Inactive",
+    "burned": "Burned",
+    "yes": "Yes",
+    "no": "No",
+    "status": "Status"
+  },
+  "field": {
+    "name": "Name",
+    "address": "Address",
+    "owner": "Owner",
+    "location": "Location",
+    "hash": "Hash",
+    "description": "Description",
+    "actions": "Actions",
+    "balance": "Balance",
+    "amount": "Amount",
+    "fee": "Fee",
+    "signature": "Signature",
+    "from": "From",
+    "to": "To"
+  },
+  "meta": {
+    "defaultDescription": "VerifiedX Spyglass: Home"
+  }
+}

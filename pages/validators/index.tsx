@@ -1,6 +1,8 @@
 import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { isMobile } from "react-device-detect";
 import { ValidatorCardList } from "../../src/components/validator-card-list";
 import { ValidatorList } from "../../src/components/validator-list";
@@ -10,27 +12,30 @@ import { Validator } from "../../src/models/validator";
 
 
 const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { t } = useTranslation(["validator", "common"]);
   if (typeof window === "undefined") {
     return null;
   }
   const results: any[] = data.results;
   const validators: Validator[] = results.map(v => new Validator(v));
+  const activeCount = validators.filter(v => v.isActive).length;
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
 
   return (
     <>
       <Head>
-        <title>VFX Spyglass: Validator Pool{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <meta name="description" content="VerifiedX Spyglass: Home" />
+        <title>{`${t("validator:list.pageTitle")}${netTag}`}</title>
+        <meta name="description" content={t("validator:list.metaDescription") as string} />
         <link rel="icon" href="/favicon.png" />
       </Head>
       {isMobile ?
         <div className="text-center px-3 pt-2">
           {validators.length ? (
             <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
-              Total Active Validators: {validators.filter(v => v.isActive).length}
+              {t("validator:list.totalActive", { count: activeCount })}
             </div>) : null}
           <Link href={"/validators/search"}>
-            <a className="btn-link btn btn-sm" >Check Validator Status</a>
+            <a className="btn-link btn btn-sm" >{t("validator:list.checkStatusCta")}</a>
           </Link>
         </div>
         :
@@ -39,11 +44,11 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
 
             {validators.length ? (
               <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
-                Total Active Validators: {validators.filter(v => v.isActive).length}
+                {t("validator:list.totalActive", { count: activeCount })}
               </div>) : null}
             <div>
               <Link href={"/validators/search"}>
-                <a className="btn-link btn btn-sm" >Check Validator Status</a>
+                <a className="btn-link btn btn-sm" >{t("validator:list.checkStatusCta")}</a>
               </Link>
             </div>
           </div>
@@ -54,7 +59,7 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {
 
   res.setHeader(
     'Cache-Control',
@@ -68,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search', 'validator'])),
       data: data
     },
   }

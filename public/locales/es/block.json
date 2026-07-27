@@ -1,0 +1,74 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass",
+    "metaDescription": "VerifiedX Spyglass: Bloques",
+    "breadcrumbCurrent": "Bloques"
+  },
+  "detail": {
+    "pageTitle": "VFX Spyglass: Bloque {{height}}",
+    "heading": "Detalles del bloque",
+    "transactionsHeading": "Transacciones",
+    "fields": {
+      "blockHeight": "Altura de bloque",
+      "transactions": "Transacciones",
+      "size": "Tamaño",
+      "amount": "Monto",
+      "reward": "Recompensa",
+      "validator": "Validador",
+      "hash": "Hash",
+      "previousHash": "Hash previo",
+      "chainRefId": "ID de referencia de cadena",
+      "merkleRoot": "Raíz Merkle",
+      "stateRoot": "Raíz de estado",
+      "validatorSignature": "Firma del validador"
+    }
+  },
+  "card": {
+    "title": "Bloque {{height}}",
+    "hash": "Hash",
+    "validatedBy": "Validado por:",
+    "validatorLocation": "Ubicación del validador:",
+    "locationFallback": "-",
+    "transactions": "Transacciones",
+    "totalAmount": "Monto total",
+    "fee": "Comisión"
+  },
+  "row": {
+    "height": "Altura",
+    "hash": "Hash",
+    "amount": "Monto",
+    "fee": "Comisión",
+    "validator": "Validador",
+    "validatorLocation": "Ubicación del validador",
+    "transactions": "Transacciones",
+    "crafted": "Creado",
+    "craftTime": "Tiempo de creación",
+    "txsCount_one": "{{count}} Tx",
+    "txsCount_other": "{{count}} Txs",
+    "craftTimeMs": "{{ms}} ms",
+    "locationFallback": "-"
+  },
+  "rewardsCalculator": {
+    "yourValidators": "Tus validadores (v)",
+    "totalValidators": "Total de validadores (t)",
+    "per": "Por (d)",
+    "day": "Día",
+    "week": "Semana",
+    "month": "Mes",
+    "year": "Año",
+    "estimateDisclaimer": "Esta es solo una estimación y las recompensas no están garantizadas.",
+    "rewardUnit": "RBX"
+  },
+  "latest": {
+    "title": "Bloque {{height}}",
+    "hash": "Hash",
+    "craftTime": "Tiempo de creación",
+    "craftTimeValue": "{{ms}} ms",
+    "size": "Tamaño",
+    "txCount": "Nº de tx",
+    "viewTx": "Ver tx {{index}}",
+    "amount": "Monto",
+    "fee": "Comisión",
+    "validatedBy": "Validado por"
+  }
+}

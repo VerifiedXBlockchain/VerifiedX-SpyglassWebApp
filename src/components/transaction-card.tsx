@@ -1,3 +1,5 @@
+import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Transaction } from "../models/transaction";
 
 interface Props {
@@ -5,50 +7,52 @@ interface Props {
 }
 
 export const TransactionCard = (props: Props) => {
+  const { t } = useTranslation("transaction");
+  const localized = useLocalized();
   const { transaction } = props;
 
   return (
     <div className="card">
       <div className="card-header text-start">
         <a
-          href={`/transaction/${transaction.hash}`}
+          href={localized(`/transaction/${transaction.hash}`)}
           className="mb-0 h6 text-white"
         >
           {transaction.hash}
         </a>
       </div>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Tx Type:
+        {t("card.txType")}
         <span className="badge bg-primary rounded-pill">
           {transaction.transactionTypeLabel}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Height:
+        {t("card.height")}
         <span className="badge bg-primary rounded-pill">
           {transaction.height}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Amount:
+        {t("card.amount")}
         <span className="badge bg-primary rounded-pill">
           {transaction.displayAmount}
         </span>
       </li>
       <li className="list-group-item">
-        From:<br />
+        {t("card.from")}<br />
         <small className={transaction.isFromSentinel ? "text-muted fst-italic" : ""}>
           {transaction.displayFromAddress}
         </small>
       </li>
       <li className="list-group-item ">
-        To:<br />
+        {t("card.to")}<br />
         <small className={transaction.isToSentinel ? "text-muted fst-italic" : ""}>
           {transaction.displayToAddress}
         </small>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center">
-        Fee:
+        {t("card.fee")}
         <span className="badge bg-primary rounded-pill">
           {transaction.fee} VFX
         </span>

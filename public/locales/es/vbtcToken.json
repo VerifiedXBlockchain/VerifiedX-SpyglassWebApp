@@ -1,0 +1,24 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Tokens vBTC",
+    "metaDescription": "VerifiedX Spyglass: Tokens vBTC VFX",
+    "breadcrumbCurrent": "Tokens vBTC",
+    "table": {
+      "name": "Nombre",
+      "smartContract": "Contrato inteligente",
+      "owner": "Propietario",
+      "mintedAt": "Emitido el",
+      "globalBalance": "Saldo global"
+    }
+  },
+  "detail": {
+    "pageTitle": "VFX Spyglass: Token vBTC: {{name}}",
+    "fields": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "smartContractId": "ID del contrato inteligente",
+      "owner": "Propietario"
+    },
+    "balancesHeading": "Saldos"
+  }
+}

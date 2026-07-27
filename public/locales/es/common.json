@@ -1,0 +1,72 @@
+{
+  "brand": {
+    "spyglass": "Spyglass",
+    "testnetSuffix": "TESTNET",
+    "devnetSuffix": "DEVNET",
+    "devnetTag": "[DEVNET]",
+    "testnetTag": "[TESTNET]"
+  },
+  "nav": {
+    "blocks": "Bloques",
+    "transactions": "Transacciones",
+    "validators": "Validadores",
+    "metrics": "Métricas",
+    "domains": "Dominios",
+    "vbtc": "vBTC",
+    "btcSpyglass": "BTC Spyglass",
+    "fungibleTokens": "Tokens fungibles",
+    "nfts": "NFTs",
+    "map": "Mapa",
+    "faucet": "Faucet",
+    "search": "Buscar",
+    "verifiedXSite": "VerifiedX.io",
+    "docs": "Docs",
+    "github": "GitHub",
+    "discord": "Discord",
+    "x": "X",
+    "switcherAria": "Idioma"
+  },
+  "maintenance": {
+    "message": "En mantenimiento. ¡Vuelve pronto!"
+  },
+  "breadcrumb": {
+    "home": "Inicio"
+  },
+  "action": {
+    "search": "Buscar",
+    "clear": "Limpiar",
+    "details": "Detalles",
+    "viewDetails": "Ver detalles",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
+  "status": {
+    "loading": "Cargando...",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "burned": "Quemado",
+    "yes": "Sí",
+    "no": "No",
+    "status": "Estado"
+  },
+  "field": {
+    "name": "Nombre",
+    "address": "Dirección",
+    "owner": "Propietario",
+    "location": "Ubicación",
+    "hash": "Hash",
+    "description": "Descripción",
+    "actions": "Acciones",
+    "balance": "Saldo",
+    "amount": "Monto",
+    "fee": "Comisión",
+    "signature": "Firma",
+    "from": "De",
+    "to": "Para"
+  },
+  "meta": {
+    "defaultDescription": "VerifiedX Spyglass: Inicio"
+  }
+}

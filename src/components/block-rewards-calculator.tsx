@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "next-i18next";
 
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 const BlockRewardsCalculator = (props: Props) => {
+    const { t } = useTranslation("block");
 
     const [validatorCount, setValidatorCount] = useState(1);
     const [totalValidators, setTotalValidators] = useState(props.totalValidators);
@@ -41,31 +43,31 @@ const BlockRewardsCalculator = (props: Props) => {
 
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Your Validators (v)</span>
+                        <span className="input-group-text" id="basic-addon3">{t("rewardsCalculator.yourValidators")}</span>
                     </div>
                     <input type="number" value={validatorCount} onChange={(e) => handleChange(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                 </div>
 
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Total Validators (t)</span>
+                        <span className="input-group-text" id="basic-addon3">{t("rewardsCalculator.totalValidators")}</span>
                     </div>
                     <input type="number" value={totalValidators} onChange={(e) => handleTotalChange(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
                 </div>
 
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Per (d)</span>
+                        <span className="input-group-text" id="basic-addon3">{t("rewardsCalculator.per")}</span>
                     </div>
                     <select className="form-control bg-dark text-light"
                         value={days}
                         onChange={(e) => {
                             setDays(parseInt(e.target.value));
                         }}>
-                        <option value="1">Day</option>
-                        <option value="7">Week</option>
-                        <option value="31">Month</option>
-                        <option value="365">Year</option>
+                        <option value="1">{t("rewardsCalculator.day")}</option>
+                        <option value="7">{t("rewardsCalculator.week")}</option>
+                        <option value="31">{t("rewardsCalculator.month")}</option>
+                        <option value="365">{t("rewardsCalculator.year")}</option>
                     </select>
                 </div>
 
@@ -82,12 +84,12 @@ const BlockRewardsCalculator = (props: Props) => {
                                 <span className="d-none d-md-inline">={' '}</span>
 
                                 <div className="badge badge-lg bg-success">
-                                    {rewardEstimate} RBX
+                                    {rewardEstimate} {t("rewardsCalculator.rewardUnit")}
                                 </div>
                             </div>
                         </div>
 
-                        <div className='mt-2 text-muted'><small>This is just an estimate and rewards are not guaranteed.</small></div>
+                        <div className='mt-2 text-muted'><small>{t("rewardsCalculator.estimateDisclaimer")}</small></div>
                     </div>
                     : null}
             </div>

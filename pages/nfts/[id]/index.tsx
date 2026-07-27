@@ -1,17 +1,22 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import { Nft } from "../../../src/models/nft";
 import { NftService } from "../../../src/services/nft-service";
 import { formatBytes } from "../../../src/utils/formatting";
 import { Transaction } from "../../../src/models/transaction";
 import { TransactionCard } from "../../../src/components/transaction-card";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 const NftDetailPage: NextPage = () => {
   const router = useRouter();
+  const { t } = useTranslation(["nft", "common"]);
+  const localized = useLocalized();
 
   const { id } = router.query;
 
@@ -37,25 +42,27 @@ const NftDetailPage: NextPage = () => {
 
   if (!nft) return <></>;
 
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
+
   return (
     <>
       <Head>
         <meta name="description" />
-        <title>{`VFX Spyglass: NFT ${id}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
-        <link rel="icon" href="/favicon.png" />
+        <title>{`${t("nft:detail.pageTitle", { id })}${netTag}`}</title>
+        <link rel="icon" href={localized("/favicon.png")} />
       </Head>
       <div className="container">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/nfts">NFTs</a>
+              <a href={localized("/nfts")}>{t("nft:list.breadcrumbCurrent")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/nft/${nft.identifier}`}>
+              <a href={localized(`/nft/${nft.identifier}`)}>
                 {nft.name}
               </a>
             </li>
@@ -68,50 +75,50 @@ const NftDetailPage: NextPage = () => {
           <tbody>
 
             <tr>
-              <th>Identifier:</th>
+              <th>{t("nft:detail.fields.identifier")}</th>
               <td>{nft.identifier}</td>
             </tr>
             <tr>
-              <th>Name:</th>
+              <th>{t("nft:detail.fields.name")}</th>
               <td>{nft.name}</td>
             </tr>
             <tr>
-              <th>Description:</th>
+              <th>{t("nft:detail.fields.description")}</th>
               <td dangerouslySetInnerHTML={{ __html: nft.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />') }}></td>
             </tr>
 
             <tr>
-              <th>minterAddress:</th>
+              <th>{t("nft:detail.fields.minterAddress")}</th>
               <td>{nft.minterAddress}</td>
             </tr>
             <tr>
-              <th>Owner Address:</th>
+              <th>{t("nft:detail.fields.ownerAddress")}</th>
               <td>{nft.ownerAddress}</td>
             </tr>
 
             <tr>
-              <th>Minter Name:</th>
+              <th>{t("nft:detail.fields.minterName")}</th>
               <td>{nft.minterName}</td>
             </tr>
             <tr>
-              <th>Primary Asset Name:</th>
+              <th>{t("nft:detail.fields.primaryAssetName")}</th>
               <td>{nft.primaryAssetName}</td>
             </tr>
             <tr>
-              <th>Primary AssetSize:</th>
+              <th>{t("nft:detail.fields.primaryAssetSize")}</th>
               <td>{formatBytes(nft.primaryAssetSize)}</td>
             </tr>
 
             <tr>
-              <th>Mint Transaction:</th>
-              <td> <a href={"/transaction/" + nft.mintTransaction} >
+              <th>{t("nft:detail.fields.mintTransaction")}</th>
+              <td> <a href={localized("/transaction/" + nft.mintTransaction)} >
                 {nft.mintTransaction}
               </a></td>
             </tr>
             {nft.burnTransaction ? (
               <tr>
-                <th>Burn Transaction:</th>
-                <td> <a href={"/transaction/" + nft.burnTransaction} >
+                <th>{t("nft:detail.fields.burnTransaction")}</th>
+                <td> <a href={localized("/transaction/" + nft.burnTransaction)} >
                   {nft.burnTransaction}
                 </a></td>
               </tr>
@@ -121,14 +128,14 @@ const NftDetailPage: NextPage = () => {
         </table>
 
         <div className="mt-3">
-          <h4>Smart Contract Code</h4>
+          <h4>{t("nft:detail.smartContractCodeHeading")}</h4>
           <pre className="bg-black p-2">
             {nft.dataDataFormatted}
           </pre>
         </div>
         {history.length && (
           <div className="mt-3">
-            <h4>Transaction History</h4>
+            <h4>{t("nft:detail.transactionHistoryHeading")}</h4>
             <div className="row">
 
               {history.map(tx => {
@@ -150,5 +157,11 @@ const NftDetailPage: NextPage = () => {
     </>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft', 'search', 'transaction'])),
+  },
+});
 
 export default NftDetailPage;

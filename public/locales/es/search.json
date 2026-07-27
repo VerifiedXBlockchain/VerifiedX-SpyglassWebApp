@@ -1,0 +1,38 @@
+{
+  "component": {
+    "placeholder": "Buscar",
+    "cta": "Buscar"
+  },
+  "page": {
+    "pageTitle": "VFX Spyglass",
+    "metaDescription": "VerifiedX Spyglass: Resultados de búsqueda",
+    "breadcrumbCurrent": "Buscar",
+    "inputPlaceholder": "Busca por dirección, bloque, hash o dominio...",
+    "submit": "Buscar",
+    "clear": "Limpiar",
+    "balance": "Saldo: {{amount}} VFX",
+    "lockedBalance": "Saldo bloqueado: {{amount}} VFX",
+    "totalBalance": "Saldo total: {{amount}} VFX",
+    "vfxDomain": "Dominio VFX: {{domain}}",
+    "tabs": {
+      "transactions": "Transacciones",
+      "blocks": "Bloques"
+    },
+    "totalTransactions": "{{count}} transacciones",
+    "totalBlocks": "{{count}} bloques"
+  },
+  "topHolders": {
+    "pageTitle": "VFX Spyglass: Principales holders",
+    "metaDescription": "VerifiedX Spyglass: Dominios VFX",
+    "breadcrumbCurrent": "Principales holders",
+    "table": {
+      "address": "Dirección",
+      "domain": "Dominio",
+      "balance": "Saldo"
+    }
+  },
+  "map": {
+    "metaDescription": "VerifiedX Spyglass: Mapa de validadores",
+    "heading": "Mapa de calor"
+  }
+}

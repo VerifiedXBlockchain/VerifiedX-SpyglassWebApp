@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import InfiniteScroll from "react-infinite-scroller";
 import { Transaction } from "../models/transaction";
 import { TransactionService } from "../services/transaction-service";
 import { TransactionList } from "./transaction-list";
 
 export const TransactionListContainer = () => {
+  const { t } = useTranslation("common");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -71,7 +73,7 @@ export const TransactionListContainer = () => {
             key={0}
           >
             <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t("status.loading")}</span>
             </div>
           </div>
         }

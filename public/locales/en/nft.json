@@ -1,0 +1,35 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass",
+    "metaDescription": "VerifiedX Spyglass: NFTs",
+    "breadcrumbCurrent": "NFTs"
+  },
+  "detail": {
+    "pageTitle": "VFX Spyglass: NFT {{id}}",
+    "fields": {
+      "identifier": "Identifier:",
+      "name": "Name:",
+      "description": "Description:",
+      "minterAddress": "minterAddress:",
+      "ownerAddress": "Owner Address:",
+      "minterName": "Minter Name:",
+      "primaryAssetName": "Primary Asset Name:",
+      "primaryAssetSize": "Primary AssetSize:",
+      "mintTransaction": "Mint Transaction:",
+      "burnTransaction": "Burn Transaction:"
+    },
+    "smartContractCodeHeading": "Smart Contract Code",
+    "transactionHistoryHeading": "Transaction History"
+  },
+  "card": {
+    "viewDetails": "View Details",
+    "status": "Status",
+    "active": "Active",
+    "burned": "Burned",
+    "name": "Name",
+    "owner": "Owner",
+    "minter": "Minter",
+    "mintTx": "Mint Tx",
+    "minted": "Minted: {{date}}"
+  }
+}

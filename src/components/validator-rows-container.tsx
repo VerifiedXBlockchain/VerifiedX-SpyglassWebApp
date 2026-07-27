@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
 import { Validator } from "../models/validator";
@@ -9,6 +10,7 @@ import { BlockList } from "./block-list";
 import { ValidatorList } from "./validator-list";
 
 export const ValidatorRowsContainer = () => {
+  const { t } = useTranslation(["validator", "common"]);
   const [validators, setValidators] = useState<Validator[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -74,11 +76,11 @@ export const ValidatorRowsContainer = () => {
 
           {validators.length ? (
             <div className="d-inline-block bg-success h6 rounded py-1 px-2 mb-0">
-              Total Active Validators: {validators.filter(v => v.isActive).length}
+              {t("validator:list.totalActive", { count: validators.filter(v => v.isActive).length })}
             </div>) : null}
           <div>
             <Link href={"/validators/search"}>
-              <a className="btn-link btn btn-sm" >Check Validator Status</a>
+              <a className="btn-link btn btn-sm" >{t("validator:list.checkStatusCta")}</a>
             </Link>
           </div>
         </div>
@@ -94,7 +96,7 @@ export const ValidatorRowsContainer = () => {
             key={0}
           >
             <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t("common:status.loading")}</span>
             </div>
           </div>
         }

@@ -1,3 +1,5 @@
+import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { FungibleToken } from "../models/fungible-token";
 import { VbtcToken } from "../models/vbtc-token";
 import { DetailItem } from "./detail-item";
@@ -11,7 +13,11 @@ interface Props {
 }
 
 export const FungibleTokenDetail = (props: Props) => {
+    const { t } = useTranslation(["fungibleToken", "common"]);
+    const localized = useLocalized();
     const { token, holders } = props;
+    const yes = t("common:status.yes") as string;
+    const no = t("common:status.no") as string;
 
     return <>
         <div className="container">
@@ -27,33 +33,33 @@ export const FungibleTokenDetail = (props: Props) => {
 
 
 
-                    <DetailItem label="Name" value={token.name}></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.name") as string} value={token.name}></DetailItem>
                     <div className="p-1"></div>
 
-                    <DetailItem label="Ticker" value={token.ticker} ></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.ticker") as string} value={token.ticker} ></DetailItem>
 
                 </div>
                 <div className="p-1"></div>
 
                 <div className="d-block d-md-flex justify-start">
 
-                    <DetailItem label="Smart Contract ID" value={token.sc_identifier}></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.smartContractId") as string} value={token.sc_identifier}></DetailItem>
                     <div className="p-1"></div>
 
-                    <DetailItem label="Owner" value={token.owner_address} href={`/search?q=${token.owner_address}`}></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.owner") as string} value={token.owner_address} href={localized(`/search?q=${token.owner_address}`)}></DetailItem>
                 </div>
                 <div className="p-1"></div>
 
 
                 <div className="d-block d-md-flex justify-start">
 
-                    <DetailItem label="Circulating Supply" value={`${token.circulating_supply} ${token.ticker}`}></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.circulatingSupply") as string} value={`${token.circulating_supply} ${token.ticker}`}></DetailItem>
                     <div className="p-1"></div>
-                    <DetailItem label="Mintable" value={token.can_mint ? "Yes" : "No"} ></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.mintable") as string} value={token.can_mint ? yes : no} ></DetailItem>
                     <div className="p-1"></div>
-                    <DetailItem label="Burnable" value={token.can_burn ? "Yes" : "No"} ></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.burnable") as string} value={token.can_burn ? yes : no} ></DetailItem>
                     <div className="p-1"></div>
-                    <DetailItem label="Supports Voting" value={token.can_vote ? "Yes" : "No"} ></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.supportsVoting") as string} value={token.can_vote ? yes : no} ></DetailItem>
                 </div>
 
 
@@ -62,7 +68,7 @@ export const FungibleTokenDetail = (props: Props) => {
 
                 {token.description && (
                     <div className="bg-black border-light border px-2 py-1 w-100">
-                        <div className="text-start h6 text-muted">Description</div>
+                        <div className="text-start h6 text-muted">{t("fungibleToken:detail.descriptionHeading")}</div>
                         <div
                             className="text-start m-0"
                             style={{ wordBreak: "break-all" }}
@@ -73,10 +79,10 @@ export const FungibleTokenDetail = (props: Props) => {
                 <div className="p-1"></div>
 
                 <hr />
-                <h5>Balances</h5>
+                <h5>{t("fungibleToken:detail.balancesHeading")}</h5>
                 {Object.keys(holders).map((address) => (
                     <div key={address} className="d-block d-md-flex justify-start py-1">
-                        <a href={`/search?q=${address}`}>{address}</a>
+                        <a href={localized(`/search?q=${address}`)}>{address}</a>
                         <div className="p-1"></div>
                         <span className="badge bg-primary" style={{ paddingTop: 6 }}>{holders[address]} {token.ticker}</span>
                     </div>

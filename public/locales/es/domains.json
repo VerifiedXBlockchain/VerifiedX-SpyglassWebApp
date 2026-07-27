@@ -1,0 +1,13 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Dominios",
+    "metaDescription": "VerifiedX Spyglass: Dominios VFX",
+    "breadcrumbCurrent": "Dominios",
+    "table": {
+      "domain": "Dominio",
+      "address": "Dirección",
+      "actions": "Acciones",
+      "viewTransaction": "Ver transacción"
+    }
+  }
+}
