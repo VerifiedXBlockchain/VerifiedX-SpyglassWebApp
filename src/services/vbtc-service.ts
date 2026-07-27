@@ -5,7 +5,7 @@ import { httpGet } from "../utils/network";
 
 export class VbtcTokenService {
     async list(page: number): Promise<PaginatedResponse<VbtcToken>> {
-        const response = await httpGet(`${API_BASE_URL}/btc/vbtc/`, { 'page': page });
+        const response = await httpGet(`${API_BASE_URL}/btc/vbtc-v2/`, { 'page': page });
         const data: any = response.parsedBody;
 
         const results = [];
@@ -14,11 +14,11 @@ export class VbtcTokenService {
             results.push(new VbtcToken(result));
         }
 
-        return new PaginatedResponse<VbtcToken>(data["count"], data["page"], data["num_pages"], results);
+        return new PaginatedResponse<VbtcToken>(data["count"] || results.length, data["page"] || 1, data["num_pages"] || 1, results);
     }
 
     async retrieve(sc_identifier: string): Promise<VbtcToken> {
-        const response = await httpGet(`${API_BASE_URL}/btc/vbtc/detail/${sc_identifier}/`, {});
+        const response = await httpGet(`${API_BASE_URL}/btc/vbtc-v2/detail/${sc_identifier}/`, {});
 
         const data: any = response.parsedBody;
 
