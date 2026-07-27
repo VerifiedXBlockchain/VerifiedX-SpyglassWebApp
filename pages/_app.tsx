@@ -14,6 +14,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { appWithTranslation, useTranslation } from "next-i18next";
 import nextI18NextConfig from "../next-i18next.config";
+import { setActiveLocale } from "../src/utils/active-locale";
 
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Script from "next/script";
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const hreflangPath = asPath === "/" ? "" : asPath;
   const canonicalPath = locale && locale !== defaultLocale ? `/${locale}${hreflangPath}` : hreflangPath;
   const localized = (path: string) => (locale && locale !== defaultLocale ? `/${locale}${path}` : path);
+  setActiveLocale(locale);
 
   if (MAINTENENCE_MODE) {
     return (

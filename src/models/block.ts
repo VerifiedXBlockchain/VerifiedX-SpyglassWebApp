@@ -3,6 +3,7 @@ import { formatBytes, numberWithCommas } from "../utils/formatting";
 import { Transaction } from "./transaction";
 import { Validator } from "./validator";
 import * as timeago from 'timeago.js';
+import { getActiveLocale } from "../utils/active-locale";
 
 export class Block {
   height: number;
@@ -82,7 +83,7 @@ export class Block {
     // if (isToday(this.dateCrafted)) {
     //   return this.dateCrafted.toLocaleTimeString();
     // }
-    return `${this.dateCrafted.toLocaleDateString()} ${this.dateCrafted.toLocaleTimeString()}`;
+    return `${this.dateCrafted.toLocaleDateString(getActiveLocale())} ${this.dateCrafted.toLocaleTimeString(getActiveLocale())}`;
   }
 
   get sizeLabel(): string {
