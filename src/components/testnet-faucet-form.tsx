@@ -3,9 +3,19 @@ import { useTranslation } from "next-i18next";
 import { FaucetService } from "../services/faucet-service";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { IS_TESTNET, IS_DEVNET } from "../constants";
-import { isValidPhoneNumber, AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
+import { AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
 
 const faucetService = new FaucetService();
+
+// The verify endpoint returns the node's raw response as a string,
+// e.g. {"Result":"Success","Message":"...","Hash":"60ab..."}
+const extractTxHash = (raw: string): string => {
+    try {
+        return JSON.parse(raw).Hash ?? raw;
+    } catch {
+        return raw; // already a plain hash
+    }
+};
 
 interface Props {
     info: TestnetFaucetInfo
@@ -35,6 +45,18 @@ const TestnetFaucetForm = (props: Props) => {
 
     const [hash, setHash] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [copied, setCopied] = useState(false)
+
+    const handleCopyHash = async () => {
+        if (!hash) return;
+        try {
+            await navigator.clipboard.writeText(hash);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (error) {
+            console.log('Failed to copy hash:', error);
+        }
+    }
 
     // Format phone number as user types
     const handlePhoneChange = (value: string) => {
@@ -85,10 +107,11 @@ const TestnetFaucetForm = (props: Props) => {
 
         let phoneParsed = '';
         try {
-            const phoneNumber = parsePhoneNumberWithError(phone);
-            
-            if (phoneNumber && isValidPhoneNumber(phoneNumber.number)) {
-                phoneParsed = phoneNumber.number; // Get the international format
+            // Numbers without a country code are treated as US (+1); a leading + overrides this
+            const phoneNumber = parsePhoneNumberWithError(phone, 'US');
+
+            if (phoneNumber.isValid()) {
+                phoneParsed = phoneNumber.number; // E.164 format, e.g. +12223334444
             } else {
                 console.log('Invalid phone number');
                 setPhoneInvalid(true);
@@ -143,8 +166,8 @@ const TestnetFaucetForm = (props: Props) => {
 
         if (result.hash) {
             setVerificationUuid("")
-
-            setHash(result.hash);
+            setCopied(false)
+            setHash(extractTxHash(result.hash));
         } else {
             setError(result.message ?? (t("errors.generic") as string))
         }
@@ -181,7 +204,16 @@ const TestnetFaucetForm = (props: Props) => {
             </div>
 
 
-            {hash && <div className="alert alert-success" >{t("success.broadcast")}<br />{t("success.hash", { hash })}</div>}
+
+            {hash && (
+                <div className="alert alert-success">
+                    {t("success.broadcast")}<br />
+                    {t("success.hash")}: <a href={`/transaction/${hash}`} className="alert-link text-break">{hash}</a>
+                    <button type="button" className="btn btn-sm btn-outline-success ms-2" onClick={handleCopyHash}>
+                        {copied ? "Copied!" : "Copy"}
+                    </button>
+                </div>
+            )}
             {error && <div className="alert alert-danger" >{error}</div>}
 
             {verificationUuid && (
