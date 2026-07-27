@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Block } from "../models/block";
 
 interface Props {
@@ -7,14 +8,15 @@ interface Props {
 
 export const BlockCard = (props: Props) => {
   const { t } = useTranslation(["block", "common"]);
+  const localized = useLocalized();
   const { block } = props;
   return (
     <div className="card">
       <div className="card-header d-flex justify-content-between align-items-center">
-        <a href={`/block/${block.height}`} className="mb-0 h5 text-white">
+        <a href={localized(`/block/${block.height}`)} className="mb-0 h5 text-white">
           {t("block:card.title", { height: block.height })}
         </a>
-        <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">
+        <a href={localized(`/block/${block.height}`)} className="btn btn-primary btn-sm">
           {t("common:action.viewDetails")}
         </a>
       </div>
@@ -31,7 +33,7 @@ export const BlockCard = (props: Props) => {
             {block.masternode ? (
               <div>
                 <a
-                  href={`/validators/${block.masternode.address}`}
+                  href={localized(`/validators/${block.masternode.address}`)}
                   className="btn btn-sm btn-success "
                 >
                   {block.masternode.uniqueNameLabel}
@@ -57,7 +59,7 @@ export const BlockCard = (props: Props) => {
             {block.transactions.map((tx, i) =>
               i < 4 ? (
                 <div key={tx.hash}>
-                  <a href={`/transaction/${tx.hash}`}>{tx.hashPreview()}</a>
+                  <a href={localized(`/transaction/${tx.hash}`)}>{tx.hashPreview()}</a>
                 </div>
               ) : null
             )}

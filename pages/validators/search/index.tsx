@@ -90,7 +90,7 @@ const ValidatorSearch: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'validator', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search', 'validator'])),
   },
 });
 

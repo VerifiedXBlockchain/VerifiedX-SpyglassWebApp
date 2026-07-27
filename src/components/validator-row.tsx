@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Validator } from "../models/validator";
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 
 export const ValidatorRow = (props: Props) => {
   const { t } = useTranslation("common");
+  const localized = useLocalized();
   const { validator } = props;
 
   return (
@@ -39,7 +41,7 @@ export const ValidatorRow = (props: Props) => {
       </td> */}
       <td>
         <a
-          href={`/validators/${validator.address}`}
+          href={localized(`/validators/${validator.address}`)}
           className="btn btn-primary btn-sm"
         >
           {t("action.viewDetails")}

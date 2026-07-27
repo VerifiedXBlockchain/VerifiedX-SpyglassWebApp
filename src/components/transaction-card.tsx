@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Transaction } from "../models/transaction";
 
 interface Props {
@@ -7,13 +8,14 @@ interface Props {
 
 export const TransactionCard = (props: Props) => {
   const { t } = useTranslation("transaction");
+  const localized = useLocalized();
   const { transaction } = props;
 
   return (
     <div className="card">
       <div className="card-header text-start">
         <a
-          href={`/transaction/${transaction.hash}`}
+          href={localized(`/transaction/${transaction.hash}`)}
           className="mb-0 h6 text-white"
         >
           {transaction.hash}

@@ -8,11 +8,13 @@ import { TransactionCard } from "../../../src/components/transaction-card";
 import { LoadingSpinner } from "../../../src/components/loading-spinner";
 import { useTransactionPolling } from "../../../src/hooks/useTransactionPolling";
 import { LAYOUT_HEIGHTS } from "../../../src/constants/ui";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 const TransactionDetailPage: NextPage = () => {
   const router = useRouter();
   const { hash } = router.query;
   const { t } = useTranslation(["transaction", "common"]);
+  const localized = useLocalized();
 
   const { transaction, loading, error, isPolling } = useTransactionPolling(hash);
 
@@ -41,14 +43,14 @@ const TransactionDetailPage: NextPage = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">{t("common:breadcrumb.home")}</a>
+              <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/transaction">{t("common:nav.transactions")}</a>
+              <a href={localized("/transaction")}>{t("common:nav.transactions")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/transaction/${transaction.hash || hash}`}>
+              <a href={localized(`/transaction/${transaction.hash || hash}`)}>
                 {transaction.hashPreview()}
               </a>
             </li>
@@ -81,7 +83,7 @@ const TransactionDetailPage: NextPage = () => {
               label={t("transaction:detail.fields.block") as string}
               value={`${transaction.height}`}
               smallValue
-              href={`/block/${transaction.height}`}
+              href={localized(`/block/${transaction.height}`)}
             ></DetailItem>
             <div className="p-1"></div>
             <DetailItem
@@ -250,7 +252,7 @@ const TransactionDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'transaction', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search', 'transaction'])),
   },
 });
 

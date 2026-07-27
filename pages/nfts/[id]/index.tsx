@@ -11,10 +11,12 @@ import { NftService } from "../../../src/services/nft-service";
 import { formatBytes } from "../../../src/utils/formatting";
 import { Transaction } from "../../../src/models/transaction";
 import { TransactionCard } from "../../../src/components/transaction-card";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 const NftDetailPage: NextPage = () => {
   const router = useRouter();
   const { t } = useTranslation(["nft", "common"]);
+  const localized = useLocalized();
 
   const { id } = router.query;
 
@@ -47,20 +49,20 @@ const NftDetailPage: NextPage = () => {
       <Head>
         <meta name="description" />
         <title>{`${t("nft:detail.pageTitle", { id })}${netTag}`}</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href={localized("/favicon.png")} />
       </Head>
       <div className="container">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">{t("common:breadcrumb.home")}</a>
+              <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/nfts">{t("nft:list.breadcrumbCurrent")}</a>
+              <a href={localized("/nfts")}>{t("nft:list.breadcrumbCurrent")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/nft/${nft.identifier}`}>
+              <a href={localized(`/nft/${nft.identifier}`)}>
                 {nft.name}
               </a>
             </li>
@@ -109,14 +111,14 @@ const NftDetailPage: NextPage = () => {
 
             <tr>
               <th>{t("nft:detail.fields.mintTransaction")}</th>
-              <td> <a href={"/transaction/" + nft.mintTransaction} >
+              <td> <a href={localized("/transaction/" + nft.mintTransaction)} >
                 {nft.mintTransaction}
               </a></td>
             </tr>
             {nft.burnTransaction ? (
               <tr>
                 <th>{t("nft:detail.fields.burnTransaction")}</th>
-                <td> <a href={"/transaction/" + nft.burnTransaction} >
+                <td> <a href={localized("/transaction/" + nft.burnTransaction)} >
                   {nft.burnTransaction}
                 </a></td>
               </tr>
@@ -158,7 +160,7 @@ const NftDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft', 'transaction', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'nft', 'search', 'transaction'])),
   },
 });
 

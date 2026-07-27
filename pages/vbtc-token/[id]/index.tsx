@@ -10,11 +10,13 @@ import { VbtcTokenService } from "../../../src/services/vbtc-service";
 import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import Head from "next/head";
 import { VbtcTokenDetail } from "../../../src/components/vbtc-token-detail";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 
 const VbtcTokenDetailPage: NextPage = () => {
 
     const { t } = useTranslation(["vbtcToken", "common"]);
+    const localized = useLocalized();
     const { id } = useRouter().query;
 
     const [token, setToken] = useState<VbtcToken | undefined>(undefined);
@@ -40,7 +42,7 @@ const VbtcTokenDetailPage: NextPage = () => {
 
             <meta name="description" />
             <title>{`${t("vbtcToken:detail.pageTitle", { name: token.name })}${netTag}`}</title>
-            <link rel="icon" href="/favicon.png" />
+            <link rel="icon" href={localized("/favicon.png")} />
         </Head>
 
         <div>
@@ -48,14 +50,14 @@ const VbtcTokenDetailPage: NextPage = () => {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb align-items-center">
                         <li className="breadcrumb-item">
-                            <a href="/">{t("common:breadcrumb.home")}</a>
+                            <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/vbtc-token">{t("vbtcToken:list.breadcrumbCurrent")}</a>
+                            <a href={localized("/vbtc-token")}>{t("vbtcToken:list.breadcrumbCurrent")}</a>
                         </li>
 
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href={`/vbtc-token/${id}`}>{token.name}</a>
+                            <a href={localized(`/vbtc-token/${id}`)}>{token.name}</a>
                         </li>
 
                     </ol>
@@ -71,7 +73,7 @@ const VbtcTokenDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'vbtcToken', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search', 'vbtcToken'])),
   },
 });
 

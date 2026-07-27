@@ -186,7 +186,7 @@ const CirculationPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'metrics', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'metrics', 'search'])),
   },
 });
 

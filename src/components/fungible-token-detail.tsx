@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { FungibleToken } from "../models/fungible-token";
 import { VbtcToken } from "../models/vbtc-token";
 import { DetailItem } from "./detail-item";
@@ -13,6 +14,7 @@ interface Props {
 
 export const FungibleTokenDetail = (props: Props) => {
     const { t } = useTranslation(["fungibleToken", "common"]);
+    const localized = useLocalized();
     const { token, holders } = props;
     const yes = t("common:status.yes") as string;
     const no = t("common:status.no") as string;
@@ -44,7 +46,7 @@ export const FungibleTokenDetail = (props: Props) => {
                     <DetailItem label={t("fungibleToken:detail.fields.smartContractId") as string} value={token.sc_identifier}></DetailItem>
                     <div className="p-1"></div>
 
-                    <DetailItem label={t("fungibleToken:detail.fields.owner") as string} value={token.owner_address} href={`/search?q=${token.owner_address}`}></DetailItem>
+                    <DetailItem label={t("fungibleToken:detail.fields.owner") as string} value={token.owner_address} href={localized(`/search?q=${token.owner_address}`)}></DetailItem>
                 </div>
                 <div className="p-1"></div>
 
@@ -80,7 +82,7 @@ export const FungibleTokenDetail = (props: Props) => {
                 <h5>{t("fungibleToken:detail.balancesHeading")}</h5>
                 {Object.keys(holders).map((address) => (
                     <div key={address} className="d-block d-md-flex justify-start py-1">
-                        <a href={`/search?q=${address}`}>{address}</a>
+                        <a href={localized(`/search?q=${address}`)}>{address}</a>
                         <div className="p-1"></div>
                         <span className="badge bg-primary" style={{ paddingTop: 6 }}>{holders[address]} {token.ticker}</span>
                     </div>

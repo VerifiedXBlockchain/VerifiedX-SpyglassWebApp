@@ -11,11 +11,13 @@ import { Block } from "../../../src/models/block";
 import { Validator } from "../../../src/models/validator";
 import { BlockService } from "../../../src/services/block-service";
 import { ValidatorService } from "../../../src/services/validator-service";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 const ValidatorDetailPage: NextPage = () => {
   const router = useRouter();
   const { address } = router.query;
   const { t } = useTranslation(["validator", "common"]);
+  const localized = useLocalized();
 
   const [validator, setValidator] = useState<Validator | undefined>(undefined);
 
@@ -38,14 +40,14 @@ const ValidatorDetailPage: NextPage = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">{t("common:breadcrumb.home")}</a>
+              <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/validators">{t("common:nav.validators")}</a>
+              <a href={localized("/validators")}>{t("common:nav.validators")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/validators/${validator.address}`}>
+              <a href={localized(`/validators/${validator.address}`)}>
                 {validator.address}
               </a>
             </li>
@@ -60,7 +62,7 @@ const ValidatorDetailPage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'validator', 'block', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search', 'transaction', 'validator'])),
   },
 });
 

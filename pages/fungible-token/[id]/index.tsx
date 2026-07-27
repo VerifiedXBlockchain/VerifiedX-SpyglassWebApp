@@ -10,11 +10,13 @@ import Head from "next/head";
 import { FungibleToken, FungibleTokenDetailResponse } from "../../../src/models/fungible-token";
 import { FungibleTokenService } from "../../../src/services/fungible-token-service";
 import { FungibleTokenDetail } from "../../../src/components/fungible-token-detail";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 
 const FungibleTokenDetailPage: NextPage = () => {
 
     const { t } = useTranslation(["fungibleToken", "common"]);
+    const localized = useLocalized();
     const { id } = useRouter().query;
 
     const [tokenDetails, setTokenDetails] = useState<FungibleTokenDetailResponse | undefined>(undefined);
@@ -41,7 +43,7 @@ const FungibleTokenDetailPage: NextPage = () => {
 
             <meta name="description" />
             <title>{`${t("fungibleToken:detail.pageTitle", { name: token.name })}${netTag}`}</title>
-            <link rel="icon" href="/favicon.png" />
+            <link rel="icon" href={localized("/favicon.png")} />
         </Head>
 
         <div>
@@ -49,14 +51,14 @@ const FungibleTokenDetailPage: NextPage = () => {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb align-items-center">
                         <li className="breadcrumb-item">
-                            <a href="/">{t("common:breadcrumb.home")}</a>
+                            <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/fungible-token">{t("fungibleToken:list.breadcrumbCurrent")}</a>
+                            <a href={localized("/fungible-token")}>{t("fungibleToken:list.breadcrumbCurrent")}</a>
                         </li>
 
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href={`/fungible-token/${id}`}>{token.name}</a>
+                            <a href={localized(`/fungible-token/${id}`)}>{token.name}</a>
                         </li>
 
                     </ol>

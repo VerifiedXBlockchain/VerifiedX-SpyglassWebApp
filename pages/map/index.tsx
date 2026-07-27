@@ -31,7 +31,7 @@ const MapPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search'])),
   },
 });
 

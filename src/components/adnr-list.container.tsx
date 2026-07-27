@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import InfiniteScroll from "react-infinite-scroller";
 import { Adnr } from "../models/adnr";
 import { Block } from "../models/block";
@@ -17,6 +18,7 @@ import { IS_TESTNET, IS_DEVNET } from "../constants";
 
 export const AdnrListContainer = () => {
   const { t } = useTranslation(["domains", "common"]);
+  const localized = useLocalized();
   const [adnrs, setAdnrs] = useState<Adnr[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -117,13 +119,13 @@ export const AdnrListContainer = () => {
                         {adnr.btc_address}
                       </a>
                     ) : (
-                      <a href={`/search?q=${adnr.address}`}>{adnr.address}</a>
+                      <a href={localized(`/search?q=${adnr.address}`)}>{adnr.address}</a>
                     )}
                   </td>
                   {/* <td>{adnr.address}</td> */}
                   {/* <td>{adnr.create_transaction.hash}</td> */}
                   <td className="text-center" style={{ verticalAlign: 'middle' }}>
-                    <a href={`/transaction/${adnr.create_transaction.hash}`} className="btn btn-primary">{t("domains:list.table.viewTransaction")}</a>
+                    <a href={localized(`/transaction/${adnr.create_transaction.hash}`)} className="btn btn-primary">{t("domains:list.table.viewTransaction")}</a>
                   </td>
                 </tr>
               ))}

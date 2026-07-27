@@ -33,6 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const hreflangPath = asPath === "/" ? "" : asPath;
   const canonicalPath = locale && locale !== defaultLocale ? `/${locale}${hreflangPath}` : hreflangPath;
+  const localized = (path: string) => (locale && locale !== defaultLocale ? `/${locale}${path}` : path);
 
   if (MAINTENENCE_MODE) {
     return (
@@ -70,20 +71,20 @@ function MyApp({ Component, pageProps }: AppProps) {
 
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample07XL">
               <div className="navbar-nav">
-                <a className="nav-link" href="/block">
+                <a className="nav-link" href={localized("/block")}>
                   {t("nav.blocks")}
                 </a>
 
                 <a
                   className="nav-link"
-                  href="/transaction"
+                  href={localized("/transaction")}
                 >
                   {t("nav.transactions")}
                 </a>
 
                 <a
                   className="nav-link"
-                  href="/validators"
+                  href={localized("/validators")}
                 >
                   {t("nav.validators")}
                 </a>
@@ -92,7 +93,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                   <a
                     className="nav-link"
-                    href="/metrics"
+                    href={localized("/metrics")}
                   >
                     {t("nav.metrics")}
                   </a>
@@ -100,7 +101,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link"
-                  href="/domains"
+                  href={localized("/domains")}
                 >
                   {t("nav.domains")}
                 </a>
@@ -108,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link btc-link"
-                  href="/vbtc-token"
+                  href={localized("/vbtc-token")}
                 >
                   {t("nav.vbtc")}
                 </a>
@@ -124,14 +125,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link"
-                  href="/fungible-token"
+                  href={localized("/fungible-token")}
                 >
                   {t("nav.fungibleTokens")}
                 </a>
 
                 <a
                   className="nav-link"
-                  href="/nfts"
+                  href={localized("/nfts")}
                 >
                   {t("nav.nfts")}
                 </a>
@@ -150,7 +151,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                   <a
                     className="nav-link"
-                    href="/faucet"
+                    href={localized("/faucet")}
                   >
                     {t("nav.faucet")}
                   </a>
@@ -158,7 +159,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <a
                   className="nav-link"
-                  href="/search"
+                  href={localized("/search")}
                 >
                   {t("nav.search")}
                 </a>

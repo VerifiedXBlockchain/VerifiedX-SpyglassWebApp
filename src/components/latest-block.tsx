@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { useEffect, useState } from "react"
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
 import * as timeago from 'timeago.js';
@@ -11,6 +12,7 @@ interface Props {
 
 export const LatestBlock = (props: Props) => {
     const { t } = useTranslation(["block", "common"]);
+    const localized = useLocalized();
     const [block, setBlock] = useState<Block | undefined>(undefined);
 
 
@@ -49,7 +51,7 @@ export const LatestBlock = (props: Props) => {
                     <div><small className="text-light">{block.timestampLabel}</small></div>
                 </div>
                 <div className="pt-2">
-                    <LineItem title={t("block:latest.hash") as string} value={block.hash} fullWidth href={"/block/" + block.height}></LineItem>
+                    <LineItem title={t("block:latest.hash") as string} value={block.hash} fullWidth href={localized("/block/" + block.height)}></LineItem>
                 </div>
 
                 <div className="d-flex justify-content-between">
@@ -59,7 +61,7 @@ export const LatestBlock = (props: Props) => {
                 <div className="d-flex justify-content-between">
                     <LineItem title={t("block:latest.txCount") as string} value={block.transactions.length.toString()}></LineItem>
                     <div className="pt-2" style={{ width: '50%' }}>
-                        {block.transactions.map((tx, i) => <a key={tx.hash} style={{ fontSize: '12px', lineHeight: "10px", textDecoration: "none" }} href={"/transaction/" + tx.hash}>{t("block:latest.viewTx", { index: i + 1 })}</a>)}
+                        {block.transactions.map((tx, i) => <a key={tx.hash} style={{ fontSize: '12px', lineHeight: "10px", textDecoration: "none" }} href={localized("/transaction/" + tx.hash)}>{t("block:latest.viewTx", { index: i + 1 })}</a>)}
                     </div>
                 </div>
                 <div className="d-flex justify-content-between">
@@ -69,7 +71,7 @@ export const LatestBlock = (props: Props) => {
                 </div>
 
                 <div className="d-flex justify-content-between">
-                    <LineItem title={t("block:latest.validatedBy") as string} value={block.validator} fullWidth href={'/validators/' + block.validator}></LineItem>
+                    <LineItem title={t("block:latest.validatedBy") as string} value={block.validator} fullWidth href={localized('/validators/' + block.validator)}></LineItem>
                 </div>
             </div>
 

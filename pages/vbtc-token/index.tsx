@@ -39,7 +39,7 @@ const VbtcTokensPage: NextPage = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'vbtcToken', 'search'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search', 'vbtcToken'])),
   },
 });
 

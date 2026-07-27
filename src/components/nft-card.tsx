@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Nft } from "../models/nft";
 import { Validator } from "../models/validator";
 
@@ -9,6 +10,7 @@ interface Props {
 
 export const NftCard = (props: Props) => {
   const { t } = useTranslation(["nft", "common"]);
+  const localized = useLocalized();
   const { nft } = props;
 
   return (
@@ -24,7 +26,7 @@ export const NftCard = (props: Props) => {
           {nft.name}
         </span>
         <a
-          href={`/nfts/${nft.identifier}`}
+          href={localized(`/nfts/${nft.identifier}`)}
           className="btn btn-primary btn-sm"
         >
           {t("nft:card.viewDetails")}
@@ -81,7 +83,7 @@ export const NftCard = (props: Props) => {
               whiteSpace: "pre-line",
               overflowWrap: "anywhere",
             }}>
-              <a href={"/transaction/" + nft.mintTransaction} >
+              <a href={localized("/transaction/" + nft.mintTransaction)} >
                 {nft.mintTransaction}
               </a>
             </small>
