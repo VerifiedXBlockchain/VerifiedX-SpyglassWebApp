@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { useLocalized } from "../utils/use-localized";
 import { Block } from "../models/block";
 
 interface Props {
@@ -6,6 +9,9 @@ interface Props {
 }
 
 export const BlockRow = (props: Props) => {
+  const { t } = useTranslation("block");
+  const router = useRouter();
+  const localized = useLocalized();
   const { block } = props;
   const [expanded, setExpanded] = useState(false);
 
@@ -14,7 +20,7 @@ export const BlockRow = (props: Props) => {
       <td className="text-center">
         <div>
 
-          {block.height.toLocaleString()}
+          {block.height.toLocaleString(router.locale)}
         </div>
       </td>
       <td>
@@ -32,7 +38,7 @@ export const BlockRow = (props: Props) => {
       <td className="text-center">
         {block.masternode ? (
           <div>
-            <a href={`/validators/${block.masternode.address}`}>
+            <a href={localized(`/validators/${block.masternode.address}`)}>
               {block.masternode.uniqueNameLabel}
             </a>
           </div>
@@ -43,7 +49,7 @@ export const BlockRow = (props: Props) => {
 
       <td>
         <div className=" ps-0">
-          {block.masternode?.locationLabel || "-"}
+          {block.masternode?.locationLabel || t("row.locationFallback")}
         </div>
       </td>
 
@@ -51,7 +57,7 @@ export const BlockRow = (props: Props) => {
         {block.transactions.length > 0 ? (
           block.transactions.length == 1 ? (
             <div className=" ps-0 d-block">
-              <a href={`/transaction/${block.transactions[0].hash}`} title={block.transactions[0].hash}>
+              <a href={localized(`/transaction/${block.transactions[0].hash}`)} title={block.transactions[0].hash}>
                 {block.transactions[0].hashPreview()}
               </a>
             </div>
@@ -62,7 +68,7 @@ export const BlockRow = (props: Props) => {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setExpanded(!expanded); }}
                 style={{ cursor: "pointer" }}
               >
-                {block.transactions.length} Txs{" "}
+                {t("row.txsCount", { count: block.transactions.length })}{" "}
                 <i
                   className={`bi ${expanded ? `bi-chevron-up` : "bi-chevron-down"
                     }`}
@@ -71,9 +77,9 @@ export const BlockRow = (props: Props) => {
 
               {expanded ? (
                 <div>
-                  {block.transactions.map((t) => (
-                    <div className=" ps-0 d-block" key={t.hash}>
-                      <a href={`/transaction/${t.hash}`} title={t.hash}>{t.hashPreview()}</a>
+                  {block.transactions.map((tx) => (
+                    <div className=" ps-0 d-block" key={tx.hash}>
+                      <a href={localized(`/transaction/${tx.hash}`)} title={tx.hash}>{tx.hashPreview()}</a>
                     </div>
                   ))}
                 </div>
@@ -81,7 +87,7 @@ export const BlockRow = (props: Props) => {
             </>
           )
         ) : (
-          "-"
+          t("row.locationFallback")
         )}
       </td>
 
@@ -91,13 +97,13 @@ export const BlockRow = (props: Props) => {
 
       <td className="text-center">
         <div>
-          {block.craftTime}ms
+          {t("row.craftTimeMs", { ms: block.craftTime })}
         </div>
       </td>
 
 
       {/* <td className="text-center">
-        <a href={`/block/${block.height}`} className="btn btn-primary btn-sm">
+        <a href={localized(`/block/${block.height}`)} className="btn btn-primary btn-sm">
           Details
         </a>
       </td> */}

@@ -2,6 +2,7 @@ import { isToday } from "../utils/dates";
 import pako from "pako";
 import { Nft } from "./nft";
 import { Recovery } from "./recovery";
+import { getActiveLocale } from "../utils/active-locale";
 import { SENTINEL_ADDRESSES } from "../constants";
 
 export class Transaction {
@@ -55,7 +56,7 @@ export class Transaction {
     // if (isToday(this.dateCrafted)) {
     //   return this.dateCrafted.toLocaleTimeString();
     // }
-    return `${this.dateCrafted.toLocaleDateString()} ${this.dateCrafted.toLocaleTimeString()}`;
+    return `${this.dateCrafted.toLocaleDateString(getActiveLocale())} ${this.dateCrafted.toLocaleTimeString(getActiveLocale())}`;
   }
 
   get nftDataFormatted() {

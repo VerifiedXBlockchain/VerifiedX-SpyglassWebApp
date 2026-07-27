@@ -6,6 +6,7 @@ import { isMobile } from "react-device-detect";
 import { BlockListContainer } from "../src/components/block-list-container";
 import { API_BASE_URL, IS_TESTNET, IS_DEVNET } from "../src/constants";
 import { Block } from "../src/models/block";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Home: NextPage = () => {
   if (typeof window === "undefined") {
@@ -34,9 +35,10 @@ const Home: NextPage = () => {
 export default Home;
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {
   return {
     props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search'])),
       data: {
         results: []
       }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "next-i18next";
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
 import { BlockRowList } from "./blocks-row-list";
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const BlockRowsContainer = (props: Props) => {
+  const { t } = useTranslation("common");
 
   const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -127,7 +129,7 @@ export const BlockRowsContainer = (props: Props) => {
             key={0}
           >
             <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t("status.loading")}</span>
             </div>
           </div>
         }

@@ -1,18 +1,22 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
 import Head from "next/head";
 import { FungibleToken, FungibleTokenDetailResponse } from "../../../src/models/fungible-token";
 import { FungibleTokenService } from "../../../src/services/fungible-token-service";
 import { FungibleTokenDetail } from "../../../src/components/fungible-token-detail";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 
 const FungibleTokenDetailPage: NextPage = () => {
 
-
+    const { t } = useTranslation(["fungibleToken", "common"]);
+    const localized = useLocalized();
     const { id } = useRouter().query;
 
     const [tokenDetails, setTokenDetails] = useState<FungibleTokenDetailResponse | undefined>(undefined);
@@ -31,14 +35,15 @@ const FungibleTokenDetailPage: NextPage = () => {
     if (!tokenDetails) return <></>;
 
     const token = tokenDetails.token;
+    const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
 
     return <>
 
         <Head>
 
             <meta name="description" />
-            <title>{`VFX Spyglass: Fungible Token: ${token.name}`}{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
-            <link rel="icon" href="/favicon.png" />
+            <title>{`${t("fungibleToken:detail.pageTitle", { name: token.name })}${netTag}`}</title>
+            <link rel="icon" href={localized("/favicon.png")} />
         </Head>
 
         <div>
@@ -46,14 +51,14 @@ const FungibleTokenDetailPage: NextPage = () => {
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb align-items-center">
                         <li className="breadcrumb-item">
-                            <a href="/">Home</a>
+                            <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href="/fungible-token">Fungible Tokens</a>
+                            <a href={localized("/fungible-token")}>{t("fungibleToken:list.breadcrumbCurrent")}</a>
                         </li>
 
                         <li className="breadcrumb-item active" aria-current="page">
-                            <a href={`/fungible-token/${id}`}>{token.name}</a>
+                            <a href={localized(`/fungible-token/${id}`)}>{token.name}</a>
                         </li>
 
                     </ol>
@@ -66,5 +71,11 @@ const FungibleTokenDetailPage: NextPage = () => {
 
     </>;
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'fungibleToken', 'search'])),
+  },
+});
 
 export default FungibleTokenDetailPage;

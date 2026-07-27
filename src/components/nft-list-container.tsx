@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
 import { Nft } from "../models/nft";
@@ -12,6 +13,7 @@ import { ValidatorCardList } from "./validator-card-list";
 import { ValidatorList } from "./validator-list";
 
 export const NftListContainer = () => {
+  const { t } = useTranslation("common");
   const [nfts, setNfts] = useState<Nft[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -83,7 +85,7 @@ export const NftListContainer = () => {
             key={0}
           >
             <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t("status.loading")}</span>
             </div>
           </div>
         }

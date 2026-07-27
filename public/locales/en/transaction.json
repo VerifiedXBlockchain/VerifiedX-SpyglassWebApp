@@ -1,0 +1,53 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Transactions",
+    "metaDescription": "VerifiedX Spyglass Transactions",
+    "breadcrumbCurrent": "Transactions"
+  },
+  "detail": {
+    "pendingHeading": "Transaction Pending",
+    "pendingBody": "This transaction has not reflected on chain yet. Stand by.",
+    "heading": "Transaction Details",
+    "smartContractHeading": "Smart Contract Details",
+    "txDetailsHeading": "Tx Details",
+    "txDataDecodedHeading": "Tx Data Decoded",
+    "callbackDetailsHeading": "Callback Details",
+    "recoveryDetailsHeading": "Recovery Details",
+    "outstandingTransactionsHeading": "Outstanding Transactions",
+    "fields": {
+      "txType": "Tx Type",
+      "craftTime": "Craft Time",
+      "hash": "Hash",
+      "hashPendingPlaceholder": "Pending broadcast...",
+      "block": "Block",
+      "amount": "Amount",
+      "fee": "Fee",
+      "from": "From",
+      "to": "To",
+      "signature": "Signature"
+    },
+    "nft": {
+      "identifier": "Identifier:",
+      "name": "Name:",
+      "description": "Description:",
+      "minterAddress": "minterAddress:",
+      "ownerAddress": "ownerAddress:",
+      "minterName": "minterName:",
+      "primaryAssetName": "primaryAssetName:",
+      "primaryAssetSize": "primaryAssetSize:"
+    },
+    "recovery": {
+      "originalAddress": "Original Address:",
+      "newAddress": "New Address:",
+      "amount": "Amount:"
+    }
+  },
+  "card": {
+    "txType": "Tx Type:",
+    "height": "Height:",
+    "amount": "Amount:",
+    "from": "From:",
+    "to": "To:",
+    "fee": "Fee:"
+  }
+}

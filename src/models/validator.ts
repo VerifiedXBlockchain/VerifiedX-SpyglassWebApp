@@ -1,5 +1,6 @@
 import { isToday } from "../utils/dates";
 import { Location } from "./location";
+import { getActiveLocale } from "../utils/active-locale";
 
 export class Validator {
   address: string;
@@ -31,7 +32,7 @@ export class Validator {
     // if (isToday(this.connectDate)) {
     //   return `Today @ ${this.connectDate.toLocaleTimeString()}`;
     // }
-    return `${this.connectDate.toLocaleDateString()} ${this.connectDate.toLocaleTimeString()}`;
+    return `${this.connectDate.toLocaleDateString(getActiveLocale())} ${this.connectDate.toLocaleTimeString(getActiveLocale())}`;
   }
 
   get uniqueNameLabel(): string {

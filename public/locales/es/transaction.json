@@ -1,0 +1,53 @@
+{
+  "list": {
+    "pageTitle": "VFX Spyglass: Transacciones",
+    "metaDescription": "VerifiedX Spyglass: Transacciones",
+    "breadcrumbCurrent": "Transacciones"
+  },
+  "detail": {
+    "pendingHeading": "Transacción pendiente",
+    "pendingBody": "Esta transacción aún no se ha reflejado en la cadena. Espera un momento.",
+    "heading": "Detalles de la transacción",
+    "smartContractHeading": "Detalles del contrato inteligente",
+    "txDetailsHeading": "Detalles de tx",
+    "txDataDecodedHeading": "Datos de tx decodificados",
+    "callbackDetailsHeading": "Detalles del callback",
+    "recoveryDetailsHeading": "Detalles de recuperación",
+    "outstandingTransactionsHeading": "Transacciones pendientes",
+    "fields": {
+      "txType": "Tipo de tx",
+      "craftTime": "Tiempo de creación",
+      "hash": "Hash",
+      "hashPendingPlaceholder": "Transmisión pendiente...",
+      "block": "Bloque",
+      "amount": "Monto",
+      "fee": "Comisión",
+      "from": "De",
+      "to": "Para",
+      "signature": "Firma"
+    },
+    "nft": {
+      "identifier": "Identificador:",
+      "name": "Nombre:",
+      "description": "Descripción:",
+      "minterAddress": "Dirección del emisor:",
+      "ownerAddress": "Dirección del propietario:",
+      "minterName": "Nombre del emisor:",
+      "primaryAssetName": "Nombre del activo principal:",
+      "primaryAssetSize": "Tamaño del activo principal:"
+    },
+    "recovery": {
+      "originalAddress": "Dirección original:",
+      "newAddress": "Dirección nueva:",
+      "amount": "Monto:"
+    }
+  },
+  "card": {
+    "txType": "Tipo de tx:",
+    "height": "Altura:",
+    "amount": "Monto:",
+    "from": "De:",
+    "to": "Para:",
+    "fee": "Comisión:"
+  }
+}

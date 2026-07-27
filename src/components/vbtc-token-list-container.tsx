@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import { VbtcToken } from "../models/vbtc-token";
 import { VbtcTokenService } from "../services/vbtc-service";
 import InfiniteScroll from "react-infinite-scroller";
@@ -7,6 +8,7 @@ import { VbtcTokenList } from "./vbtc-token-list";
 
 
 export const VbtcTokenListContainer = () => {
+    const { t } = useTranslation("common");
 
     const [tokens, setTokens] = useState<VbtcToken[]>([]);
     const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -89,7 +91,7 @@ export const VbtcTokenListContainer = () => {
                             key={0}
                         >
                             <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                                <span className="visually-hidden">{t("status.loading")}</span>
                             </div>
                         </div>
                     }

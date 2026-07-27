@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import InfiniteScroll from "react-infinite-scroller";
 import { FungibleTokenService } from "../services/fungible-token-service";
 import { FungibleToken } from "../models/fungible-token";
@@ -7,6 +8,7 @@ import { FungibleTokenList } from "./fungible-token-list";
 
 
 export const FungibleTokenListContainer = () => {
+    const { t } = useTranslation("common");
 
     const [tokens, setTokens] = useState<FungibleToken[]>([]);
     const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -89,7 +91,7 @@ export const FungibleTokenListContainer = () => {
                             key={0}
                         >
                             <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                                <span className="visually-hidden">{t("status.loading")}</span>
                             </div>
                         </div>
                     }

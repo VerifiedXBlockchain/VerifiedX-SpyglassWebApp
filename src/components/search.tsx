@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   initialValue?: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export const Search = (props: Props) => {
+  const { t } = useTranslation("search");
   const [query, setQuery] = useState<string>(props.initialValue ?? "");
   const router = useRouter();
 
@@ -39,7 +41,7 @@ export const Search = (props: Props) => {
       <input
         type="text"
         className="form-control bg-dark text-light"
-        placeholder={props.placeholder || "Search"}
+        placeholder={props.placeholder || (t("component.placeholder") as string)}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={e => e.key === "Enter" ? handleSearch() : null}
@@ -53,7 +55,7 @@ export const Search = (props: Props) => {
         onClick={handleSearch}
         style={props.mini ? { height: 32, paddingTop: 5, fontSize: 12, } : {}}
       >
-        Search
+        {t("component.cta")}
       </button>
     </div>
     // </div>

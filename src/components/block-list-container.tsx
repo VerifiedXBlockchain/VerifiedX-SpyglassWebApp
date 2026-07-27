@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 import InfiniteScroll from "react-infinite-scroller";
 import { Block } from "../models/block";
 import { BlockService } from "../services/block-service";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const BlockListContainer = (props: Props) => {
+  const { t } = useTranslation("common");
   const [blocks, setBlocks] = useState<Block[]>(props.initialBlocks);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
 
@@ -84,7 +86,7 @@ export const BlockListContainer = (props: Props) => {
             key={0}
           >
             <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t("status.loading")}</span>
             </div>
           </div>
         }

@@ -1,5 +1,6 @@
 import pako from "pako";
 import { isToday } from "../utils/dates";
+import { getActiveLocale } from "../utils/active-locale";
 
 export class Nft {
     identifier: string;
@@ -86,7 +87,7 @@ export class Nft {
     // if (isToday(this.mintedAt)) {
     //   return this.mintedAt.toLocaleTimeString();
     // }
-    return `${this.mintedAt.toLocaleDateString()} ${this.mintedAt.toLocaleTimeString()}`;
+    return `${this.mintedAt.toLocaleDateString(getActiveLocale())} ${this.mintedAt.toLocaleTimeString(getActiveLocale())}`;
   }
   
   

@@ -1,15 +1,20 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { DetailItem } from "../../../src/components/detail-item";
 import { TransactionCard } from "../../../src/components/transaction-card";
 import { LoadingSpinner } from "../../../src/components/loading-spinner";
 import { useTransactionPolling } from "../../../src/hooks/useTransactionPolling";
 import { LAYOUT_HEIGHTS } from "../../../src/constants/ui";
+import { useLocalized } from "../../../src/utils/use-localized";
 
 const TransactionDetailPage: NextPage = () => {
   const router = useRouter();
   const { hash } = router.query;
+  const { t } = useTranslation(["transaction", "common"]);
+  const localized = useLocalized();
 
   const { transaction, loading, error, isPolling } = useTransactionPolling(hash);
 
@@ -17,13 +22,13 @@ const TransactionDetailPage: NextPage = () => {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: LAYOUT_HEIGHTS.PENDING_MIN_HEIGHT }}>
         <div className="text-center">
-          <h4 className="text-light mb-3">Transaction Pending</h4>
+          <h4 className="text-light mb-3">{t("transaction:detail.pendingHeading")}</h4>
           <p className="text-muted mb-4">
-            This transaction has not reflected on chain yet. Stand by.
+            {t("transaction:detail.pendingBody")}
           </p>
-          
+
           {(isPolling || loading) && (
-            <LoadingSpinner variant="light" message="Loading..." />
+            <LoadingSpinner variant="light" message={t("common:status.loading") as string} />
           )}
         </div>
       </div>
@@ -38,58 +43,58 @@ const TransactionDetailPage: NextPage = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb align-items-center">
             <li className="breadcrumb-item">
-              <a href="/">Home</a>
+              <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              <a href="/transaction">Transactions</a>
+              <a href={localized("/transaction")}>{t("common:nav.transactions")}</a>
             </li>
 
             <li className="breadcrumb-item active" aria-current="page">
-              <a href={`/transaction/${transaction.hash || hash}`}>
+              <a href={localized(`/transaction/${transaction.hash || hash}`)}>
                 {transaction.hashPreview()}
               </a>
             </li>
           </ol>
         </nav>
-        <h4>Transaction Details</h4>
+        <h4>{t("transaction:detail.heading")}</h4>
         <div className="bg-dark p-2">
           <div className="d-block d-md-flex">
             <DetailItem
-              label="Tx&nbsp;Type"
+              label={t("transaction:detail.fields.txType") as string}
               value={transaction.transactionTypeLabel}
               dontBreak
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
-              label="Craft Time"
+              label={t("transaction:detail.fields.craftTime") as string}
               value={transaction.timestampLabel}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
             <DetailItem
-              label="Hash"
-              value={transaction.hash || "Pending broadcast..."}
+              label={t("transaction:detail.fields.hash") as string}
+              value={transaction.hash || (t("transaction:detail.fields.hashPendingPlaceholder") as string)}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
-              label="Block"
+              label={t("transaction:detail.fields.block") as string}
               value={`${transaction.height}`}
               smallValue
-              href={`/block/${transaction.height}`}
+              href={localized(`/block/${transaction.height}`)}
             ></DetailItem>
             <div className="p-1"></div>
             <DetailItem
-              label="Amount"
+              label={t("transaction:detail.fields.amount") as string}
               value={transaction.displayAmount}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
-              label="Fee"
+              label={t("transaction:detail.fields.fee") as string}
               value={`${transaction.fee} VFX`}
               smallValue
             ></DetailItem>
@@ -98,14 +103,14 @@ const TransactionDetailPage: NextPage = () => {
 
           <div className="d-block d-md-flex">
             <DetailItem
-              label="From"
+              label={t("transaction:detail.fields.from") as string}
               value={transaction.displayFromAddress}
               smallValue
             ></DetailItem>
             <div className="p-1"></div>
 
             <DetailItem
-              label="To"
+              label={t("transaction:detail.fields.to") as string}
               value={transaction.displayToAddress}
               smallValue
             ></DetailItem>
@@ -114,7 +119,7 @@ const TransactionDetailPage: NextPage = () => {
           <div className="p-1"></div>
           {transaction.signature ? (
             <DetailItem
-              label="Signature"
+              label={t("transaction:detail.fields.signature") as string}
               value={transaction.signature}
               smallValue
             ></DetailItem>) : null}
@@ -122,42 +127,42 @@ const TransactionDetailPage: NextPage = () => {
         <div>
           {transaction.nft ? (
             <div className="mt-3">
-              <h4>Smart Contract Details</h4>
+              <h4>{t("transaction:detail.smartContractHeading")}</h4>
               <table className="table table-striped">
                 <tbody>
 
                   <tr>
-                    <th>Identifier:</th>
+                    <th>{t("transaction:detail.nft.identifier")}</th>
                     <td>{transaction.nft.identifier}</td>
                   </tr>
                   <tr>
-                    <th>Name:</th>
+                    <th>{t("transaction:detail.nft.name")}</th>
                     <td>{transaction.nft.name}</td>
                   </tr>
                   <tr>
-                    <th>Description:</th>
+                    <th>{t("transaction:detail.nft.description")}</th>
                     <td dangerouslySetInnerHTML={{ __html: transaction.nft.description.replace(/\\n/g, '<br />').replace(/\n/g, '<br />') }}></td>
                   </tr>
 
                   <tr>
-                    <th>minterAddress:</th>
+                    <th>{t("transaction:detail.nft.minterAddress")}</th>
                     <td>{transaction.nft.minterAddress}</td>
                   </tr>
                   <tr>
-                    <th>ownerAddress:</th>
+                    <th>{t("transaction:detail.nft.ownerAddress")}</th>
                     <td>{transaction.nft.ownerAddress}</td>
                   </tr>
 
                   <tr>
-                    <th>minterName:</th>
+                    <th>{t("transaction:detail.nft.minterName")}</th>
                     <td>{transaction.nft.minterName}</td>
                   </tr>
                   <tr>
-                    <th>primaryAssetName:</th>
+                    <th>{t("transaction:detail.nft.primaryAssetName")}</th>
                     <td>{transaction.nft.primaryAssetName}</td>
                   </tr>
                   <tr>
-                    <th>primaryAssetSize:</th>
+                    <th>{t("transaction:detail.nft.primaryAssetSize")}</th>
                     <td>{transaction.nft.primaryAssetSize}</td>
                   </tr>
                 </tbody>
@@ -168,7 +173,7 @@ const TransactionDetailPage: NextPage = () => {
 
           {transaction.nftData != null ? (
             <div className="mt-3">
-              <h4>Tx Details</h4>
+              <h4>{t("transaction:detail.txDetailsHeading")}</h4>
               <pre
                 className="bg-black p-2"
                 style={{
@@ -184,7 +189,7 @@ const TransactionDetailPage: NextPage = () => {
 
           {transaction.nftDataDataFormatted != "" ? (
             <div className="mt-3">
-              <h4>Tx Data Decoded</h4>
+              <h4>{t("transaction:detail.txDataDecodedHeading")}</h4>
               <pre className="bg-black p-2">
                 {transaction.nftDataDataFormatted}
               </pre>
@@ -194,7 +199,7 @@ const TransactionDetailPage: NextPage = () => {
 
         {transaction.callbackDetails ? (
           <div>
-            <h4>Callback Details</h4>
+            <h4>{t("transaction:detail.callbackDetailsHeading")}</h4>
 
             <div className="row">
               <div className="col-12 col-md-4 py-2">
@@ -209,18 +214,18 @@ const TransactionDetailPage: NextPage = () => {
 
         {transaction.recoveryDetails ? (
           <div>
-            <h4>Recovery Details</h4>
+            <h4>{t("transaction:detail.recoveryDetailsHeading")}</h4>
 
             <pre className="bg-black p-2">
-              Original Address: {transaction.recoveryDetails.originalAddress}<br />
-              New Address: {transaction.recoveryDetails.newAddress}<br />
-              Amount: {transaction.recoveryDetails.amount}<br />
+              {t("transaction:detail.recovery.originalAddress")} {transaction.recoveryDetails.originalAddress}<br />
+              {t("transaction:detail.recovery.newAddress")} {transaction.recoveryDetails.newAddress}<br />
+              {t("transaction:detail.recovery.amount")} {transaction.recoveryDetails.amount}<br />
             </pre>
 
             {transaction.recoveryDetails ? (
 
               <>
-                <h4>Outstanding Transactions</h4>
+                <h4>{t("transaction:detail.outstandingTransactionsHeading")}</h4>
                 <div className="row">
 
                   {transaction.recoveryDetails.outstandingTransactions.map(tx => {
@@ -244,5 +249,11 @@ const TransactionDetailPage: NextPage = () => {
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search', 'transaction'])),
+  },
+});
 
 export default TransactionDetailPage;
