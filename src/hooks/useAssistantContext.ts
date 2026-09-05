@@ -8,7 +8,8 @@ import { IS_DEVNET, IS_TESTNET } from "../constants";
  * visitor is looking at, so its answers can refer to the transaction, block,
  * address or validator on screen. The widget tracks the URL itself; this hook
  * adds the semantic `page`, `entity` and `address` fields on every route
- * change. Integration guide:
+ * change, plus `custom.network` (mainnet, testnet or devnet) for this build.
+ * Integration guide:
  * https://github.com/VerifiedXBlockchain/vfx-chat/blob/main/docs/integration.md
  */
 
@@ -27,7 +28,9 @@ export interface AssistantContext {
   address: string | null;
 }
 
-/** The widget's page API (window.VfxAssistant); the other context fields exist but Spyglass does not set them. */
+export type AssistantNetwork = "mainnet" | "testnet" | "devnet";
+
+/** The widget's page API (window.VfxAssistant); `app` and `url` exist too but Spyglass leaves them to the widget. */
 interface VfxAssistantApi {
   setContext(context: Partial<AssistantContext> & { app?: string; url?: string; custom?: Record<string, string> }): void;
   open(): void;
@@ -115,10 +118,24 @@ export function deriveAssistantContext(asPath: string): AssistantContext {
   return { page: segments.join("/") || "home", entity: null, address: null };
 }
 
+/**
+ * The network this build serves: the NEXT_PUBLIC_IS_DEVNET / NEXT_PUBLIC_IS_TESTNET
+ * build flags first, then a hostname that names the network, else mainnet.
+ */
+export function detectNetwork(hostname: string = typeof window === "undefined" ? "" : window.location.hostname): AssistantNetwork {
+  if (IS_DEVNET) return "devnet";
+  if (IS_TESTNET) return "testnet";
+  const host = hostname.toLowerCase();
+  if (host.includes("devnet")) return "devnet";
+  if (host.includes("testnet")) return "testnet";
+  return "mainnet";
+}
+
 /** Sends the context to the widget when it is present; a no-op before the script has loaded. */
 export function pushAssistantContext(context: AssistantContext): void {
   if (typeof window === "undefined") return;
-  window.VfxAssistant?.setContext(context);
+  // `custom` is replaced as a whole by the widget, so the network rides on every push.
+  window.VfxAssistant?.setContext({ ...context, custom: { network: detectNetwork() } });
 }
 
 /** Pushes the current route's context on mount and after every client-side navigation. */
