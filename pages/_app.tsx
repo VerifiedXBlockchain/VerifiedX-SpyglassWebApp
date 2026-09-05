@@ -15,6 +15,12 @@ import { useEffect, useState } from "react";
 import { appWithTranslation, useTranslation } from "next-i18next";
 import nextI18NextConfig from "../next-i18next.config";
 import { setActiveLocale } from "../src/utils/active-locale";
+import {
+  ASSISTANT_WIDGET_URL,
+  deriveAssistantContext,
+  pushAssistantContext,
+  useAssistantContext,
+} from "../src/hooks/useAssistantContext";
 
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Script from "next/script";
@@ -31,6 +37,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+
+  // VFX Assistant: page, entity and address follow the route (src/hooks/useAssistantContext.ts).
+  useAssistantContext();
 
   const hreflangPath = asPath === "/" ? "" : asPath;
   const canonicalPath = locale && locale !== defaultLocale ? `/${locale}${hreflangPath}` : hreflangPath;
@@ -244,6 +253,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       </div>
 
       <Component {...pageProps} />
+
+      {/* VFX Assistant chat widget. It loads after hydration, so the current
+          route's context is pushed again once the script is in place. */}
+      <Script
+        src={ASSISTANT_WIDGET_URL}
+        strategy="afterInteractive"
+        data-app="spyglass"
+        onLoad={() => pushAssistantContext(deriveAssistantContext(asPath))}
+      />
     </div>
   );
 }
