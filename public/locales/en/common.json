@@ -49,7 +49,9 @@
     "prev": "Prev",
     "next": "Next",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "status": {
     "loading": "Loading...",

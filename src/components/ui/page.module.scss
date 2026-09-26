@@ -1,0 +1,10 @@
+.page {
+  box-sizing: border-box;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 20px var(--gutter) 48px;
+}
+
+.narrow {
+  max-width: 1100px;
+}

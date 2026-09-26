@@ -46,7 +46,10 @@
     "txsCount_one": "{{count}} Tx",
     "txsCount_other": "{{count}} Txs",
     "craftTimeMs": "{{ms}} ms",
-    "locationFallback": "-"
+    "locationFallback": "-",
+    "reward": "Recompensa",
+    "noTransactions": "—",
+    "toggleTxs": "Mostrar u ocultar transacciones"
   },
   "rewardsCalculator": {
     "yourValidators": "Tus validadores (v)",
@@ -70,5 +73,23 @@
     "amount": "Monto",
     "fee": "Comisión",
     "validatedBy": "Validado por"
+  },
+  "home": {
+    "latestBlocks": "Últimos bloques",
+    "live": "En vivo",
+    "streaming": "Los bloques nuevos aparecen a medida que se crean",
+    "allBlocks": "Todos los bloques",
+    "tableCaption": "Últimos bloques de la red VerifiedX"
+  },
+  "overview": {
+    "ariaLabel": "Resumen de la red",
+    "latestBlock": "Último bloque",
+    "avgBlockTime": "Tiempo medio de bloque",
+    "avgBlockTimeSub": "Promedio móvil de la red",
+    "lastBlockDelay": "Retraso del último bloque",
+    "lastBlockDelaySub": "Entre los dos últimos bloques",
+    "activeValidators": "Validadores activos",
+    "checkStatus": "Verificar el estado de un validador",
+    "unavailable": "No disponible"
   }
 }

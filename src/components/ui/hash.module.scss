@@ -1,0 +1,38 @@
+.hash {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.text {
+  color: var(--text-soft);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.strong {
+  color: var(--text-strong);
+}
+
+.link {
+  color: var(--accent);
+
+  &:hover {
+    color: var(--accent-strong);
+  }
+}
+
+.full {
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.sm {
+  font-size: 12px;
+}
