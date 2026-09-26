@@ -1,68 +1,38 @@
 import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router";
-import { useLocalized } from "../utils/use-localized";
+import { TABLET_QUERY, useMediaQuery } from "../hooks/useMediaQuery";
 import { FungibleToken } from "../models/fungible-token";
-
+import { useLocalized } from "../utils/use-localized";
+import { FungibleTokenAvatar, FungibleTokenTable, TokenSupply } from "./tokens/fungible-token-table";
+import { TokenRowsCompact } from "./tokens/token-rows-compact";
+import { Skeleton } from "./ui/skeleton";
 
 interface Props {
-    tokens: FungibleToken[];
+  tokens: FungibleToken[];
+  loading?: boolean;
 }
 
-export const FungibleTokenList = (props: Props) => {
-    const { t } = useTranslation("fungibleToken");
-    const router = useRouter();
-    const localized = useLocalized();
-    const { tokens } = props;
+/** Responsive fungible token list: table from tablet width, avatar rows on phones. */
+export const FungibleTokenList = ({ tokens, loading }: Props) => {
+  const { t } = useTranslation("fungibleToken");
+  const localized = useLocalized();
+  const isTablet = useMediaQuery(TABLET_QUERY);
 
+  if (isTablet === undefined) return <Skeleton height={320} radius={12} />;
+  if (isTablet) return <FungibleTokenTable tokens={tokens} loading={loading} />;
 
-    return (
-        <>
-            <table className="table table-striped table-dark">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>{t("list.table.ticker")}</th>
-                        <th>{t("list.table.name")}</th>
-                        <th>{t("list.table.smartContract")}</th>
-                        <th>{t("list.table.owner")}</th>
-                        <th>{t("list.table.deployedAt")}</th>
-                        <th style={{ textAlign: 'right' }}>{t("list.table.circulatingSupply")}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tokens.map((token) => (
-                        <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
-                            <td>
-                                <a href={localized(`/fungible-token/${token.sc_identifier}`)}>
-                                    {token.nsfw ? <div style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: "#222222" }}></div> : <img src={token.image_url} alt={token.name} width={48} height={48} style={{ borderRadius: 24 }} />}
-
-                                </a>
-                            </td>
-                            <td>
-                                <a href={localized(`/fungible-token/${token.sc_identifier}`)}>
-
-                                    {token.ticker}
-                                </a>
-                            </td>
-                            <td>
-                                <a href={localized(`/fungible-token/${token.sc_identifier}`)}>
-
-                                    {token.name}
-                                </a>
-                            </td>
-                            <td>
-                                {token.sc_identifier}
-
-                            </td>
-                            <td>
-                                <a href={localized(`/search?q=${token.owner_address}`)}>{token.owner_address}</a>
-                            </td>
-                            <td>{token.created_at ? token.created_at.toLocaleDateString(router.locale) : '-'}</td>
-                            <td style={{ textAlign: 'right' }}>{token.circulating_supply} {token.ticker}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table >
-        </>
-    )
-}
+  return (
+    <TokenRowsCompact
+      loading={loading}
+      emptyLabel={t("list.empty") as string}
+      rows={tokens.map((token) => ({
+        key: token.sc_identifier,
+        href: localized(`/fungible-token/${token.sc_identifier}`),
+        image: <FungibleTokenAvatar token={token} />,
+        title: token.ticker,
+        subtitle: token.name,
+        value: <TokenSupply value={token.circulating_supply} ticker={token.ticker} />,
+        meta: token.is_paused ? t("list.paused") : undefined,
+      }))}
+    />
+  );
+};
