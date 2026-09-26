@@ -33,7 +33,9 @@
     "closeMenu": "Cerrar menú",
     "primaryAria": "Principal",
     "exploreHeading": "Explorar",
-    "resourcesHeading": "Recursos"
+    "resourcesHeading": "Recursos",
+    "live": "En vivo",
+    "liveTitle": "VerifiedX Live: la red en un globo en tiempo real"
   },
   "maintenance": {
     "message": "En mantenimiento. ¡Vuelve pronto!"

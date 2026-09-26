@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // Keep in sync with src/styles/_breakpoints.scss.
 export const TABLET_QUERY = "(min-width: 768px)";
-export const DESKTOP_QUERY = "(min-width: 1200px)";
+export const DESKTOP_QUERY = "(min-width: 1280px)";
 
 /**
  * Viewport-based breakpoint. Returns `undefined` until mounted so server and

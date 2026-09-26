@@ -6,7 +6,7 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { IS_DEVNET, IS_TESTNET } from "../../constants";
+import { IS_DEVNET, IS_TESTNET, LIVE_SITE_URL } from "../../constants";
 import { navigateTo } from "../../utils/navigate";
 import { useLocalized } from "../../utils/use-localized";
 import { LanguageSwitcher } from "../language-switcher";
@@ -138,6 +138,10 @@ export const AppHeader = () => {
             );
           })}
           <Menu label={t("common:nav.tokens") as string} items={tokenItems} active={tokensActive} />
+          <a className={styles.navLink} href={LIVE_SITE_URL} target="_blank" rel="noreferrer" title={t("common:nav.liveTitle") as string}>
+            {t("common:nav.live")}
+            <ExternalLinkIcon className={styles.navExternal} />
+          </a>
         </nav>
 
         <div className={styles.spacer} />
@@ -200,6 +204,12 @@ export const AppHeader = () => {
               </a>
             );
           })}
+          <a className={styles.drawerLink} href={LIVE_SITE_URL} target="_blank" rel="noreferrer">
+            {t("common:nav.liveTitle")}
+            <span className={styles.drawerMeta}>
+              <ExternalLinkIcon />
+            </span>
+          </a>
         </div>
         <div className={styles.drawerGroup}>
           <h2 className={styles.drawerHeading}>{t("common:nav.tokens")}</h2>
