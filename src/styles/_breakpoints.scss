@@ -4,4 +4,4 @@
 //   @use "../../styles/breakpoints" as bp;
 //   @media (min-width: bp.$desktop) { ... }
 $tablet: 768px; // phone → tablet: search leaves its own row, BTC link appears
-$desktop: 1200px; // tablet → desktop: full nav replaces the hamburger
+$desktop: 1280px; // tablet → desktop: full nav replaces the hamburger (1200 overflowed once Live joined the nav)

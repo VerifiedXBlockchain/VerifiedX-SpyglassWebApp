@@ -11,6 +11,9 @@ export const MAINTENENCE_MODE = process.env.NEXT_PUBLIC_MAINTENENCE_MODE == "tru
 
 export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://spyglass.verifiedx.io";
 
+/** VerifiedX Live: the real-time 3D globe of validators, blocks and transactions. */
+export const LIVE_SITE_URL = "https://live.verifiedx.io";
+
 export const SENTINEL_ADDRESSES: Record<string, string> = {
   "Shielded_Pool": "Shielded Pool",
   "TW_Base": "Token Withdrawal Base",

@@ -120,6 +120,12 @@
   background: var(--selected);
 }
 
+.navExternal {
+  margin-left: 4px;
+  color: var(--text-faint);
+  vertical-align: -1px;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -155,7 +161,9 @@
   }
 
   @media (min-width: bp.$desktop) {
-    flex: 0 0 270px;
+    // Preferred 270px, but may shrink so the full nav never overflows at the desktop breakpoint.
+    flex: 0 1 270px;
+    min-width: 170px;
   }
 }
 
