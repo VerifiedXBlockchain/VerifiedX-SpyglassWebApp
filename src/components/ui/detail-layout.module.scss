@@ -1,0 +1,23 @@
+@use "../../styles/breakpoints" as bp;
+
+// Shared layout for detail pages: a summary card beside a wide card of
+// hashes, then optional sections below.
+
+.twoColumn {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: bp.$desktop) {
+    grid-template-columns: 400px minmax(0, 1fr);
+  }
+
+  // A long unbreakable value must never widen the column.
+  > * {
+    min-width: 0;
+  }
+}
+
+.section {
+  margin-top: 28px;
+}

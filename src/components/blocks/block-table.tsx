@@ -10,9 +10,10 @@ interface Props {
   loading?: boolean;
   /** Shared clock for the relative timestamps. */
   now: number;
+  emptyLabel?: string;
 }
 
-export const BlockTable = ({ blocks, loading, now }: Props) => {
+export const BlockTable = ({ blocks, loading, now, emptyLabel }: Props) => {
   const { t } = useTranslation("block");
   const localized = useLocalized();
 
@@ -34,6 +35,7 @@ export const BlockTable = ({ blocks, loading, now }: Props) => {
       rowKey={(block) => block.height}
       rowHref={(block) => localized(`/block/${block.height}`)}
       loading={loading}
+      emptyLabel={emptyLabel}
       caption={t("home.tableCaption") as string}
     />
   );

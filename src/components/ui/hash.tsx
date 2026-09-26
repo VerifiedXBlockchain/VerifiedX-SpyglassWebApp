@@ -23,7 +23,7 @@ export const Hash = ({ value, side = 8, full, href, copy = true, tone = "default
     .filter(Boolean)
     .join(" ");
   return (
-    <span className={[styles.hash, size === "sm" ? styles.sm : "", className].filter(Boolean).join(" ")}>
+    <span className={[styles.hash, full ? styles.fullWrap : "", size === "sm" ? styles.sm : "", className].filter(Boolean).join(" ")}>
       {href ? (
         <a href={href} className={textClass} title={full ? undefined : value}>
           {text}

@@ -2,8 +2,9 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ExternalLinkIcon } from "./icons";
 import styles from "./menu.module.scss";
 
-// React 17 has no useId; a module counter gives each panel a stable id.
-let menuCounter = 0;
+// React 17 has no useId, and a render counter would differ between server and
+// client (hydration mismatch), so the panel id derives from the label.
+const slug = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export interface MenuItem {
   key: string;
@@ -35,7 +36,7 @@ interface Props {
 export const Menu = ({ label, items, icon, active, align = "start", className }: Props) => {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [panelId] = useState(() => `menu-panel-${++menuCounter}`);
+  const panelId = `menu-panel-${slug(label)}`;
 
   useEffect(() => {
     if (!open) return;

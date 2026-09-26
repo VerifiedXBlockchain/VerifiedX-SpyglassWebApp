@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { LiveBlocks } from "../src/components/home/live-blocks";
+import { BlockFeed } from "../src/components/blocks/block-feed";
 import { NetworkOverview } from "../src/components/home/network-overview";
 import { Button } from "../src/components/ui/button";
 import { ArrowRightIcon } from "../src/components/ui/icons";
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
             </Button>
           }
         />
-        <LiveBlocks blocks={blocks} loadMore={loadMore} canLoadMore={canLoadMore} />
+        <BlockFeed blocks={blocks} loadMore={loadMore} canLoadMore={canLoadMore} />
       </Page>
     </>
   );

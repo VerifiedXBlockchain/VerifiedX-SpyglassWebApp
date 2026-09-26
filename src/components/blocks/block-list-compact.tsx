@@ -12,10 +12,11 @@ interface Props {
   blocks: Block[];
   loading?: boolean;
   now: number;
+  emptyLabel?: string;
 }
 
 /** Phone layout: one tappable row per block with the essentials only. */
-export const BlockListCompact = ({ blocks, loading, now }: Props) => {
+export const BlockListCompact = ({ blocks, loading, now, emptyLabel }: Props) => {
   const { t } = useTranslation("block");
   const localized = useLocalized();
   const { locale } = useRouter();
@@ -55,6 +56,7 @@ export const BlockListCompact = ({ blocks, loading, now }: Props) => {
             </div>
           ))
         : null}
+      {!loading && blocks.length === 0 && emptyLabel ? <div className={styles.empty}>{emptyLabel}</div> : null}
     </div>
   );
 };

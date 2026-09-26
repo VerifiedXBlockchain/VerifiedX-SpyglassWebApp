@@ -1,0 +1,27 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  > :first-child {
+    flex-grow: 1;
+  }
+}
+
+.submit {
+  height: 44px;
+
+  @media (min-width: 768px) {
+    // Align with the input, below its label.
+    margin-top: 23px;
+  }
+}
+
+.results {
+  margin-top: 20px;
+}

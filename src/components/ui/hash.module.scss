@@ -28,7 +28,16 @@
   }
 }
 
+// Full values must be allowed to shrink inside the flex row (min-width: 0)
+// or the unbreakable string forces its card wider than a phone screen.
+.fullWrap {
+  display: flex;
+  width: 100%;
+}
+
 .full {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow-wrap: anywhere;
   word-break: break-all;
 }

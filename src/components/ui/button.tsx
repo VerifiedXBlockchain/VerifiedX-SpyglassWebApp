@@ -16,7 +16,9 @@ interface Props {
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   disabled?: boolean;
   className?: string;
+  title?: string;
   "aria-label"?: string;
+  "aria-expanded"?: boolean;
 }
 
 export const Button = ({ children, variant = "secondary", size = "md", icon, iconRight, href, external, onClick, type = "button", disabled, className, ...rest }: Props) => {
