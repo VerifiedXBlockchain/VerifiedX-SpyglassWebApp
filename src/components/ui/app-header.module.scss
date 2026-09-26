@@ -49,11 +49,21 @@
   justify-content: center;
   width: 30px;
   height: 30px;
+  overflow: hidden;
   border-radius: 9px;
-  background: var(--surface-1);
+  background: #000;
   border: 1px solid rgba(115, 196, 250, 0.35);
   box-shadow: 0 0 14px rgba(115, 196, 250, 0.35);
   color: var(--accent);
+}
+
+// The animated cube GIF (320px, black background) fills the mark; the
+// rounded box clips its corners and the glow frames it.
+.brandGif {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brandName {
