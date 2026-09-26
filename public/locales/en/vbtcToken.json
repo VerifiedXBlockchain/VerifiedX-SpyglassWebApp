@@ -8,8 +8,11 @@
       "smartContract": "Smart Contract",
       "owner": "Owner",
       "mintedAt": "Minted At",
-      "globalBalance": "Global Balance"
-    }
+      "globalBalance": "Global Balance",
+      "token": "Token"
+    },
+    "empty": "No funded vBTC tokens yet",
+    "caption": "vBTC tokens"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: vBTC Token: {{name}}",
@@ -17,8 +20,24 @@
       "name": "Name",
       "description": "Description",
       "smartContractId": "Smart Contract ID",
-      "owner": "Owner"
+      "owner": "Owner",
+      "globalBalance": "Global balance",
+      "totalReceived": "Total received",
+      "totalSent": "Total sent",
+      "txCount": "Transactions",
+      "threshold": "Signing threshold",
+      "depositAddress": "BTC deposit address",
+      "frostKey": "FROST group public key",
+      "mintedAt": "Minted"
     },
-    "balancesHeading": "Balances"
+    "balancesHeading": "Balances",
+    "badge": "vBTC",
+    "pendingWithdrawal": "Withdrawal pending",
+    "summary": "Summary",
+    "custody": "Smart contract & custody",
+    "viewOnMempool": "View on mempool.space",
+    "noBalances": "No addresses hold this token yet",
+    "notFound": "vBTC token not found",
+    "notFoundBody": "No vBTC token with id “{{id}}” has been indexed."
   }
 }

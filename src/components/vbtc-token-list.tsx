@@ -1,69 +1,43 @@
-import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { useLocalized } from "../utils/use-localized";
+import { useTranslation } from "next-i18next";
+import { TABLET_QUERY, useMediaQuery } from "../hooks/useMediaQuery";
 import { VbtcToken } from "../models/vbtc-token";
-
+import { truncateMiddle } from "../utils/formatting";
+import { useLocalized } from "../utils/use-localized";
+import { TokenImage } from "./tokens/token-image";
+import { TokenRowsCompact } from "./tokens/token-rows-compact";
+import { VBTC_FALLBACK_IMAGE, VbtcBalance, VbtcTokenTable } from "./tokens/vbtc-token-table";
+import { Skeleton } from "./ui/skeleton";
 
 interface Props {
-    tokens: VbtcToken[];
+  tokens: VbtcToken[];
+  loading?: boolean;
 }
 
-export const VbtcTokenList = (props: Props) => {
-    const { t } = useTranslation("vbtcToken");
-    const router = useRouter();
-    const localized = useLocalized();
-    const { tokens } = props;
+/** Responsive vBTC token list; tokens with no balance are hidden, as before. */
+export const VbtcTokenList = ({ tokens, loading }: Props) => {
+  const { t } = useTranslation("vbtcToken");
+  const { locale } = useRouter();
+  const localized = useLocalized();
+  const isTablet = useMediaQuery(TABLET_QUERY);
+  const funded = tokens.filter((token) => token.global_balance > 0);
 
+  if (isTablet === undefined) return <Skeleton height={320} radius={12} />;
+  if (isTablet) return <VbtcTokenTable tokens={funded} loading={loading} />;
 
-    return (
-        <>
-            <table className="table table-striped table-dark">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>{t("list.table.name")}</th>
-                        <th>{t("list.table.smartContract")}</th>
-                        <th>{t("list.table.owner")}</th>
-                        <th>{t("list.table.mintedAt")}</th>
-                        <th style={{ textAlign: 'right' }}>{t("list.table.globalBalance")}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tokens.filter((tok) => tok.global_balance > 0).map((token) => (
-                        <tr key={token.sc_identifier} style={{ verticalAlign: 'middle' }}>
-                            <td>
-                                <a href={localized(`/vbtc-token/${token.sc_identifier}`)}>
-                                    <img
-                                        src={token.image_url}
-                                        alt={token.name}
-                                        width={48}
-                                        height={48}
-                                        style={{ borderRadius: 24 }}
-                                        onError={(e) => {
-                                            e.currentTarget.src = '/vbtc-fallback.gif';
-                                        }}
-                                    />
-                                </a>
-                            </td>
-                            <td>
-                                <a href={localized(`/vbtc-token/${token.sc_identifier}`)}>
-
-                                    {token.name}
-                                </a>
-                            </td>
-                            <td>
-                                {token.nft.identifier}
-
-                            </td>
-                            <td>
-                                <a href={localized(`/search?q=${token.owner_address}`)}>{token.owner_address}</a>
-                            </td>
-                            <td>{token.created_at ? token.created_at.toLocaleDateString(router.locale) : '-'}</td>
-                            <td style={{ textAlign: 'right' }}>{token.global_balance} vBTC</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table >
-        </>
-    )
-}
+  return (
+    <TokenRowsCompact
+      loading={loading}
+      emptyLabel={t("list.empty") as string}
+      rows={funded.map((token) => ({
+        key: token.sc_identifier,
+        href: localized(`/vbtc-token/${token.sc_identifier}`),
+        image: <TokenImage src={token.image_url} alt={token.name} size="sm" fallbackSrc={VBTC_FALLBACK_IMAGE} />,
+        title: token.name,
+        subtitle: truncateMiddle(token.owner_address, 6),
+        value: <VbtcBalance value={token.global_balance} />,
+        meta: token.created_at ? token.created_at.toLocaleDateString(locale) : undefined,
+      }))}
+    />
+  );
+};

@@ -11,7 +11,6 @@ import { BlockService } from "../services/block-service";
 import { NftService } from "../services/nft-service";
 import { ValidatorService } from "../services/validator-service";
 import { BlockList } from "./block-list";
-import { NftCardList } from "./nft-list";
 import { ValidatorCardList } from "./validator-card-list";
 import { ValidatorList } from "./validator-list";
 import { IS_TESTNET, IS_DEVNET } from "../constants";
