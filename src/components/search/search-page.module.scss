@@ -1,0 +1,34 @@
+.form {
+  margin-bottom: 24px;
+}
+
+.summary {
+  margin-bottom: 24px;
+}
+
+.resultsBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-bottom: 12px;
+}
+
+.total {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.queryValue {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--accent-strong);
+  overflow-wrap: anywhere;
+}

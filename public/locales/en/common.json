@@ -4,7 +4,8 @@
     "testnetSuffix": "TESTNET",
     "devnetSuffix": "DEVNET",
     "devnetTag": "[DEVNET]",
-    "testnetTag": "[TESTNET]"
+    "testnetTag": "[TESTNET]",
+    "mainnetSuffix": "MAINNET"
   },
   "nav": {
     "blocks": "Blocks",
@@ -24,13 +25,22 @@
     "github": "GitHub",
     "discord": "Discord",
     "x": "X",
-    "switcherAria": "Language"
+    "switcherAria": "Language",
+    "tokens": "Tokens",
+    "btcShort": "BTC",
+    "more": "More links",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "primaryAria": "Primary",
+    "exploreHeading": "Explore",
+    "resourcesHeading": "Resources"
   },
   "maintenance": {
     "message": "Down for Maintenance. Come back soon!"
   },
   "breadcrumb": {
-    "home": "Home"
+    "home": "Home",
+    "ariaLabel": "Breadcrumb"
   },
   "action": {
     "search": "Search",
@@ -40,7 +50,11 @@
     "prev": "Prev",
     "next": "Next",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "copied": "Copied",
+    "show": "Show",
+    "hide": "Hide"
   },
   "status": {
     "loading": "Loading...",

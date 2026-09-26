@@ -1,0 +1,53 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+.success {
+  background: var(--green-soft);
+  border: 1px solid rgba(105, 229, 173, 0.35);
+  color: var(--text);
+}
+
+.failure {
+  background: var(--red-soft);
+  border: 1px solid rgba(250, 123, 126, 0.35);
+  color: var(--text);
+}
+
+.noticeTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.returnNote {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+}

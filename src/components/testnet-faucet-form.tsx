@@ -1,300 +1,260 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useTranslation } from "next-i18next";
-import { FaucetService } from "../services/faucet-service";
+import { AsYouType, parsePhoneNumberWithError } from "libphonenumber-js";
+import { IS_DEVNET, IS_TESTNET } from "../constants";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
-import { IS_TESTNET, IS_DEVNET } from "../constants";
-import { AsYouType, parsePhoneNumberWithError } from 'libphonenumber-js';
+import { FaucetService } from "../services/faucet-service";
+import { useLocalized } from "../utils/use-localized";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
+import { DetailList, DetailRow } from "./ui/detail-list";
+import { Hash } from "./ui/hash";
+import { CheckIcon } from "./ui/icons";
+import { Pill } from "./ui/pill";
+import { TextInput } from "./ui/text-input";
+import styles from "./testnet-faucet-form.module.scss";
 
 const faucetService = new FaucetService();
+const isTestNetwork = Boolean(IS_DEVNET || IS_TESTNET);
 
 // The verify endpoint returns the node's raw response as a string,
 // e.g. {"Result":"Success","Message":"...","Hash":"60ab..."}
 const extractTxHash = (raw: string): string => {
-    try {
-        return JSON.parse(raw).Hash ?? raw;
-    } catch {
-        return raw; // already a plain hash
-    }
+  try {
+    return JSON.parse(raw).Hash ?? raw;
+  } catch {
+    return raw; // already a plain hash
+  }
 };
 
 interface Props {
-    info: TestnetFaucetInfo
+  info: TestnetFaucetInfo;
 }
 
-const TestnetFaucetForm = (props: Props) => {
-    const { t } = useTranslation("faucet");
+const TestnetFaucetForm = ({ info }: Props) => {
+  const { t } = useTranslation("faucet");
+  const localized = useLocalized();
 
-    const { info } = props;
+  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState("");
+  const [phone, setPhone] = useState("");
 
-    const [address, setAddress] = useState("");
-    const [amount, setAmount] = useState("");
-    const [phone, setPhone] = useState("");
-    const [formattedPhone, setFormattedPhone] = useState("");
+  const [verificationUuid, setVerificationUuid] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
 
+  const [addressInvalid, setAddressInvalid] = useState(false);
+  const [amountInvalid, setAmountInvalid] = useState(false);
+  const [phoneInvalid, setPhoneInvalid] = useState(false);
+  const [verificationCodeInvalid, setVerificationCodeInvalid] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
-    const [verificationUuid, setVerificationUuid] = useState("");
-    const [verificationCode, setVerificationCode] = useState("");
+  const [hash, setHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
+  // Format as the user types; numbers without a country code are treated as US.
+  const handlePhoneChange = (value: string) => {
+    setPhoneInvalid(false);
+    setPhone(new AsYouType("US").input(value));
+  };
 
+  const handleRequest = async (event: FormEvent) => {
+    event.preventDefault();
+    setAddressInvalid(false);
+    setAmountInvalid(false);
+    setPhoneInvalid(false);
+    setError(null);
+    setHash(null);
 
-    const [addressInvalid, setAddressInvalid] = useState(false)
-    const [amountInvalid, setAmountInvalid] = useState(false)
-    const [phoneInvalid, setPhoneInvalid] = useState(false)
-    const [verificationCodeInvalid, setVerificationCodeInvalid] = useState(false)
-    const [processing, setProcessing] = useState(false)
+    let hasError = false;
 
-    const [hash, setHash] = useState<string | null>(null)
-    const [error, setError] = useState<string | null>(null)
-    const [copied, setCopied] = useState(false)
-
-    const handleCopyHash = async () => {
-        if (!hash) return;
-        try {
-            await navigator.clipboard.writeText(hash);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (error) {
-            console.log('Failed to copy hash:', error);
-        }
+    if (address.length !== 34 || address[0].toUpperCase() !== "X") {
+      setAddressInvalid(true);
+      hasError = true;
     }
 
-    // Format phone number as user types
-    const handlePhoneChange = (value: string) => {
-        setPhone(value);
-        setPhoneInvalid(false);
-        
-        // Use AsYouType formatter for real-time formatting
-        const formatter = new AsYouType('US'); // Default to US, but will auto-detect international
-        const formatted = formatter.input(value);
-        setFormattedPhone(formatted);
+    const amountParsed = parseFloat(amount);
+    if (!amountParsed || amountParsed <= info.minAmount || amountParsed > info.maxAmount) {
+      setAmountInvalid(true);
+      hasError = true;
     }
 
-    // const handleAmountChange = (value: string) => {
-    //     let result = parseFloat(value.replace(/[^0-9.]/g, ''));
-
-    //     console.log(result);
-
-    //     if (result !== undefined) {
-    //         setAmount(result);
-    //     }
-
-    // }
-
-    const handleFormSubmit = async () => {
-
-        setAddressInvalid(false)
-        setAmountInvalid(false)
-        setError(null)
-        setHash(null);
-
-
-        let hasError = false;
-
-
-        if (address.length != 34 || address[0].toUpperCase() != "X") {
-            setAddressInvalid(true);
-            hasError = true;
-        }
-
-        const amountParsed = parseFloat(amount);
-
-        if (!amountParsed || amountParsed <= info.minAmount || amountParsed > info.maxAmount) {
-            setAmountInvalid(true)
-            hasError = true;
-        }
-
-
-
-        let phoneParsed = '';
-        try {
-            // Numbers without a country code are treated as US (+1); a leading + overrides this
-            const phoneNumber = parsePhoneNumberWithError(phone, 'US');
-
-            if (phoneNumber.isValid()) {
-                phoneParsed = phoneNumber.number; // E.164 format, e.g. +12223334444
-            } else {
-                console.log('Invalid phone number');
-                setPhoneInvalid(true);
-                hasError = true;
-            }
-        } catch (error) {
-            console.log('Invalid phone number format:', error);
-            setPhoneInvalid(true);
-            hasError = true;
-        }
-
-        if (hasError) {
-            return
-        }
-
-
-        setProcessing(true);
-        const result = await faucetService.requestFunds(address, amountParsed, phoneParsed)
-        setProcessing(false);
-
-        if (result.uuid) {
-            setAddress("");
-            setAmount("");
-            setPhone("");
-            setVerificationUuid(result.uuid)
-        } else {
-            setError(result.message ?? (t("errors.generic") as string))
-        }
-        // if (result.hash) {
-        //     setAddress("");
-        //     setAmount("");
-        //     setHash(result.hash);
-        // } else {
-        //     setError(result.message ?? "Error")
-        // }
-
-
-
+    let phoneParsed = "";
+    try {
+      const phoneNumber = parsePhoneNumberWithError(phone, "US");
+      if (phoneNumber.isValid()) {
+        phoneParsed = phoneNumber.number; // E.164, e.g. +12223334444
+      } else {
+        setPhoneInvalid(true);
+        hasError = true;
+      }
+    } catch (parseError) {
+      console.error("Invalid phone number format", parseError);
+      setPhoneInvalid(true);
+      hasError = true;
     }
 
-    const handleVerify = async () => {
-        setVerificationCodeInvalid(false);
+    if (hasError) return;
 
-        if (verificationCode.length < 4) {
-            setVerificationCodeInvalid(true);
-            return;
-        }
+    setProcessing(true);
+    try {
+      const result = await faucetService.requestFunds(address, amountParsed, phoneParsed);
+      if (result.uuid) {
+        setAddress("");
+        setAmount("");
+        setPhone("");
+        setVerificationUuid(result.uuid);
+      } else {
+        setError(result.message ?? (t("errors.generic") as string));
+      }
+    } catch (requestError) {
+      console.error("Faucet request failed", requestError);
+      setError(t("errors.generic") as string);
+    } finally {
+      setProcessing(false);
+    }
+  };
 
-        setProcessing(true);
-        const result = await faucetService.verify(verificationUuid, verificationCode)
-        setProcessing(false);
+  const handleVerify = async (event: FormEvent) => {
+    event.preventDefault();
+    setVerificationCodeInvalid(false);
+    setError(null);
 
-        if (result.hash) {
-            setVerificationUuid("")
-            setCopied(false)
-            setHash(extractTxHash(result.hash));
-        } else {
-            setError(result.message ?? (t("errors.generic") as string))
-        }
-
-
-
+    if (verificationCode.trim().length < 4) {
+      setVerificationCodeInvalid(true);
+      return;
     }
 
+    setProcessing(true);
+    try {
+      const result = await faucetService.verify(verificationUuid, verificationCode.trim());
+      if (result.hash) {
+        setVerificationUuid("");
+        setVerificationCode("");
+        setHash(extractTxHash(result.hash));
+      } else {
+        setError(result.message ?? (t("errors.generic") as string));
+      }
+    } catch (verifyError) {
+      console.error("Faucet verification failed", verifyError);
+      setError(t("errors.generic") as string);
+    } finally {
+      setProcessing(false);
+    }
+  };
 
+  const addressLabel = IS_DEVNET ? t("form.addressLabelDevnet") : IS_TESTNET ? t("form.addressLabelTestnet") : t("form.addressLabelMainnet");
+  const addressPlaceholder = isTestNetwork ? t("form.addressPlaceholderTestnet") : t("form.addressPlaceholderMainnet");
 
+  return (
+    <div className={styles.stack}>
+      <Card title={t("info.heading")}>
+        <DetailList>
+          {isTestNetwork ? (
+            <DetailRow label={t("info.availableLabel")} mono>
+              {info.available} VFX
+            </DetailRow>
+          ) : null}
+          <DetailRow label={t("info.minLabel")} mono>
+            {info.minAmount} VFX
+          </DetailRow>
+          <DetailRow label={t("info.maxLabel")} mono>
+            {info.maxAmount} VFX
+          </DetailRow>
+          {isTestNetwork ? (
+            <DetailRow label={t("info.senderLabel")} stacked>
+              <Hash value={info.address} full />
+            </DetailRow>
+          ) : null}
+        </DetailList>
+      </Card>
 
+      {hash ? (
+        <div className={[styles.notice, styles.success].join(" ")} role="status">
+          <span className={styles.noticeTitle}>
+            <Pill tone="green" icon={<CheckIcon size={11} />}>
+              {t("success.broadcast")}
+            </Pill>
+          </span>
+          <Hash value={hash} full href={localized(`/transaction/${hash}`)} />
+        </div>
+      ) : null}
 
-    return (
-        <>
+      {error ? (
+        <div className={[styles.notice, styles.failure].join(" ")} role="alert">
+          {error}
+        </div>
+      ) : null}
 
-
-
-            <div className="text-center">
-
-
-                <ul className="list-group">
-                    {(IS_DEVNET || IS_TESTNET) && (
-                        <li className="list-group-item">{t("info.available", { amount: info.available })}</li>
-                    )}
-                    <li className="list-group-item">{t("info.min", { amount: info.minAmount })}</li>
-                    <li className="list-group-item">{t("info.max", { amount: info.maxAmount })}</li>
-                    {(IS_DEVNET || IS_TESTNET) && (
-                        <li className="list-group-item">{t("info.sender", { address: info.address })}</li>
-                    )}
-                </ul>
-
-                <div className="py-2"></div>
-
+      {verificationUuid ? (
+        <Card title={t("form.verifyHeading")}>
+          <form className={styles.fields} onSubmit={handleVerify}>
+            <TextInput
+              name="verification-code"
+              label={t("form.verificationCodeLabel")}
+              placeholder={t("form.verificationCodePlaceholder") as string}
+              value={verificationCode}
+              onChange={(event) => setVerificationCode(event.target.value)}
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              mono
+              error={verificationCodeInvalid ? t("errors.invalidCode") : undefined}
+            />
+            <div className={styles.actions}>
+              <Button type="submit" variant="primary" disabled={processing}>
+                {t("form.verifyCta")}
+              </Button>
             </div>
+          </form>
+        </Card>
+      ) : (
+        <Card title={t("form.requestHeading")}>
+          <form className={styles.fields} onSubmit={handleRequest}>
+            <TextInput
+              name="address"
+              label={addressLabel}
+              placeholder={addressPlaceholder as string}
+              value={address}
+              onChange={(event) => setAddress(event.target.value)}
+              mono
+              autoComplete="off"
+              spellCheck={false}
+              error={addressInvalid ? t("errors.invalidAddress") : undefined}
+            />
+            <TextInput
+              name="amount"
+              type="number"
+              label={t("form.amountLabel")}
+              placeholder={t("form.amountPlaceholder") as string}
+              value={amount}
+              onChange={(event) => setAmount(event.target.value)}
+              min={info.minAmount}
+              max={info.maxAmount}
+              step="any"
+              error={amountInvalid ? t("errors.invalidAmount") : undefined}
+            />
+            <TextInput
+              name="phone"
+              type="tel"
+              label={t("form.phoneLabel")}
+              placeholder={t("form.phonePlaceholder") as string}
+              value={phone}
+              onChange={(event) => handlePhoneChange(event.target.value)}
+              autoComplete="tel"
+              hint={t("form.phoneHelp")}
+              error={phoneInvalid ? t("errors.invalidPhone") : undefined}
+            />
+            <div className={styles.actions}>
+              <Button type="submit" variant="primary" disabled={processing}>
+                {t("form.requestCta")}
+              </Button>
+            </div>
+          </form>
+        </Card>
+      )}
 
-
-
-            {hash && (
-                <div className="alert alert-success">
-                    {t("success.broadcast")}<br />
-                    {t("success.hash")}: <a href={`/transaction/${hash}`} className="alert-link text-break">{hash}</a>
-                    <button type="button" className="btn btn-sm btn-outline-success ms-2" onClick={handleCopyHash}>
-                        {copied ? "Copied!" : "Copy"}
-                    </button>
-                </div>
-            )}
-            {error && <div className="alert alert-danger" >{error}</div>}
-
-            {verificationUuid && (
-
-                <div className="card">
-
-                    <div className="card-body">
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">{t("form.verificationCodeLabel")}</span>
-                            </div>
-                            <input type="text" placeholder={t("form.verificationCodePlaceholder") as string} value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
-                        </div>
-
-                        {verificationCodeInvalid && <p className="text-danger">{t("errors.invalidCode")}</p>}
-
-
-                    </div>
-
-                    <div className="card-footer">
-                        <button className="btn btn-secondary" disabled={processing} onClick={handleVerify}>{t("form.verifyCta")}</button>
-                    </div>
-
-                </div>
-            )}
-
-            {!verificationUuid && (
-
-                <div className="card">
-                    <div className="card-body">
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">{IS_DEVNET ? t("form.addressLabelDevnet") : IS_TESTNET ? t("form.addressLabelTestnet") : t("form.addressLabelMainnet")}</span>
-                            </div>
-                            <input type="text" placeholder={(IS_DEVNET || IS_TESTNET) ? (t("form.addressPlaceholderTestnet") as string) : (t("form.addressPlaceholderMainnet") as string)} value={address} onChange={(e) => setAddress(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
-                        </div>
-
-                        {addressInvalid && <p className="text-danger">{t("errors.invalidAddress")}</p>}
-
-
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">{t("form.amountLabel")}</span>
-                            </div>
-                            <input type="number" placeholder={t("form.amountPlaceholder") as string} value={amount ?? ''} onChange={(e) => setAmount(e.target.value)} className="form-control bg-dark text-light" pattern="^[0-9\b]+$" />
-                        </div>
-
-                        {amountInvalid && <p className="text-danger">{t("errors.invalidAmount")}</p>}
-
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">{t("form.phoneLabel")}</span>
-                            </div>
-                            <input
-                                type="tel"
-                                value={phone ?? ''}
-                                placeholder={t("form.phonePlaceholder") as string}
-                                onChange={(e) => handlePhoneChange(e.target.value)}
-                                className="form-control bg-dark text-light"
-                            />
-                        </div>
-
-                        <div className="text-muted"><small>{t("form.phoneHelp")}</small></div>
-
-                        {phoneInvalid && <p className="text-danger">{t("errors.invalidPhone")}</p>}
-
-
-                    </div>
-
-                    <div className="card-footer">
-                        <button className="btn btn-secondary" disabled={processing} onClick={handleFormSubmit}>{t("form.requestCta")}</button>
-                    </div>
-                </div>
-
-            )}
-            {(IS_DEVNET || IS_TESTNET) && (
-                <p className="py-2 text-center"><strong>{IS_DEVNET ? t("returnCoinsDevnet", { address: info.address }) : t("returnCoinsTestnet", { address: info.address })}</strong></p>
-            )}
-        </>
-    )
-
-}
+      {isTestNetwork ? <p className={styles.returnNote}>{IS_DEVNET ? t("returnCoinsDevnet", { address: info.address }) : t("returnCoinsTestnet", { address: info.address })}</p> : null}
+    </div>
+  );
+};
 
 export default TestnetFaucetForm;

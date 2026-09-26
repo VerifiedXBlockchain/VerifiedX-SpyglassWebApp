@@ -1,0 +1,24 @@
+.sentinel {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.hidden {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.typePill {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,7 +1,9 @@
 {
   "component": {
     "placeholder": "Buscar",
-    "cta": "Buscar"
+    "cta": "Buscar",
+    "headerPlaceholder": "Bloque, tx, dirección o dominio",
+    "ariaLabel": "Buscar en el explorador"
   },
   "page": {
     "pageTitle": "VFX Spyglass",
@@ -18,8 +20,28 @@
       "transactions": "Transacciones",
       "blocks": "Bloques"
     },
-    "totalTransactions": "{{count}} transacciones",
-    "totalBlocks": "{{count}} bloques"
+    "totalTransactions": "{{count, number}} transacciones",
+    "totalBlocks": "{{count, number}} bloques",
+    "title": "Buscar",
+    "emptyTitle": "Busca en la cadena VerifiedX",
+    "emptyBody": "Pega una dirección, un hash de transacción, una altura de bloque o un dominio.",
+    "resultsFor": "Resultados para",
+    "types": {
+      "address": "Dirección",
+      "hash": "Hash",
+      "blockHeight": "Altura de bloque",
+      "adnr": "Dominio"
+    },
+    "domainNotFound": "Ninguna dirección posee el dominio “{{domain}}”.",
+    "addressUnavailable": "Saldo no disponible",
+    "labels": {
+      "balance": "Saldo",
+      "locked": "Bloqueado",
+      "total": "Total"
+    },
+    "tabsAria": "Tipo de resultado",
+    "noTransactions": "Ninguna transacción coincide con “{{query}}”.",
+    "noBlocks": "Ningún bloque coincide con “{{query}}”."
   },
   "topHolders": {
     "pageTitle": "VFX Spyglass: Principales holders",
@@ -29,7 +51,11 @@
       "address": "Dirección",
       "domain": "Dominio",
       "balance": "Saldo"
-    }
+    },
+    "heading": "Principales holders",
+    "description": "Las 100 direcciones con mayor saldo de VFX",
+    "error": "No se pudo cargar la lista de holders.",
+    "empty": "No se encontraron holders"
   },
   "map": {
     "metaDescription": "VerifiedX Spyglass: Mapa de validadores",

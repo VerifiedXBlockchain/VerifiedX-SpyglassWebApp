@@ -1,67 +1,59 @@
 import { useTranslation } from "next-i18next";
-import { Block } from "../models/block";
+import { useBlockPages } from "../hooks/useBlockPages";
 import { Validator } from "../models/validator";
-import { BlockListContainer } from "./block-list-container";
-import { DetailItem } from "./detail-item";
-import { TransactionCard } from "./transaction-card";
+import { BlockFeed } from "./blocks/block-feed";
+import { Card } from "./ui/card";
+import { DetailGrid, DetailList, DetailRow } from "./ui/detail-list";
+import { Hash } from "./ui/hash";
+import { PageHeader } from "./ui/page-header";
+import { SectionHeader } from "./ui/section-header";
+import { ValidatorStatusPill, validatorDisplayName } from "./validators/validator-table";
+import layout from "./ui/detail-layout.module.scss";
 
 interface Props {
   validator: Validator;
 }
 
-export const ValidatorDetail = (props: Props) => {
+export const ValidatorDetail = ({ validator }: Props) => {
   const { t } = useTranslation(["validator", "common"]);
-  const { validator } = props;
+  const name = validatorDisplayName(validator);
+  const feed = useBlockPages({ params: { master_node: validator.address } });
 
   return (
     <>
-      <div className="container">
-        <h4>{t("validator:detail.heading")}</h4>
-        <div className="bg-dark p-2">
-          <div className="d-block d-md-flex justify-start">
-            <DetailItem
-              label={t("validator:detail.fields.address") as string}
-              value={`${validator.address}`}
-            ></DetailItem>
-            <div className="px-1 py-1"></div>
-            <DetailItem
-              label={t("validator:detail.fields.name") as string}
-              value={`${validator.uniqueName}`}
-            ></DetailItem>
-            <div className="px-1  py-1"></div>
+      <PageHeader
+        title={name ?? validator.uniqueNameLabel}
+        badges={<ValidatorStatusPill validator={validator} size="md" />}
+        meta={[validator.locationLabel !== "-" ? validator.locationLabel : null, `${t("validator:detail.connected")} ${validator.dateLabel}`]}
+      />
 
-            <DetailItem
-              label={t("validator:detail.fields.location") as string}
-              value={`${validator.locationLabel}`}
-            ></DetailItem>
-          </div>
-          <div className="py-1"></div>
+      <Card as="section" aria-label={t("validator:detail.heading") as string}>
+        <DetailList>
+          <DetailRow label={t("validator:detail.fields.address")} stacked>
+            <Hash value={validator.address} full tone="strong" />
+          </DetailRow>
+          <DetailGrid>
+            <DetailRow label={t("validator:detail.fields.name")} stacked>
+              {name ?? "—"}
+            </DetailRow>
+            <DetailRow label={t("validator:detail.fields.status")} stacked>
+              <ValidatorStatusPill validator={validator} />
+            </DetailRow>
+            <DetailRow label={t("validator:detail.fields.location")} stacked>
+              {validator.locationLabel}
+            </DetailRow>
+            <DetailRow label={t("validator:detail.fields.connectionDate")} stacked>
+              {validator.dateLabel}
+            </DetailRow>
+            <DetailRow label={t("validator:detail.fields.blocksCrafted")} stacked mono>
+              {Number.isFinite(validator.blockCount) ? validator.blockCount.toLocaleString() : "—"}
+            </DetailRow>
+          </DetailGrid>
+        </DetailList>
+      </Card>
 
-          <div className="d-block d-md-flex justify-start">
-            <DetailItem
-              label={t("validator:detail.fields.connectionDate") as string}
-              value={`${validator.dateLabel}`}
-            ></DetailItem>
-            <div className="px-1  py-1"></div>
-
-            <div className="px-1  py-1"></div>
-            <DetailItem
-              label={t("validator:detail.fields.status") as string}
-              value={`${validator.isActive ? t("common:status.active") : t("common:status.inactive")}`}
-            ></DetailItem>
-            <div className="px-1  py-1"></div>
-
-            <DetailItem
-              label={t("validator:detail.fields.blocksCrafted") as string}
-              value={`${validator.blockCount}`}
-            ></DetailItem>
-          </div>
-        </div>
-        <h4 className="mt-3">{t("validator:detail.blocksHeading")}</h4>
-      </div>
-      <div>
-        <BlockListContainer initialBlocks={[]} validatorAddress={validator.address} />
-      </div>
+      <SectionHeader title={t("validator:detail.blocksHeading")} description={t("validator:detail.blocksDescription")} className={layout.section} />
+      <BlockFeed blocks={feed.blocks} loadMore={feed.loadMore} canLoadMore={feed.canLoadMore} loading={!feed.loaded} emptyLabel={t("validator:detail.noBlocks") as string} />
     </>
   );
 };

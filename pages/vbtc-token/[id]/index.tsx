@@ -1,79 +1,94 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
-
 import { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Breadcrumbs } from "../../../src/components/ui/breadcrumbs";
+import { Card } from "../../../src/components/ui/card";
+import { Page } from "../../../src/components/ui/page";
+import { Skeleton } from "../../../src/components/ui/skeleton";
+import { CenteredState } from "../../../src/components/ui/spinner";
+import { VbtcTokenDetail } from "../../../src/components/vbtc-token-detail";
+import { IS_DEVNET, IS_TESTNET } from "../../../src/constants";
 import { VbtcToken } from "../../../src/models/vbtc-token";
 import { VbtcTokenService } from "../../../src/services/vbtc-service";
-import { IS_TESTNET, IS_DEVNET } from "../../../src/constants";
-import Head from "next/head";
-import { VbtcTokenDetail } from "../../../src/components/vbtc-token-detail";
+import { truncateMiddle } from "../../../src/utils/formatting";
 import { useLocalized } from "../../../src/utils/use-localized";
 
-
 const VbtcTokenDetailPage: NextPage = () => {
+  const { t } = useTranslation(["vbtcToken", "common"]);
+  const localized = useLocalized();
+  const { id } = useRouter().query;
 
-    const { t } = useTranslation(["vbtcToken", "common"]);
-    const localized = useLocalized();
-    const { id } = useRouter().query;
+  const [token, setToken] = useState<VbtcToken | undefined>(undefined);
+  const [notFound, setNotFound] = useState(false);
 
-    const [token, setToken] = useState<VbtcToken | undefined>(undefined);
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    setToken(undefined);
+    setNotFound(false);
+    new VbtcTokenService()
+      .retrieve(id.toString())
+      .then((data) => {
+        if (cancelled) return;
+        if (!data.sc_identifier) {
+          setNotFound(true);
+          return;
+        }
+        setToken(data);
+      })
+      .catch((error) => {
+        console.error("vBTC token lookup failed", error);
+        if (!cancelled) setNotFound(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
-    useEffect(() => {
-        if (!id) return;
+  const idText = `${id ?? ""}`;
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
 
-        const service = new VbtcTokenService();
-
-        service.retrieve(id.toString()).then((data) => {
-            console.log(data);
-            setToken(data);
-        });
-    }, [id]);
-
-    if (!token) return <></>;
-
-    const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : '';
-
-    return <>
-
-        <Head>
-
-            <meta name="description" />
-            <title>{`${t("vbtcToken:detail.pageTitle", { name: token.name })}${netTag}`}</title>
-            <link rel="icon" href={localized("/favicon.png")} />
-        </Head>
-
-        <div>
-            <div className="container">
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb align-items-center">
-                        <li className="breadcrumb-item">
-                            <a href={localized("/")}>{t("common:breadcrumb.home")}</a>
-                        </li>
-                        <li className="breadcrumb-item active" aria-current="page">
-                            <a href={localized("/vbtc-token")}>{t("vbtcToken:list.breadcrumbCurrent")}</a>
-                        </li>
-
-                        <li className="breadcrumb-item active" aria-current="page">
-                            <a href={localized(`/vbtc-token/${id}`)}>{token.name}</a>
-                        </li>
-
-                    </ol>
-                </nav>
-            </div>
-
-            <VbtcTokenDetail token={token} />
-        </div>
-
-
-    </>;
-}
+  return (
+    <>
+      <Head>
+        <title>{`${t("vbtcToken:detail.pageTitle", { name: token?.name ?? truncateMiddle(idText, 6) })}${netTag}`}</title>
+        <meta name="description" content={t("vbtcToken:list.metaDescription") as string} />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      <Page>
+        <Breadcrumbs
+          items={[
+            { label: t("common:breadcrumb.home"), href: localized("/") },
+            { label: t("vbtcToken:list.breadcrumbCurrent"), href: localized("/vbtc-token") },
+            { label: token?.name ?? truncateMiddle(idText, 8), mono: !token },
+          ]}
+        />
+        {notFound ? (
+          <Card>
+            <CenteredState title={t("vbtcToken:detail.notFound")} body={t("vbtcToken:detail.notFoundBody", { id: idText })} />
+          </Card>
+        ) : token ? (
+          <VbtcTokenDetail token={token} />
+        ) : (
+          <>
+            <Skeleton width={260} height={30} />
+            <div style={{ height: 18 }} />
+            <Card>
+              <Skeleton height={200} />
+            </Card>
+          </>
+        )}
+      </Page>
+    </>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'search', 'vbtcToken'])),
+    ...(await serverSideTranslations(locale ?? "en", ["common", "search", "vbtcToken"])),
   },
 });
 

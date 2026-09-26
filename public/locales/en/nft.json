@@ -2,7 +2,8 @@
   "list": {
     "pageTitle": "VFX Spyglass",
     "metaDescription": "VerifiedX Spyglass: NFTs",
-    "breadcrumbCurrent": "NFTs"
+    "breadcrumbCurrent": "NFTs",
+    "empty": "No NFTs yet"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: NFT {{id}}",
@@ -19,7 +20,25 @@
       "burnTransaction": "Burn Transaction:"
     },
     "smartContractCodeHeading": "Smart Contract Code",
-    "transactionHistoryHeading": "Transaction History"
+    "transactionHistoryHeading": "Transaction History",
+    "summary": "Details",
+    "minted": "Minted",
+    "notFound": "NFT not found",
+    "notFoundBody": "No NFT with id “{{id}}” has been indexed.",
+    "noHistory": "No transactions yet",
+    "codeUnavailable": "The smart contract code could not be decoded.",
+    "labels": {
+      "identifier": "Identifier",
+      "name": "Name",
+      "description": "Description",
+      "minterAddress": "Minter address",
+      "ownerAddress": "Owner address",
+      "minterName": "Minter name",
+      "primaryAssetName": "Primary asset",
+      "primaryAssetSize": "Primary asset size",
+      "mintTransaction": "Mint transaction",
+      "burnTransaction": "Burn transaction"
+    }
   },
   "card": {
     "viewDetails": "View Details",

@@ -2,7 +2,9 @@
   "list": {
     "pageTitle": "VFX Spyglass",
     "metaDescription": "VerifiedX Spyglass: Bloques",
-    "breadcrumbCurrent": "Bloques"
+    "breadcrumbCurrent": "Bloques",
+    "heading": "Bloques",
+    "description": "Todos los bloques de la red VerifiedX, del más reciente al más antiguo"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: Bloque {{height}}",
@@ -21,7 +23,19 @@
       "merkleRoot": "Raíz Merkle",
       "stateRoot": "Raíz de estado",
       "validatorSignature": "Firma del validador"
-    }
+    },
+    "title": "Bloque",
+    "summary": "Resumen",
+    "hashes": "Hashes",
+    "crafted": "Creado",
+    "txCount_one": "{{count}} transacción",
+    "txCount_other": "{{count}} transacciones",
+    "txInBlock": "En este bloque",
+    "noTransactions": "Sin transacciones en este bloque",
+    "notFound": "Bloque no encontrado",
+    "notFoundBody": "No se ha indexado nada para “{{id}}”.",
+    "prevBlock": "Bloque anterior",
+    "nextBlock": "Bloque siguiente"
   },
   "card": {
     "title": "Bloque {{height}}",
@@ -46,7 +60,10 @@
     "txsCount_one": "{{count}} Tx",
     "txsCount_other": "{{count}} Txs",
     "craftTimeMs": "{{ms}} ms",
-    "locationFallback": "-"
+    "locationFallback": "-",
+    "reward": "Recompensa",
+    "noTransactions": "—",
+    "toggleTxs": "Mostrar u ocultar transacciones"
   },
   "rewardsCalculator": {
     "yourValidators": "Tus validadores (v)",
@@ -70,5 +87,25 @@
     "amount": "Monto",
     "fee": "Comisión",
     "validatedBy": "Validado por"
+  },
+  "home": {
+    "latestBlocks": "Últimos bloques",
+    "live": "En vivo",
+    "streaming": "Los bloques nuevos aparecen a medida que se crean",
+    "allBlocks": "Todos los bloques",
+    "tableCaption": "Últimos bloques de la red VerifiedX"
+  },
+  "overview": {
+    "ariaLabel": "Resumen de la red",
+    "latestBlock": "Último bloque",
+    "avgBlockTime": "Tiempo medio de bloque",
+    "avgBlockTimeSub": "Promedio móvil de la red",
+    "lastBlockDelay": "Retraso del último bloque",
+    "lastBlockDelaySub": "Entre los dos últimos bloques",
+    "activeValidators": "Validadores activos",
+    "checkStatus": "Verificar el estado de un validador",
+    "unavailable": "No disponible",
+    "avgBlockTimeComputedSub_one": "Promedio del último bloque",
+    "avgBlockTimeComputedSub_other": "Promedio de los últimos {{count}} bloques"
   }
 }

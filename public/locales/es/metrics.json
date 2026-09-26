@@ -1,5 +1,5 @@
 {
-  "heading": "Métricas",
+  "heading": "Métricas de la red",
   "spyglassHeading": "Spyglass",
   "labels": {
     "lifetimeSupply": "Suministro histórico",
@@ -14,12 +14,22 @@
     "networkMetrics": "Métricas de red",
     "blockDifferenceAverage": "Diferencia promedio entre bloques",
     "blockLastDelay": "Retraso del último bloque",
-    "blockAverages": "Promedios de bloques"
+    "blockAverages": "Promedios de bloques",
+    "latestBlock": "Último bloque",
+    "totalTransactionsSub": "Desde el génesis",
+    "totalVfxAddressesSub": "Direcciones que han tenido VFX",
+    "viewValidators": "Ver el pool de validadores",
+    "cliVersionSub": "Software del nodo reportado por el indexador"
   },
   "search": {
     "placeholder": "Buscar dirección"
   },
   "units": {
-    "seconds": "s"
-  }
+    "seconds": "s",
+    "vfx": "VFX"
+  },
+  "pageTitle": "VFX Spyglass: Métricas",
+  "description": "Oferta, actividad y salud de los bloques en la red VerifiedX",
+  "supplyHeading": "Oferta y actividad",
+  "unavailable": "No disponible"
 }

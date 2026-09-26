@@ -2,7 +2,9 @@
   "list": {
     "pageTitle": "VFX Spyglass",
     "metaDescription": "VerifiedX Spyglass: Blocks",
-    "breadcrumbCurrent": "Blocks"
+    "breadcrumbCurrent": "Blocks",
+    "heading": "Blocks",
+    "description": "Every block on the VerifiedX network, newest first"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: Block {{height}}",
@@ -21,7 +23,19 @@
       "merkleRoot": "Merkle Root",
       "stateRoot": "State Root",
       "validatorSignature": "Validator Signature"
-    }
+    },
+    "title": "Block",
+    "summary": "Summary",
+    "hashes": "Hashes",
+    "crafted": "Crafted",
+    "txCount_one": "{{count}} transaction",
+    "txCount_other": "{{count}} transactions",
+    "txInBlock": "In this block",
+    "noTransactions": "No transactions in this block",
+    "notFound": "Block not found",
+    "notFoundBody": "Nothing has been indexed for “{{id}}”.",
+    "prevBlock": "Previous block",
+    "nextBlock": "Next block"
   },
   "card": {
     "title": "Block {{height}}",
@@ -46,7 +60,10 @@
     "txsCount_one": "{{count}} Tx",
     "txsCount_other": "{{count}} Txs",
     "craftTimeMs": "{{ms}}ms",
-    "locationFallback": "-"
+    "locationFallback": "-",
+    "reward": "Reward",
+    "noTransactions": "—",
+    "toggleTxs": "Show or hide transactions"
   },
   "rewardsCalculator": {
     "yourValidators": "Your Validators (v)",
@@ -70,5 +87,25 @@
     "amount": "Amount",
     "fee": "Fee",
     "validatedBy": "Validated By"
+  },
+  "home": {
+    "latestBlocks": "Latest blocks",
+    "live": "Live",
+    "streaming": "New blocks appear as they are crafted",
+    "allBlocks": "All blocks",
+    "tableCaption": "Latest blocks on the VerifiedX network"
+  },
+  "overview": {
+    "ariaLabel": "Network overview",
+    "latestBlock": "Latest block",
+    "avgBlockTime": "Avg block time",
+    "avgBlockTimeSub": "Rolling network average",
+    "lastBlockDelay": "Last block delay",
+    "lastBlockDelaySub": "Between the last two blocks",
+    "activeValidators": "Active validators",
+    "checkStatus": "Check a validator’s status",
+    "unavailable": "Unavailable",
+    "avgBlockTimeComputedSub_one": "Average of the last block",
+    "avgBlockTimeComputedSub_other": "Average of the last {{count}} blocks"
   }
 }

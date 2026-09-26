@@ -1,193 +1,127 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 import { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { LatestBlock } from "../../src/components/latest-block";
-import { Search } from "../../src/components/search";
+import { LatestBlockCard } from "../../src/components/metrics/latest-block-card";
+import { Breadcrumbs } from "../../src/components/ui/breadcrumbs";
+import { Card } from "../../src/components/ui/card";
+import { DetailList, DetailRow } from "../../src/components/ui/detail-list";
+import { Page } from "../../src/components/ui/page";
+import { PageHeader } from "../../src/components/ui/page-header";
+import { StatTile } from "../../src/components/ui/stat-tile";
+import { IS_DEVNET, IS_TESTNET } from "../../src/constants";
 import { Circulation } from "../../src/models/circulation";
 import { NetworkMetrics } from "../../src/models/network_metrics";
 import { CirculationService } from "../../src/services/circulation-service";
 import { NetworkMetricsService } from "../../src/services/network-metrics-service";
-import { numberWithCommas } from "../../src/utils/formatting";
-import * as timeago from 'timeago.js';
-import BlockRewardsCalculator from "../../src/components/block-rewards-calculator";
+import { useLocalized } from "../../src/utils/use-localized";
+import styles from "../../src/components/metrics/metrics-overview.module.scss";
 
+const REFRESH_MS = 15000;
 
-const CirculationPage: NextPage = () => {
+/** undefined = loading, null = endpoint failed. */
+type Loadable<T> = T | null | undefined;
+
+const MetricsPage: NextPage = () => {
   const { t } = useTranslation(["metrics", "common"]);
-  const router = useRouter();
-  const { hash } = router.query;
-
-  const [circulation, setCirculation] = useState<Circulation | undefined>(
-    undefined
-  );
-
-
-  const [metrics, setMetrics] = useState<NetworkMetrics | undefined>(
-    undefined
-  );
+  const { locale } = useRouter();
+  const localized = useLocalized();
+  const [circulation, setCirculation] = useState<Loadable<Circulation>>(undefined);
+  const [metrics, setMetrics] = useState<Loadable<NetworkMetrics>>(undefined);
 
   useEffect(() => {
-
-    const service = new CirculationService();
-    const networkMetricsService = new NetworkMetricsService();
-    service.retrieve().then((data) => {
-      setCirculation(data);
-    });
-
-    networkMetricsService.retrieve().then((data) => {
-      setMetrics(data);
-    });
-
-    const interval = setInterval(() => {
-      service.retrieve().then((data) => {
-        setCirculation(data);
-      });
-
-
-      networkMetricsService.retrieve().then((data) => {
-        setMetrics(data);
-      });
-
-
-    }, 1000 * 15);
-
-
-
-    return () => clearInterval(interval);
-
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const data = await new CirculationService().retrieve();
+        if (!cancelled) setCirculation(data);
+      } catch (error) {
+        console.error("Circulation unavailable", error);
+        if (!cancelled) setCirculation(null);
+      }
+      try {
+        const data = await new NetworkMetricsService().retrieve();
+        if (!cancelled) setMetrics(data);
+      } catch (error) {
+        console.error("Network metrics unavailable", error);
+        if (!cancelled) setMetrics(null);
+      }
+    };
+    load();
+    const id = setInterval(load, REFRESH_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
   }, []);
 
-  if (!circulation && !metrics) return <></>;
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
+  const dash = <span className={styles.dash}>—</span>;
+  const unavailable = t("metrics:unavailable");
+  const vfx = (value: number | undefined) => (value === undefined ? dash : value.toLocaleString(locale, { maximumFractionDigits: 2 }));
+  const count = (value: number | undefined) => (value === undefined ? dash : value.toLocaleString(locale));
+  const supplyValue = (pick: (c: Circulation) => number) => (circulation === undefined ? undefined : circulation === null ? dash : vfx(pick(circulation)));
+  const countValue = (pick: (c: Circulation) => number) => (circulation === undefined ? undefined : circulation === null ? dash : count(pick(circulation)));
+  const supplySub = circulation === null ? unavailable : t("metrics:units.vfx");
+  const seconds = (value: number) => value.toLocaleString(locale, { maximumFractionDigits: 1 });
 
   return (
-    <div>
-      <div className="container">
-        <h3 className="mt-3 text-center">{t("metrics:heading")}</h3>
+    <>
+      <Head>
+        <title>{`${t("metrics:pageTitle")}${netTag}`}</title>
+        <meta name="description" content={t("metrics:description") as string} />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      <Page>
+        <Breadcrumbs items={[{ label: t("common:breadcrumb.home"), href: localized("/") }, { label: t("metrics:heading") }]} />
+        <PageHeader title={t("metrics:heading")} meta={t("metrics:description")} />
 
+        <section className={styles.grid} aria-label={t("metrics:supplyHeading") as string}>
+          <StatTile label={t("metrics:labels.circulatingSupply")} value={supplyValue((c) => c.balance)} sub={supplySub} />
+          <StatTile label={t("metrics:labels.lifetimeSupply")} value={supplyValue((c) => c.lifetimeSupply)} sub={supplySub} />
+          <StatTile label={t("metrics:labels.amountAssured")} value={supplyValue((c) => c.totalStaked)} sub={supplySub} />
+          <StatTile label={t("metrics:labels.totalBurnedFees")} value={supplyValue((c) => c.feesBurnedSum)} sub={supplySub} />
+          <StatTile label={t("metrics:labels.totalTransactions")} value={countValue((c) => c.totalTransactions)} sub={circulation === null ? unavailable : t("metrics:labels.totalTransactionsSub")} />
+          <StatTile label={t("metrics:labels.totalVfxAddresses")} value={countValue((c) => c.totalAddresses)} sub={circulation === null ? unavailable : t("metrics:labels.totalVfxAddressesSub")} />
+          <StatTile
+            label={t("metrics:labels.activeValidatorPool")}
+            value={countValue((c) => c.activeMasterNodes)}
+            sub={circulation === null ? unavailable : <a href={localized("/validators")}>{t("metrics:labels.viewValidators")}</a>}
+          />
+          <StatTile
+            label={t("metrics:labels.cliVersion")}
+            value={circulation === undefined ? undefined : circulation === null ? dash : <span className={styles.mono}>{circulation.cliVersion}</span>}
+            sub={circulation === null ? unavailable : t("metrics:labels.cliVersionSub")}
+          />
+        </section>
 
-        <ul className="list-group my-5">
-          {circulation ? (
-            <>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.lifetimeSupply")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.lifetimeSupply)} VFX</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.circulatingSupply")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance)} VFX</span>
-              </li>
-
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.amountAssured")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalStaked)} VFX</span>
-              </li>
-
-              {/* <li className="list-group-item d-flex justify-content-between align-items-center">
-                Effective Circulating Supply
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.balance - circulation.totalStaked)} VFX</span>
-              </li> */}
-              {/* 
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                Founder Assured
-                <span className="badge bg-secondary badge-lg text-black">58,000,000 VFX</span>
-              </li> */}
-
-
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.totalBurnedFees")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.feesBurnedSum)} VFX</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.totalTransactions")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalTransactions)}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <span style={{ textDecoration: 'underline' }}>{t("metrics:labels.network")}</span>
-                <span className="badge bg-secondary badge-lg text-black">{ }</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.cliVersion")}
-                <span className="badge bg-secondary badge-lg text-black">{circulation.cliVersion}</span>
-              </li>
-              {/* <li className="list-group-item d-flex justify-content-between align-items-center">
-                Total Validator Pool
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalMasterNodes)}</span>
-              </li> */}
-
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.totalVfxAddresses")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.totalAddresses)}</span>
-              </li>
-
-              <li className="list-group-item d-flex justify-content-between align-items-center" style={{ borderBottom: 'none' }}>
-                <div className="d-flex align-items-start  flex-column">
-                  <div className="">
-
-                    {t("metrics:labels.activeValidatorPool")}
-                  </div>
-                </div>
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(circulation.activeMasterNodes)}</span>
-              </li>
-
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Search placeholder={t("metrics:search.placeholder") as string} mini />
-              </li>
-            </>
-          ) : null}
-          {metrics ? (
-            <>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <span style={{ textDecoration: 'underline' }}>{t("metrics:labels.networkMetrics")}</span>
-                <span className="badge bg-secondary badge-lg text-black">{ }</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.blockDifferenceAverage")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.blockDifferenceAverage)} s</span>
-              </li>
-              {/* <li className="list-group-item d-flex justify-content-between align-items-center">
-                Block Last Received
-                <span className="badge bg-secondary badge-lg text-black">{timeago.format(metrics.blockLastReceived)}</span>
-              </li> */}
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.blockLastDelay")}
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.blockLastDelay)} s</span>
-              </li>
-              {/* <li className="list-group-item d-flex justify-content-between align-items-center">
-                Time Since Last Block
-                <span className="badge bg-secondary badge-lg text-black">{numberWithCommas(metrics.timeSinceLastBlock)} s</span>
-              </li> */}
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {t("metrics:labels.blockAverages")}
-                <span className="badge bg-secondary badge-lg text-black">{metrics.blocksAverages}</span>
-              </li>
-            </>) : null}
-        </ul>
-
-        <div className="row">
-          <div className="col-12 col-md-6 offset-3">
-            <h3 className="mt-3 mb-4 text-center">{t("metrics:spyglassHeading")}</h3>
-            <LatestBlock />
-          </div>
-
-
+        <div className={styles.columns}>
+          <Card title={t("metrics:labels.networkMetrics")} as="section" aria-label={t("metrics:labels.networkMetrics") as string}>
+            <DetailList>
+              <DetailRow label={t("metrics:labels.blockDifferenceAverage")} mono>
+                {metrics === undefined ? "…" : metrics === null ? dash : `${seconds(metrics.blockDifferenceAverage)} ${t("metrics:units.seconds")}`}
+              </DetailRow>
+              <DetailRow label={t("metrics:labels.blockLastDelay")} mono>
+                {metrics === undefined ? "…" : metrics === null ? dash : `${seconds(metrics.blockLastDelay)} ${t("metrics:units.seconds")}`}
+              </DetailRow>
+              <DetailRow label={t("metrics:labels.blockAverages")} mono>
+                {metrics === undefined ? "…" : metrics === null ? dash : metrics.blocksAverages}
+              </DetailRow>
+            </DetailList>
+          </Card>
+          <LatestBlockCard />
         </div>
-
-
-        <div className="py-5"></div>
-
-
-      </div>
-    </div>
+      </Page>
+    </>
   );
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'metrics', 'search'])),
+    ...(await serverSideTranslations(locale ?? "en", ["block", "common", "metrics", "search"])),
   },
 });
 
-export default CirculationPage;
+export default MetricsPage;

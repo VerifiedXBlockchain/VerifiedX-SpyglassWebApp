@@ -6,7 +6,12 @@
     "available": "Available Funds: {{amount}} VFX",
     "min": "Minimum Request Amount: {{amount}} VFX",
     "max": "Maximum Request Amount: {{amount}} VFX",
-    "sender": "Sender Address: {{address}}"
+    "sender": "Sender Address: {{address}}",
+    "heading": "Faucet details",
+    "availableLabel": "Available funds",
+    "minLabel": "Minimum request",
+    "maxLabel": "Maximum request",
+    "senderLabel": "Sender address"
   },
   "success": {
     "broadcast": "Success, TX Broadcasted!",
@@ -33,8 +38,13 @@
     "phoneLabel": "Phone Number",
     "phonePlaceholder": "+1 (555) 123-4567",
     "phoneHelp": "Your phone number is required to prevent abuse of this service. Once the verification code is sent, only a hash of the phone number is stored.",
-    "requestCta": "Request Funds"
+    "requestCta": "Request Funds",
+    "requestHeading": "Request funds",
+    "verifyHeading": "Enter the verification code we texted you"
   },
   "returnCoinsDevnet": "Please send devnet coin back to {{address}} when you don't need them anymore. By returning the devnet coins, you contribute to the devnet ecosystem and help maintain its functionality for other developers and testers.",
-  "returnCoinsTestnet": "Please send testnet coin back to {{address}} when you don't need them anymore. By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers."
+  "returnCoinsTestnet": "Please send testnet coin back to {{address}} when you don't need them anymore. By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers.",
+  "description": "Request test funds for development and testing",
+  "unavailableHeading": "Faucet unavailable",
+  "unavailableBody": "The faucet service did not respond. Try again in a few minutes."
 }
