@@ -1,5 +1,33 @@
 import { Block } from "../models/block";
 
+export interface BlockTiming {
+  /** Mean seconds between consecutive blocks over the sample; undefined with fewer than two blocks. */
+  averageSeconds?: number;
+  /** Seconds between the two newest blocks. */
+  lastDelaySeconds?: number;
+  /** How many blocks the average covers. */
+  sampleSize: number;
+}
+
+const MAX_SAMPLE = 30;
+
+/**
+ * Block timing derived from blocks already on the page (newest first), so the
+ * overview works on networks whose indexer lacks the metrics endpoint.
+ */
+export function blockTiming(blocks: Block[]): BlockTiming {
+  const sample = blocks.filter((b) => b.dateCrafted instanceof Date && !Number.isNaN(b.dateCrafted.getTime())).slice(0, MAX_SAMPLE);
+  if (sample.length < 2) return { sampleSize: sample.length };
+  const newest = sample[0].dateCrafted.getTime();
+  const oldest = sample[sample.length - 1].dateCrafted.getTime();
+  const second = sample[1].dateCrafted.getTime();
+  return {
+    averageSeconds: Math.max(0, (newest - oldest) / 1000 / (sample.length - 1)),
+    lastDelaySeconds: Math.max(0, (newest - second) / 1000),
+    sampleSize: sample.length,
+  };
+}
+
 /** Union of two block lists keyed by height, newest first. */
 export function mergeBlocks(existing: Block[], incoming: Block[]): Block[] {
   if (incoming.length === 0) return existing;

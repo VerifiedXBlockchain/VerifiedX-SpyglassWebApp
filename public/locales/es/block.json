@@ -104,6 +104,8 @@
     "lastBlockDelaySub": "Entre los dos últimos bloques",
     "activeValidators": "Validadores activos",
     "checkStatus": "Verificar el estado de un validador",
-    "unavailable": "No disponible"
+    "unavailable": "No disponible",
+    "avgBlockTimeComputedSub_one": "Promedio del último bloque",
+    "avgBlockTimeComputedSub_other": "Promedio de los últimos {{count}} bloques"
   }
 }
