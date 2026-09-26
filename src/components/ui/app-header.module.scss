@@ -32,7 +32,8 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
+  // The GIF carries its own black padding, so the mark sits closer than an icon would.
+  gap: 4px;
   flex-shrink: 0;
   color: var(--text-strong);
   text-decoration: none;
@@ -76,6 +77,8 @@
 }
 
 .brandProduct {
+  // Keep the wordmark → product spacing at its previous 9px despite the tighter flex gap.
+  margin-left: 5px;
   font-family: var(--font-heading);
   font-size: 15px;
   font-weight: 400;
