@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Page>
-        <NetworkOverview latestBlock={blocks[0]} />
+        <NetworkOverview blocks={blocks} />
         <SectionHeader
           as="h1"
           title={t("block:home.latestBlocks")}
