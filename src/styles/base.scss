@@ -1,8 +1,28 @@
-// Global element styles for the redesigned shell. Loaded after Bootstrap so
-// these win while legacy pages are still migrating; once Bootstrap is removed
-// this file is the whole reset.
+// Global element defaults. This is the whole reset: components own their
+// spacing, so only box model, type and link colors are set here.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   color-scheme: dark;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+}
+
+img,
+svg {
+  vertical-align: middle;
 }
 
 body {

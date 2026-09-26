@@ -3,8 +3,8 @@ import Head from "next/head";
 import { useCallback } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { PagedFeed } from "../../src/components/tokens/paged-feed";
-import { usePagedList } from "../../src/components/tokens/use-paged-list";
+import { InfiniteList } from "../../src/components/ui/infinite-list";
+import { usePagedList } from "../../src/hooks/usePagedList";
 import { Breadcrumbs } from "../../src/components/ui/breadcrumbs";
 import { Page } from "../../src/components/ui/page";
 import { PageHeader } from "../../src/components/ui/page-header";
@@ -18,7 +18,7 @@ const VbtcTokensPage: NextPage = () => {
   const { t } = useTranslation(["vbtcToken", "common"]);
   const localized = useLocalized();
   const fetchPage = useCallback((page: number) => new VbtcTokenService().list(page), []);
-  const { items, loadMore, canLoadMore, loaded } = usePagedList<VbtcToken>(fetchPage, (token) => token.sc_identifier);
+  const { items, loadMore, canLoadMore, loaded } = usePagedList<VbtcToken>(fetchPage, (token) => token.sc_identifier, { pollMs: 5000 });
   const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
 
   return (
@@ -31,9 +31,9 @@ const VbtcTokensPage: NextPage = () => {
       <Page>
         <Breadcrumbs items={[{ label: t("common:breadcrumb.home"), href: localized("/") }, { label: t("vbtcToken:list.breadcrumbCurrent") }]} />
         <PageHeader title={t("vbtcToken:list.breadcrumbCurrent")} />
-        <PagedFeed loadMore={loadMore} canLoadMore={canLoadMore}>
+        <InfiniteList loadMore={loadMore} hasMore={canLoadMore}>
           <VbtcTokenList tokens={items} loading={!loaded} />
-        </PagedFeed>
+        </InfiniteList>
       </Page>
     </>
   );

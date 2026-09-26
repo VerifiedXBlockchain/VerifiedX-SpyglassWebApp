@@ -4,8 +4,8 @@ import { useCallback } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NftGrid } from "../../src/components/tokens/nft-grid";
-import { PagedFeed } from "../../src/components/tokens/paged-feed";
-import { usePagedList } from "../../src/components/tokens/use-paged-list";
+import { InfiniteList } from "../../src/components/ui/infinite-list";
+import { usePagedList } from "../../src/hooks/usePagedList";
 import { Breadcrumbs } from "../../src/components/ui/breadcrumbs";
 import { Page } from "../../src/components/ui/page";
 import { PageHeader } from "../../src/components/ui/page-header";
@@ -18,7 +18,7 @@ const NftListPage: NextPage = () => {
   const { t } = useTranslation(["nft", "common"]);
   const localized = useLocalized();
   const fetchPage = useCallback((page: number) => new NftService().list(page), []);
-  const { items, loadMore, canLoadMore, loaded } = usePagedList<Nft>(fetchPage, (nft) => nft.identifier);
+  const { items, loadMore, canLoadMore, loaded } = usePagedList<Nft>(fetchPage, (nft) => nft.identifier, { pollMs: 5000 });
   const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
 
   return (
@@ -31,9 +31,9 @@ const NftListPage: NextPage = () => {
       <Page>
         <Breadcrumbs items={[{ label: t("common:breadcrumb.home"), href: localized("/") }, { label: t("nft:list.breadcrumbCurrent") }]} />
         <PageHeader title={t("nft:list.breadcrumbCurrent")} />
-        <PagedFeed loadMore={loadMore} canLoadMore={canLoadMore}>
+        <InfiniteList loadMore={loadMore} hasMore={canLoadMore}>
           <NftGrid nfts={items} loading={!loaded} />
-        </PagedFeed>
+        </InfiniteList>
       </Page>
     </>
   );

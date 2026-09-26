@@ -1,37 +1,11 @@
-// Legacy Bootstrap theme. Still loaded while pages migrate to the new
-// design system (src/styles/tokens.scss + component modules); remove the two
-// Bootstrap imports once no page uses Bootstrap classes.
-@import "./theme.scss";
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
-
-// New shell: tokens and element defaults win over Bootstrap's reboot.
+// Global stylesheet: design tokens and element defaults. Everything else is
+// component-scoped in *.module.scss files next to the components.
 @import "./tokens.scss";
 @import "./base.scss";
 
-.badge.badge-lg {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-
-.map-outer-container {
-    position: relative;
-    height: calc(100vh - 120px);
-    width: 100%;
-    overflow: hidden;
-
-    .map-container {
-        width: 100%;
-        height: 100%;
-    }
-
-    .spinner-border {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-    }
-}
-
+// Mapbox renders its popup on a light card; keep its text readable.
 .mapboxgl-popup-content {
-    color: #000;
+    color: #101010;
+    border-radius: 10px;
+    padding: 12px 14px;
 }

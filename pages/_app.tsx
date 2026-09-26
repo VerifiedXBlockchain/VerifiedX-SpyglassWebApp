@@ -1,5 +1,4 @@
 import "../src/styles/styles.scss";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
