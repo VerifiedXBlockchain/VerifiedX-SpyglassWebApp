@@ -1,6 +1,8 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
+/* eslint-disable @next/next/no-html-link-for-pages, @next/next/no-img-element */
 // Raw <a href> on purpose: the app navigates with full page loads and
 // useLocalized() keeps the active locale prefix on every internal link.
+// Plain <img> for the brand mark: it is an animated GIF, which next/image
+// would only pass through unoptimized anyway.
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { FormEvent, useEffect, useRef, useState } from "react";
@@ -8,7 +10,7 @@ import { IS_DEVNET, IS_TESTNET } from "../../constants";
 import { navigateTo } from "../../utils/navigate";
 import { useLocalized } from "../../utils/use-localized";
 import { LanguageSwitcher } from "../language-switcher";
-import { CloseIcon, CubeIcon, ExternalLinkIcon, MenuIcon, MoreIcon, SearchIcon } from "./icons";
+import { CloseIcon, ExternalLinkIcon, MenuIcon, MoreIcon, SearchIcon } from "./icons";
 import { Menu, MenuItem } from "./menu";
 import { NetworkBadge } from "./network-badge";
 import styles from "./app-header.module.scss";
@@ -112,7 +114,7 @@ export const AppHeader = () => {
       <div className={styles.bar}>
         <a className={styles.brand} href={localized("/")}>
           <span className={styles.brandMark}>
-            <CubeIcon />
+            <img src="/cube.gif" alt="" width={30} height={30} className={styles.brandGif} />
           </span>
           <span className={styles.brandName}>
             Verified<span className={styles.brandX}>X</span>
