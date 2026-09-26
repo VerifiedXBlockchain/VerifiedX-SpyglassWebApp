@@ -1,445 +1,142 @@
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { isMobile } from "react-device-detect";
-import { BlockCard } from "../../src/components/block-card";
-import { TransactionCard } from "../../src/components/transaction-card";
-import { IS_TESTNET, IS_DEVNET } from "../../src/constants";
-import { Address } from "../../src/models/address";
-import { Block } from "../../src/models/block";
-import { PaginatedResponse } from "../../src/models/paginated-response";
-import { Transaction } from "../../src/models/transaction";
-import { AddressService } from "../../src/services/address-service";
-import { BlockService } from "../../src/services/block-service";
-import { TransactionService } from "../../src/services/transaction-service";
-
-
-
-enum SearchType {
-    address,
-    hash,
-    blockHeight,
-    adnr,
-}
-
-enum SearchResultType {
-    blocks,
-    transactions
-}
-
-const NewSearchPage: NextPage = () => {
-    const { t } = useTranslation(["search", "common"]);
-
-    const router = useRouter();
-    const { q } = router.query;
-
-    let initialQuery = q;
-    let initialResultType = SearchResultType.transactions;
-
-    const [query, setQuery] = useState<string>(initialQuery?.toString() || '');
-    const [resultType, setResultType] = useState<SearchResultType>(initialResultType);
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [page, setPage] = useState<number>(0);
-
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [blocks, setBlocks] = useState<Block[]>([]);
-
-    const [canLoadMoreTransactions, setCanLoadMoreTransactions] = useState<boolean>(false);
-    const [canLoadMoreBlocks, setCanLoadMoreBlocks] = useState<boolean>(false);
-
-    const [totalTransactionResults, setTotalTransactionResults] = useState<number>(0);
-    const [totalBlockResults, setTotalBlocksResults] = useState<number>(0);
-
-    const [address, setAddress] = useState<Address | undefined>(undefined);
-
-
-    const transactionService = new TransactionService();
-    const blockService = new BlockService();
-    const addressService = new AddressService();
-
-
-
-    useEffect(() => {
-        if (q) {
-            setQuery(q.toString());
-            handleSearch(q.toString());
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [q]);
-
-    const searchInput = useCallback((inputElement) => {
-        if (inputElement) {
-            inputElement.focus();
-        }
-    }, []);
-
-    const handleQueryChange = (q: string, andSearch = false) => {
-
-        handleClear(q);
-        if (andSearch) {
-            handleSearch(q);
-        }
-    }
-
-
-    const handleClear = (q = '') => {
-        setQuery(q);
-        setResultType(SearchResultType.transactions);
-        setBlocks([]);
-        setTransactions([]);
-        setPage(0);
-        setLoading(false);
-        setCanLoadMoreBlocks(false);
-        setCanLoadMoreTransactions(false);
-        setAddress(undefined);
-        setTotalBlocksResults(0)
-        setTotalTransactionResults(0);
-
-    }
-
-    const valueToSearchType = (val: string) => {
-
-        if (val.length == 34 && val.startsWith('xRBX')) {
-            return SearchType.address;
-        }
-
-        if (val.length == 34 && val[0].toUpperCase() == (IS_DEVNET ? "X" : IS_TESTNET ? "X" : "R")) {
-            return SearchType.address;
-        }
-
-        if (val.includes('.rbx')) {
-            return SearchType.adnr;
-        }
-
-        const isNumber = /^\d+$/.test(val);
-
-        if (isNumber) {
-            return SearchType.blockHeight;
-        }
-
-        return SearchType.hash;
-
-    }
-
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const handleSearch = async (q: string, p: number = 1, forceResultType?: SearchResultType) => {
-        const type = valueToSearchType(q);
-
-
-
-        if (type == SearchType.adnr) {
-
-            const a = await addressService.retrieveByAdnr(q);
-            handleQueryChange(a.address, true);
-            return;
-        }
-
-
-        if (!q) {
-            handleClear();
-            return;
-        }
-
-        if (loading) {
-            return;
-        }
-
-        setLoading(true);
-        setPage(p);
-
-
-        let _resultType: SearchResultType = SearchResultType.transactions;
-
-        switch (type) {
-            case SearchType.address:
-                if (p == 1) {
-                    addressService.retrieve(q).then((a) => {
-                        setAddress(a);
-                    })
-                }
-
-                _resultType = forceResultType !== undefined ? forceResultType : SearchResultType.transactions;
-                setResultType(_resultType);
-
-                if (_resultType == SearchResultType.transactions) {
-
-                    const data = await transactionService.address(q, p);
-                    if (p == 1) {
-                        setTransactions(data.results);
-                    } else {
-                        setTransactions([...transactions, ...data.results]);
-                    }
-
-                    setCanLoadMoreTransactions(data.numPages > data.page);
-                    setTotalTransactionResults(data.count);
-
-                } else {
-                    const data = await blockService.address(q, p);
-                    if (p == 1) {
-                        setBlocks(data.results);
-                    } else {
-                        setBlocks([...blocks, ...data.results]);
-
-                    }
-                    setCanLoadMoreBlocks(data.numPages > data.page);
-                    setTotalBlocksResults(data.count);
-
-                }
-                break;
-            case SearchType.blockHeight:
-                setAddress(undefined);
-                _resultType = forceResultType !== undefined ? forceResultType : SearchResultType.blocks;
-                setResultType(_resultType);
-
-                if (_resultType == SearchResultType.transactions) {
-                    const data = await transactionService.listByBlockHeight(parseInt(q));
-                    setTransactions(data.results);
-                    setCanLoadMoreTransactions(data.numPages > data.page);
-                    setTotalTransactionResults(data.count);
-
-                } else {
-                    try {
-                        const data = await blockService.retrieve(q);
-                        setBlocks([data]);
-                        setCanLoadMoreBlocks(false);
-                        setTotalBlocksResults(1);
-                    } catch (e) {
-                        console.log(e);
-                        setBlocks([])
-                        setCanLoadMoreBlocks(false);
-                        setTotalBlocksResults(0);
-                    }
-
-                }
-                break;
-            case SearchType.hash:
-                setAddress(undefined);
-                _resultType = forceResultType !== undefined ? forceResultType : SearchResultType.transactions;
-                setResultType(_resultType);
-
-                if (_resultType == SearchResultType.transactions) {
-                    try {
-                        const data = await transactionService.retrieve(q);
-                        setTransactions([data]);
-                        setCanLoadMoreTransactions(false);
-                        setTotalTransactionResults(1);
-                    } catch (e) {
-                        console.log(e);
-                        setTransactions([])
-                        setCanLoadMoreTransactions(false);
-                        setTotalTransactionResults(0);
-                    }
-
-                } else {
-                    try {
-                        const data = await blockService.retrieveByHash(q);
-                        setBlocks([data]);
-                        setCanLoadMoreBlocks(false);
-                        setTotalBlocksResults(1);
-                    } catch (e) {
-                        console.log(e);
-                        setBlocks([])
-                        setCanLoadMoreBlocks(false);
-                        setTotalBlocksResults(0);
-                    }
-
-                }
-                break;
-
-
-
-
-
-
-        }
-
-        setLoading(false);
-
-    }
-
-    const handleResultTypeChange = (type: SearchResultType) => {
-        setResultType(type);
-        handleSearch(query, 1, type);
-    }
-
-
-    useEffect(() => {
-        const handleNextPage = (q: string, p: number, type: SearchResultType) => {
-            if (!q) {
-                return;
-            }
-            if (type == SearchResultType.transactions && !canLoadMoreTransactions) {
-                return;
-            }
-            if (type == SearchResultType.blocks && !canLoadMoreBlocks) {
-                return;
-            }
-
-            handleSearch(q, p, type);
-        }
-
-        const handleScroll = (event: any) => {
-            const percentScrolled = (window.scrollY + window.innerHeight) / document.documentElement.offsetHeight;
-            if (percentScrolled > 0.9) {
-                if (!loading) {
-                    handleNextPage(query, page + 1, resultType);
-                }
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [query, page, resultType, loading, canLoadMoreTransactions, canLoadMoreBlocks, handleSearch,]);
-
-
-    return (
-        <div>
-            <Head>
-                <title>VFX Spyglass{IS_DEVNET ? ' [DEVNET]' : IS_TESTNET ? ' [TESTNET]' : ''}</title>
-                <meta
-                    name="description"
-                    content="VerifiedX Spyglass: Search Results"
-                />
-                <link rel="icon" href="/favicon.png" />
-            </Head>
-
-            <nav aria-label="breadcrumb">
-                <ol className="breadcrumb align-items-center">
-                    <li className="breadcrumb-item">
-                        <Link href="/">{t("common:breadcrumb.home")}</Link>
-                    </li>
-                    <li className="breadcrumb-item active" aria-current="page">
-                        <Link href="/search">{t("search:page.breadcrumbCurrent")}</Link>
-                    </li>
-                </ol>
-            </nav>
-
-            <div className="container">
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSearch(query, 1);
-                }}>
-                    <div className="input-group">
-
-                        <input
-                            type="text"
-                            autoFocus={true}
-                            className="form-control py-2 bg-dark text-white"
-                            placeholder={t("search:page.inputPlaceholder") as string}
-                            style={isMobile ? { fontSize: 12 } : { fontSize: 24 }}
-                            ref={searchInput}
-                            value={query}
-                            onChange={(event) => handleQueryChange(event.target.value)}
-                            onKeyDown={e => e.key === "Enter" ? handleSearch(query, 1) : null}
-                        ></input>
-
-                        <button type="submit" className="btn btn-secondary">{t("search:page.submit")}</button>
-
-                        {query ?
-                            <button className="btn"
-                                style={{ backgroundColor: 'transparent' }}
-                                onClick={() => handleClear()}
-                            >{t("search:page.clear")}</button> : null}
-
-                    </div>
-                </form>
-
-                {address ?
-
-                    <div className="mt-4 alert bg-success text-center">
-                        Balance: {address.balance} VFX<br />
-                        Locked Balance: {address.balanceLocked} VFX<br />
-                        Total Balance: {address.balanceTotal} VFX<br />
-                        {address.adnr != null ? `VFX Domain: ${address.adnr}` : ``}
-                    </div>
-                    : null}
-
-                {page > 0 ?
-                    <div className="d-flex justify-content-between">
-
-                        <div className="mt-3">
-                            <ul className="nav nav-tabs border-bottom-0">
-                                <li className="nav-item">
-                                    <button
-                                        className={`nav-link ${resultType == SearchResultType.transactions ? 'active' : ''}`}
-                                        onClick={() => handleResultTypeChange(SearchResultType.transactions)}
-                                    >
-                                        Transactions
-                                    </button>
-                                </li>
-                                <li className="nav-item">
-                                    <button
-                                        className={`nav-link ${resultType == SearchResultType.blocks ? 'active' : ''}`}
-                                        onClick={() => handleResultTypeChange(SearchResultType.blocks)}
-                                    >
-                                        Blocks
-                                    </button>
-                                </li>
-
-                            </ul>
-                        </div>
-                        {resultType == SearchResultType.transactions && totalTransactionResults ?
-                            <div className="mt-4 d-none d-md-block">{totalTransactionResults} Transactions</div> : null}
-                        {resultType == SearchResultType.blocks && totalBlockResults ?
-                            <div className="mt-4 d-none d-md-block">{totalBlockResults} Blocks</div> : null}
-                    </div>
-
-                    : null}
-
-                {resultType == SearchResultType.transactions ?
-                    <div>
-                        <div className="row">
-                            {transactions.map(t => {
-                                return (
-                                    <div key={t.hash} className="col-12 pb-3 col-md-4 col-lg-4">
-                                        <TransactionCard transaction={t}></TransactionCard>
-                                    </div>
-                                )
-                            })}
-                        </div>
-
-
-                    </div>
-                    :
-
-                    <div className="row">
-                        {blocks.map(b => {
-                            return (
-                                <div key={b.height} className="col-12 pb-3 col-md-4 col-lg-4">
-                                    <BlockCard block={b}></BlockCard>
-                                </div>
-                            )
-                        })}
-                    </div>}
-
-                {loading ?
-                    <div className="d-flex justify-content-center align-items-center py-3">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                    : null}
-            </div>
+import InfiniteScroll from "react-infinite-scroller";
+import { AddressSummary } from "../../src/components/search/address-summary";
+import { BlockResults } from "../../src/components/search/block-results";
+import { SearchForm } from "../../src/components/search/search-form";
+import { ResultTab } from "../../src/components/search/search-type";
+import { Tabs } from "../../src/components/search/tabs";
+import { useSearch } from "../../src/components/search/use-search";
+import { TransactionList } from "../../src/components/transactions/transaction-list";
+import { Breadcrumbs } from "../../src/components/ui/breadcrumbs";
+import { Card } from "../../src/components/ui/card";
+import { SearchIcon } from "../../src/components/ui/icons";
+import { Page } from "../../src/components/ui/page";
+import { PageHeader } from "../../src/components/ui/page-header";
+import { Pill } from "../../src/components/ui/pill";
+import { Skeleton } from "../../src/components/ui/skeleton";
+import { CenteredState } from "../../src/components/ui/spinner";
+import { IS_DEVNET, IS_TESTNET } from "../../src/constants";
+import { truncateMiddle } from "../../src/utils/formatting";
+import { useLocalized } from "../../src/utils/use-localized";
+import styles from "../../src/components/search/search-page.module.scss";
+
+const SearchPage: NextPage = () => {
+  const { t } = useTranslation(["search", "common"]);
+  const router = useRouter();
+  const { locale } = router;
+  const localized = useLocalized();
+  const q = Array.isArray(router.query.q) ? router.query.q[0] : router.query.q;
+  const { state, switchTab, loadMore } = useSearch(q);
+
+  const setQuery = (value: string) => {
+    router.push({ pathname: router.pathname, query: value ? { q: value } : {} }, undefined, { shallow: true });
+  };
+
+  const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
+  const active = state[state.tab];
+  const listLoading = state.loading && active.items.length === 0;
+  const typeLabel = state.type ? t(`search:page.types.${state.type}`) : "";
+
+  return (
+    <>
+      <Head>
+        <title>{`${t("search:page.pageTitle")}${netTag}`}</title>
+        <meta name="description" content={t("search:page.metaDescription") as string} />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      <Page>
+        <Breadcrumbs items={[{ label: t("common:breadcrumb.home"), href: localized("/") }, { label: t("search:page.breadcrumbCurrent") }]} />
+
+        <div className={styles.form}>
+          <SearchForm value={state.query} onSubmit={setQuery} onClear={() => setQuery("")} />
         </div>
-    )
 
-}
+        {!router.isReady ? null : !state.query ? (
+          // Static page: the query string is only known once the router is ready, so hold the empty state until then.
+          <Card>
+            <CenteredState title={t("search:page.emptyTitle")} body={t("search:page.emptyBody")}>
+              <SearchIcon size={28} />
+            </CenteredState>
+          </Card>
+        ) : state.type === "adnr" ? (
+          <Card>
+            {state.domainNotFound ? (
+              <CenteredState title={t("search:page.domainNotFound", { domain: state.query })} body={t("search:page.emptyBody")} />
+            ) : (
+              <Skeleton height={80} />
+            )}
+          </Card>
+        ) : (
+          <>
+            <PageHeader
+              title={
+                state.type === "address" ? (
+                  t("search:page.types.address")
+                ) : (
+                  <>
+                    {t("search:page.resultsFor")} <span className={styles.queryValue}>{truncateMiddle(state.query, 10)}</span>
+                  </>
+                )
+              }
+              badges={state.type && state.type !== "address" ? <Pill size="md">{typeLabel}</Pill> : null}
+            />
 
+            {state.type === "address" ? (
+              <div className={styles.summary}>
+                <AddressSummary value={state.query} address={state.address} />
+              </div>
+            ) : null}
+
+            <div className={styles.resultsBar}>
+              <Tabs<ResultTab>
+                aria-label={t("search:page.tabsAria") as string}
+                active={state.tab}
+                onChange={switchTab}
+                tabs={[
+                  { id: "transactions", label: t("search:page.tabs.transactions"), count: state.transactions.count },
+                  { id: "blocks", label: t("search:page.tabs.blocks"), count: state.blocks.count },
+                ]}
+              />
+              {active.count !== undefined ? (
+                <span className={styles.total}>
+                  {state.tab === "transactions" ? t("search:page.totalTransactions", { count: active.count }) : t("search:page.totalBlocks", { count: active.count })}
+                </span>
+              ) : null}
+            </div>
+
+            <InfiniteScroll
+              key={`${state.query}-${state.tab}`}
+              pageStart={1}
+              initialLoad={false}
+              loadMore={loadMore}
+              hasMore={active.hasMore && !state.loading}
+              loader={
+                <div key="loader" className={styles.loader}>
+                  <Skeleton width={160} height={12} />
+                </div>
+              }
+            >
+              {state.tab === "transactions" ? (
+                <TransactionList transactions={state.transactions.items} loading={listLoading} emptyLabel={t("search:page.noTransactions", { query: state.query }) as string} />
+              ) : (
+                <BlockResults blocks={state.blocks.items} loading={listLoading} emptyLabel={t("search:page.noBlocks", { query: state.query }) as string} />
+              )}
+            </InfiniteScroll>
+          </>
+        )}
+      </Page>
+    </>
+  );
+};
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['block', 'common', 'search', 'transaction'])),
+    ...(await serverSideTranslations(locale ?? "en", ["block", "common", "search", "transaction"])),
   },
 });
 
-export default NewSearchPage;
+export default SearchPage;
