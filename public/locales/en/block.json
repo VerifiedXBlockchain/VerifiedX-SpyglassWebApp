@@ -21,7 +21,19 @@
       "merkleRoot": "Merkle Root",
       "stateRoot": "State Root",
       "validatorSignature": "Validator Signature"
-    }
+    },
+    "title": "Block",
+    "summary": "Summary",
+    "hashes": "Hashes",
+    "crafted": "Crafted",
+    "txCount_one": "{{count}} transaction",
+    "txCount_other": "{{count}} transactions",
+    "txInBlock": "In this block",
+    "noTransactions": "No transactions in this block",
+    "notFound": "Block not found",
+    "notFoundBody": "Nothing has been indexed for “{{id}}”.",
+    "prevBlock": "Previous block",
+    "nextBlock": "Next block"
   },
   "card": {
     "title": "Block {{height}}",

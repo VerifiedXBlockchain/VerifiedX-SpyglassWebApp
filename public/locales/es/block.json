@@ -21,7 +21,19 @@
       "merkleRoot": "Raíz Merkle",
       "stateRoot": "Raíz de estado",
       "validatorSignature": "Firma del validador"
-    }
+    },
+    "title": "Bloque",
+    "summary": "Resumen",
+    "hashes": "Hashes",
+    "crafted": "Creado",
+    "txCount_one": "{{count}} transacción",
+    "txCount_other": "{{count}} transacciones",
+    "txInBlock": "En este bloque",
+    "noTransactions": "Sin transacciones en este bloque",
+    "notFound": "Bloque no encontrado",
+    "notFoundBody": "No se ha indexado nada para “{{id}}”.",
+    "prevBlock": "Bloque anterior",
+    "nextBlock": "Bloque siguiente"
   },
   "card": {
     "title": "Bloque {{height}}",

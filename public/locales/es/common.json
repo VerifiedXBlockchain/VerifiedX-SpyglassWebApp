@@ -39,7 +39,8 @@
     "message": "En mantenimiento. ¡Vuelve pronto!"
   },
   "breadcrumb": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "ariaLabel": "Ruta de navegación"
   },
   "action": {
     "search": "Buscar",
@@ -51,7 +52,9 @@
     "cancel": "Cancelar",
     "confirm": "Confirmar",
     "copy": "Copiar",
-    "copied": "Copiado"
+    "copied": "Copiado",
+    "show": "Mostrar",
+    "hide": "Ocultar"
   },
   "status": {
     "loading": "Cargando...",

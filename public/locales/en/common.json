@@ -39,7 +39,8 @@
     "message": "Down for Maintenance. Come back soon!"
   },
   "breadcrumb": {
-    "home": "Home"
+    "home": "Home",
+    "ariaLabel": "Breadcrumb"
   },
   "action": {
     "search": "Search",
@@ -51,7 +52,9 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "show": "Show",
+    "hide": "Hide"
   },
   "status": {
     "loading": "Loading...",

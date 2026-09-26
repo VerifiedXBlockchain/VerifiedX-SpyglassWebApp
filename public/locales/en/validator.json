@@ -15,19 +15,31 @@
       "connectionDate": "Connection Date",
       "status": "Status",
       "blocksCrafted": "Blocks Crafted"
-    }
+    },
+    "pageTitle": "VFX Spyglass: Validator {{address}}",
+    "connected": "Connected",
+    "blocksDescription": "Newest blocks crafted by this validator",
+    "noBlocks": "This validator has not crafted a block yet",
+    "notFound": "Validator not found",
+    "notFoundBody": "No validator with address “{{address}}” has been indexed."
   },
   "table": {
     "status": "Status",
     "address": "Address",
     "validatorName": "Validator Name",
     "location": "Location",
-    "actions": "Actions"
+    "actions": "Actions",
+    "blocks": "Blocks",
+    "empty": "No validators",
+    "caption": "Validators"
   },
   "search": {
     "heading": "Validator Status Checker",
     "label": "Validator Name or Address",
     "placeholder": "RBnw8....",
-    "cta": "Check Status"
+    "cta": "Check Status",
+    "pageTitle": "VFX Spyglass: Validator Status",
+    "body": "Enter a validator name or address to see whether it is active.",
+    "noResults": "No validator matches “{{query}}”."
   }
 }

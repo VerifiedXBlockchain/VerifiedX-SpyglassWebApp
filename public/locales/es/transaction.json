@@ -24,7 +24,8 @@
       "fee": "Comisión",
       "from": "De",
       "to": "Para",
-      "signature": "Firma"
+      "signature": "Firma",
+      "time": "Hora"
     },
     "nft": {
       "identifier": "Identificador:",
@@ -40,6 +41,25 @@
       "originalAddress": "Dirección original:",
       "newAddress": "Dirección nueva:",
       "amount": "Monto:"
+    },
+    "pageTitle": "VFX Spyglass: Transacción {{hash}}",
+    "title": "Transacción",
+    "summary": "Resumen",
+    "identity": "Hash y firma",
+    "nftFields": {
+      "identifier": "Identificador",
+      "name": "Nombre",
+      "description": "Descripción",
+      "minterAddress": "Dirección del emisor",
+      "ownerAddress": "Dirección del propietario",
+      "minterName": "Nombre del emisor",
+      "primaryAssetName": "Activo principal",
+      "primaryAssetSize": "Tamaño del activo principal"
+    },
+    "recoveryFields": {
+      "originalAddress": "Dirección original",
+      "newAddress": "Dirección nueva",
+      "amount": "Monto"
     }
   },
   "card": {
@@ -49,5 +69,12 @@
     "from": "De:",
     "to": "Para:",
     "fee": "Comisión:"
+  },
+  "table": {
+    "type": "Tipo",
+    "block": "Bloque",
+    "time": "Hora",
+    "empty": "Sin transacciones",
+    "caption": "Transacciones"
   }
 }
