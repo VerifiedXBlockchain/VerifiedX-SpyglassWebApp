@@ -4,12 +4,12 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Breadcrumbs } from "../../src/components/ui/breadcrumbs";
 import { Button } from "../../src/components/ui/button";
-import { SearchIcon } from "../../src/components/ui/icons";
+import { ExternalLinkIcon, GlobeIcon, SearchIcon } from "../../src/components/ui/icons";
 import { Page } from "../../src/components/ui/page";
 import { PageHeader } from "../../src/components/ui/page-header";
 import { LiveDot, Pill } from "../../src/components/ui/pill";
 import { ValidatorList } from "../../src/components/validators/validator-list";
-import { API_BASE_URL, IS_DEVNET, IS_TESTNET } from "../../src/constants";
+import { API_BASE_URL, IS_DEVNET, IS_TESTNET, LIVE_SITE_URL } from "../../src/constants";
 import { Validator } from "../../src/models/validator";
 import { useLocalized } from "../../src/utils/use-localized";
 
@@ -41,9 +41,14 @@ const ValidatorPoolPage: NextPage = ({ data }: InferGetServerSidePropsType<typeo
           }
           meta={t("validator:list.description")}
           actions={
-            <Button href={localized("/validators/search")} size="sm" icon={<SearchIcon size={14} />}>
-              {t("validator:list.checkStatusCta")}
-            </Button>
+            <>
+              <Button href={LIVE_SITE_URL} external size="sm" icon={<GlobeIcon />} iconRight={<ExternalLinkIcon />} title={t("common:nav.liveTitle") as string}>
+                {t("validator:list.liveGlobeCta")}
+              </Button>
+              <Button href={localized("/validators/search")} size="sm" variant="primary" icon={<SearchIcon size={14} />}>
+                {t("validator:list.checkStatusCta")}
+              </Button>
+            </>
           }
         />
         <ValidatorList validators={validators} sortable />

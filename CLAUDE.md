@@ -10,7 +10,7 @@ Public VerifiedX block explorer: `spyglass.verifiedx.io`. Next 12 (pages router)
 
 ## Conventions
 
-- **Design system** lives in `src/styles/tokens.scss` (CSS variables) and `src/components/ui/*` (SCSS modules). Use `var(--…)` tokens, never raw hex, in new styles. Breakpoints: `@use "../../styles/breakpoints" as bp;` (`bp.$tablet` 768, `bp.$desktop` 1200), mobile-first. No CSS framework: Bootstrap was removed in the 2026-09 redesign.
+- **Design system** lives in `src/styles/tokens.scss` (CSS variables) and `src/components/ui/*` (SCSS modules). Use `var(--…)` tokens, never raw hex, in new styles. Breakpoints: `@use "../../styles/breakpoints" as bp;` (`bp.$tablet` 768, `bp.$desktop` 1280), mobile-first. No CSS framework: Bootstrap was removed in the 2026-09 redesign.
 - **Page recipe**: `Page` → `Breadcrumbs` → `PageHeader` → content. Lists use `DataTable` (tablet and up) with a `*-compact` row list for phones behind `useMediaQuery(TABLET_QUERY)`; paging via `usePagedList` + `InfiniteList` (blocks: `useBlockPages`/`useLiveBlocks` + `BlockFeed`). Details use `Card` + `DetailList`/`DetailRow`, `Hash` for hashes and addresses, `Pill` for status and type.
 - Layout is chosen by viewport (`useMediaQuery`), never by user agent.
 - Internal links are raw `<a href>` wrapped with `useLocalized()` so the `/es` prefix survives; cross-page moves are full loads on purpose. Route through `navigateTo()` for programmatic navigation.

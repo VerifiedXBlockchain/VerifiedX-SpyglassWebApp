@@ -49,6 +49,15 @@ describe("AppHeader", () => {
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
+  it("links out to VerifiedX Live in a new tab from the primary nav", () => {
+    render(<AppHeader />);
+    const [nav] = screen.getAllByRole("navigation", { name: "nav.primaryAria" });
+    const live = within(nav).getByRole("link", { name: /nav\.live/ });
+    expect(live).toHaveAttribute("href", "https://live.verifiedx.io");
+    expect(live).toHaveAttribute("target", "_blank");
+    expect(live).toHaveAttribute("rel", "noreferrer");
+  });
+
   it("puts community links behind the More menu, opening in a new tab", async () => {
     const user = userEvent.setup();
     render(<AppHeader />);

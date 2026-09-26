@@ -95,6 +95,14 @@ export const MoreIcon = ({ size = 16, ...props }: IconProps) => (
   </svg>
 );
 
+export const GlobeIcon = ({ size = 14, ...props }: IconProps) => (
+  <svg {...base(size, props)}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18" />
+    <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z" />
+  </svg>
+);
+
 export const CopyIcon = ({ size = 13, ...props }: IconProps) => (
   <svg {...base(size, props)}>
     <rect x="9" y="9" width="12" height="12" rx="2" />

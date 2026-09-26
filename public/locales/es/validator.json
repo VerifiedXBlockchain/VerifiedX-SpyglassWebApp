@@ -7,7 +7,8 @@
     "heading": "Validadores",
     "description": "Todos los validadores activos en la red en este momento",
     "activeCount_one": "{{count}} activo",
-    "activeCount_other": "{{count}} activos"
+    "activeCount_other": "{{count}} activos",
+    "liveGlobeCta": "Globo en vivo"
   },
   "detail": {
     "heading": "Detalles del validador",
