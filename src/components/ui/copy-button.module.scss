@@ -1,0 +1,37 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  vertical-align: middle;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--text-strong);
+    background: var(--hover);
+  }
+}
+
+.boxed {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-1);
+  color: var(--text-muted);
+}
+
+.copied {
+  color: var(--green);
+
+  &:hover {
+    color: var(--green);
+  }
+}

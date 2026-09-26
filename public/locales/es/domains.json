@@ -7,7 +7,12 @@
       "domain": "Dominio",
       "address": "Dirección",
       "actions": "Acciones",
-      "viewTransaction": "Ver transacción"
-    }
+      "viewTransaction": "Ver transacción",
+      "registeredIn": "Registrado en",
+      "caption": "Dominios registrados"
+    },
+    "heading": "Dominios VFX",
+    "description": "Nombres legibles registrados en la cadena y las direcciones a las que resuelven",
+    "empty": "Aún no hay dominios registrados"
   }
 }

@@ -1,97 +1,110 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { useLocalized } from "../utils/use-localized";
 import { FungibleToken } from "../models/fungible-token";
-import { VbtcToken } from "../models/vbtc-token";
-import { DetailItem } from "./detail-item";
-
-
-
+import { numberWithCommas } from "../utils/formatting";
+import { FungibleTokenAvatar, TokenSupply } from "./tokens/fungible-token-table";
+import { HoldersList } from "./tokens/holders-list";
+import { AddressLink } from "./transactions/transaction-cells";
+import { Card } from "./ui/card";
+import { DetailList, DetailRow } from "./ui/detail-list";
+import { Hash } from "./ui/hash";
+import { PageHeader } from "./ui/page-header";
+import { Pill } from "./ui/pill";
+import { SectionHeader } from "./ui/section-header";
+import layout from "./ui/detail-layout.module.scss";
+import styles from "./tokens/token-detail.module.scss";
 
 interface Props {
-    token: FungibleToken;
-    holders: { [key: string]: number }
+  token: FungibleToken;
+  holders: { [address: string]: number };
 }
 
-export const FungibleTokenDetail = (props: Props) => {
-    const { t } = useTranslation(["fungibleToken", "common"]);
-    const localized = useLocalized();
-    const { token, holders } = props;
-    const yes = t("common:status.yes") as string;
-    const no = t("common:status.no") as string;
+export const FungibleTokenDetail = ({ token, holders }: Props) => {
+  const { t } = useTranslation(["fungibleToken", "common"]);
+  const { locale } = useRouter();
+  const yes = t("common:status.yes") as string;
+  const no = t("common:status.no") as string;
+  const description = token.description.replace(/\\n/g, "\n");
 
-    return <>
-        <div className="container">
-            <div className="bg-dark p-2">
-                <div className="text-center">
+  const flag = (enabled: boolean) => <Pill tone={enabled ? "green" : "neutral"}>{enabled ? yes : no}</Pill>;
 
-                </div>
+  return (
+    <>
+      <PageHeader
+        title={token.name}
+        badges={
+          <>
+            <Pill tone="accent" size="md">
+              {token.ticker}
+            </Pill>
+            {token.is_paused ? (
+              <Pill tone="gold" size="md">
+                {t("fungibleToken:list.paused")}
+              </Pill>
+            ) : null}
+          </>
+        }
+        meta={[token.created_at ? `${t("fungibleToken:detail.fields.deployedAt")} ${token.created_at.toLocaleDateString(locale)}` : null]}
+      />
 
-                {token.nsfw ? <div style={{ width: 128, height: 128, borderRadius: 64, backgroundColor: "#222222" }}></div> : <img src={token.image_url} alt={token.name} width={128} height={128} style={{ borderRadius: 64 }} />}
-                <div className="p-2"></div>
-
-                <div className="d-block d-md-flex justify-start">
-
-
-
-                    <DetailItem label={t("fungibleToken:detail.fields.name") as string} value={token.name}></DetailItem>
-                    <div className="p-1"></div>
-
-                    <DetailItem label={t("fungibleToken:detail.fields.ticker") as string} value={token.ticker} ></DetailItem>
-
-                </div>
-                <div className="p-1"></div>
-
-                <div className="d-block d-md-flex justify-start">
-
-                    <DetailItem label={t("fungibleToken:detail.fields.smartContractId") as string} value={token.sc_identifier}></DetailItem>
-                    <div className="p-1"></div>
-
-                    <DetailItem label={t("fungibleToken:detail.fields.owner") as string} value={token.owner_address} href={localized(`/search?q=${token.owner_address}`)}></DetailItem>
-                </div>
-                <div className="p-1"></div>
-
-
-                <div className="d-block d-md-flex justify-start">
-
-                    <DetailItem label={t("fungibleToken:detail.fields.circulatingSupply") as string} value={`${token.circulating_supply} ${token.ticker}`}></DetailItem>
-                    <div className="p-1"></div>
-                    <DetailItem label={t("fungibleToken:detail.fields.mintable") as string} value={token.can_mint ? yes : no} ></DetailItem>
-                    <div className="p-1"></div>
-                    <DetailItem label={t("fungibleToken:detail.fields.burnable") as string} value={token.can_burn ? yes : no} ></DetailItem>
-                    <div className="p-1"></div>
-                    <DetailItem label={t("fungibleToken:detail.fields.supportsVoting") as string} value={token.can_vote ? yes : no} ></DetailItem>
-                </div>
-
-
-
-                <div className="p-1"></div>
-
-                {token.description && (
-                    <div className="bg-black border-light border px-2 py-1 w-100">
-                        <div className="text-start h6 text-muted">{t("fungibleToken:detail.descriptionHeading")}</div>
-                        <div
-                            className="text-start m-0"
-                            style={{ wordBreak: "break-all" }}
-                            dangerouslySetInnerHTML={{ __html: token.description.replace(/\\n/g, '<br>') }}
-                        />
-                    </div>
-                )}
-                <div className="p-1"></div>
-
-                <hr />
-                <h5>{t("fungibleToken:detail.balancesHeading")}</h5>
-                {Object.keys(holders).map((address) => (
-                    <div key={address} className="d-block d-md-flex justify-start py-1">
-                        <a href={localized(`/search?q=${address}`)}>{address}</a>
-                        <div className="p-1"></div>
-                        <span className="badge bg-primary" style={{ paddingTop: 6 }}>{holders[address]} {token.ticker}</span>
-                    </div>
-                ))}
-
-                <div className="p-1"></div>
-
-
+      <div className={layout.twoColumn}>
+        <Card title={t("fungibleToken:detail.summary")} as="section" aria-label={t("fungibleToken:detail.summary") as string}>
+          <div className={styles.hero}>
+            <FungibleTokenAvatar token={token} size="lg" />
+            <div className={styles.heroText}>
+              <span className={styles.heroName}>{token.name}</span>
+              <span className={styles.heroSub}>
+                <TokenSupply value={token.circulating_supply} ticker={token.ticker} />
+              </span>
             </div>
-        </div>
-    </>;
-}
+          </div>
+          <DetailList>
+            <DetailRow label={t("fungibleToken:detail.fields.ticker")} mono>
+              {token.ticker}
+            </DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.owner")}>
+              <AddressLink address={token.owner_address} side={8} copy />
+            </DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.circulatingSupply")}>
+              <TokenSupply value={token.circulating_supply} ticker={token.ticker} />
+            </DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.initialSupply")}>
+              <TokenSupply value={token.initial_supply} ticker={token.ticker} />
+            </DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.decimals")} mono>
+              {numberWithCommas(token.decimal_places)}
+            </DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.mintable")}>{flag(token.can_mint)}</DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.burnable")}>{flag(token.can_burn)}</DetailRow>
+            <DetailRow label={t("fungibleToken:detail.fields.supportsVoting")}>{flag(token.can_vote)}</DetailRow>
+          </DetailList>
+        </Card>
+
+        <Card title={t("fungibleToken:detail.contract")} as="section" aria-label={t("fungibleToken:detail.contract") as string}>
+          <DetailList>
+            <DetailRow label={t("fungibleToken:detail.fields.smartContractId")} stacked>
+              <Hash value={token.sc_identifier} full tone="strong" />
+            </DetailRow>
+            {description ? (
+              <DetailRow label={t("fungibleToken:detail.descriptionHeading")} stacked>
+                <span className={styles.description}>{description}</span>
+              </DetailRow>
+            ) : null}
+            {token.banned_addresses.length > 0 ? (
+              <DetailRow label={t("fungibleToken:detail.bannedHeading")} stacked>
+                <div className={styles.bannedList}>
+                  {token.banned_addresses.map((address) => (
+                    <AddressLink key={address} address={address} side={10} copy />
+                  ))}
+                </div>
+              </DetailRow>
+            ) : null}
+          </DetailList>
+        </Card>
+      </div>
+
+      <SectionHeader title={t("fungibleToken:detail.balancesHeading")} className={layout.section} />
+      <HoldersList balances={holders} unit={token.ticker} emptyLabel={t("fungibleToken:detail.noHolders") as string} />
+    </>
+  );
+};

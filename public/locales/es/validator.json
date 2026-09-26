@@ -3,7 +3,11 @@
     "pageTitle": "VFX Spyglass: Pool de validadores",
     "metaDescription": "VerifiedX Spyglass: Inicio",
     "totalActive": "Validadores activos totales: {{count}}",
-    "checkStatusCta": "Verificar estado del validador"
+    "checkStatusCta": "Verificar estado del validador",
+    "heading": "Validadores",
+    "description": "Todos los validadores activos en la red en este momento",
+    "activeCount_one": "{{count}} activo",
+    "activeCount_other": "{{count}} activos"
   },
   "detail": {
     "heading": "Detalles del validador",
@@ -15,19 +19,31 @@
       "connectionDate": "Fecha de conexión",
       "status": "Estado",
       "blocksCrafted": "Bloques creados"
-    }
+    },
+    "pageTitle": "VFX Spyglass: Validador {{address}}",
+    "connected": "Conectado",
+    "blocksDescription": "Bloques más recientes creados por este validador",
+    "noBlocks": "Este validador aún no ha creado ningún bloque",
+    "notFound": "Validador no encontrado",
+    "notFoundBody": "No se ha indexado ningún validador con la dirección “{{address}}”."
   },
   "table": {
     "status": "Estado",
     "address": "Dirección",
     "validatorName": "Nombre del validador",
     "location": "Ubicación",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "blocks": "Bloques",
+    "empty": "Sin validadores",
+    "caption": "Validadores"
   },
   "search": {
     "heading": "Verificador de estado del validador",
     "label": "Nombre o dirección del validador",
     "placeholder": "RBnw8....",
-    "cta": "Verificar estado"
+    "cta": "Verificar estado",
+    "pageTitle": "VFX Spyglass: Estado del validador",
+    "body": "Introduce el nombre o la dirección de un validador para ver si está activo.",
+    "noResults": "Ningún validador coincide con “{{query}}”."
   }
 }

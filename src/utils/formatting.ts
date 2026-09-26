@@ -24,6 +24,13 @@ export function formatBytes(bytes: number, decimals: number = 2) {
   return parseFloat(bytes.toFixed(decimals)) + " " + units[i];
 }
 
+/** Keep `side` characters at each end of a long hash or address: "abcdefgh…stuvwxyz". */
+export function truncateMiddle(value: string, side: number = 8, ellipsis: string = "…"): string {
+  if (!value) return "";
+  if (value.length <= side * 2 + ellipsis.length) return value;
+  return `${value.slice(0, side)}${ellipsis}${value.slice(-side)}`;
+}
+
 export function chunkString(str: string, len: number) {
   const size = Math.ceil(str.length / len);
   const r = Array(size);

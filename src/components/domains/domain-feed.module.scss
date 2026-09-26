@@ -1,0 +1,18 @@
+.domain {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  overflow-wrap: anywhere;
+}
+
+.external {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--btc);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--btc);
+  }
+}

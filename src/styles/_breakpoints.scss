@@ -1,0 +1,7 @@
+// Shared breakpoints for SCSS modules. Mobile-first: style for phones,
+// then widen with `@media (min-width: bp.$tablet)` etc.
+//
+//   @use "../../styles/breakpoints" as bp;
+//   @media (min-width: bp.$desktop) { ... }
+$tablet: 768px; // phone → tablet: search leaves its own row, BTC link appears
+$desktop: 1200px; // tablet → desktop: full nav replaces the hamburger

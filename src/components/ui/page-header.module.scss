@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-bottom: 18px;
+}
+
+.left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text-strong);
+  overflow-wrap: anywhere;
+
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
+}
+
+// Inter with tabular figures rather than the mono face: Roboto Mono's wide
+// comma makes "7,381,925" read as three groups at title size.
+.titleValue {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-strong);
+}
+
+.right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.metaSep {
+  color: var(--text-faint);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}

@@ -1,0 +1,28 @@
+.group {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.option {
+  padding: 5px 10px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-strong);
+  }
+}
+
+.optionActive {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-strong);
+}

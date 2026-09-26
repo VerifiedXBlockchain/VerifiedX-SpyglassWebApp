@@ -1,0 +1,78 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.sm {
+  padding: 7px 12px;
+  font-size: 13px;
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #05131f;
+
+  &:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    color: #05131f;
+  }
+}
+
+.secondary {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-soft);
+
+  &:hover {
+    background: var(--hover);
+    color: var(--text-strong);
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: var(--accent);
+  padding-left: 8px;
+  padding-right: 8px;
+
+  &:hover {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+  }
+}
+
+.btc {
+  background: transparent;
+  border-color: rgba(247, 147, 26, 0.35);
+  color: var(--btc);
+
+  &:hover {
+    background: var(--btc-soft);
+    color: var(--btc);
+  }
+}

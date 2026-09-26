@@ -9,8 +9,12 @@
       "smartContract": "Smart Contract",
       "owner": "Owner",
       "deployedAt": "Deployed At",
-      "circulatingSupply": "Circulating Supply"
-    }
+      "circulatingSupply": "Circulating Supply",
+      "token": "Token"
+    },
+    "empty": "No fungible tokens yet",
+    "caption": "Fungible tokens",
+    "paused": "Paused"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: Fungible Token: {{name}}",
@@ -22,9 +26,19 @@
       "circulatingSupply": "Circulating Supply",
       "mintable": "Mintable",
       "burnable": "Burnable",
-      "supportsVoting": "Supports Voting"
+      "supportsVoting": "Supports Voting",
+      "initialSupply": "Initial supply",
+      "decimals": "Decimals",
+      "deployedAt": "Deployed"
     },
     "descriptionHeading": "Description",
-    "balancesHeading": "Balances"
+    "balancesHeading": "Balances",
+    "summary": "Summary",
+    "contract": "Smart contract",
+    "nsfw": "Image hidden",
+    "noHolders": "No holders yet",
+    "bannedHeading": "Banned addresses",
+    "notFound": "Token not found",
+    "notFoundBody": "No fungible token with id “{{id}}” has been indexed."
   }
 }
