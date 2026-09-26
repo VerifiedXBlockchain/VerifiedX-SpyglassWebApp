@@ -1,101 +1,51 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 import { useTranslation } from "next-i18next";
-import { useLocalized } from "../utils/use-localized";
 import { Nft } from "../models/nft";
-import { Validator } from "../models/validator";
+import { useLocalized } from "../utils/use-localized";
+import { AddressLink } from "./transactions/transaction-cells";
+import { Card } from "./ui/card";
+import { DetailList, DetailRow } from "./ui/detail-list";
+import { Hash } from "./ui/hash";
+import { Pill } from "./ui/pill";
+import styles from "./tokens/nft-grid.module.scss";
 
 interface Props {
   nft: Nft;
 }
 
-export const NftCard = (props: Props) => {
-  const { t } = useTranslation(["nft", "common"]);
+export const NftStatusPill = ({ nft, size }: { nft: Nft; size?: "sm" | "md" }) => {
+  const { t } = useTranslation("nft");
+  return (
+    <Pill tone={nft.isBurned ? "red" : "green"} size={size}>
+      {nft.isBurned ? t("card.burned") : t("card.active")}
+    </Pill>
+  );
+};
+
+export const NftCard = ({ nft }: Props) => {
+  const { t } = useTranslation("nft");
   const localized = useLocalized();
-  const { nft } = props;
+  const href = localized(`/nfts/${nft.identifier}`);
 
   return (
-    <div className="card">
-      <div className="card-header  d-flex justify-content-between align-items-center">
-        <span
-          style={{
-            // wordBreak: "break-all",
-            whiteSpace: "pre-line",
-            overflowWrap: "anywhere",
-          }}
-        >
-          {nft.name}
-        </span>
-        <a
-          href={localized(`/nfts/${nft.identifier}`)}
-          className="btn btn-primary btn-sm"
-        >
-          {t("nft:card.viewDetails")}
-        </a>
+    <Card as="article" className={styles.card} aria-label={nft.name}>
+      <div className={styles.head}>
+        <h3 className={styles.title}>
+          <a href={href}>{nft.name}</a>
+        </h3>
+        <NftStatusPill nft={nft} />
       </div>
-      <ul className="list-group">
-        <li className="list-group-item">
-          <div className="d-flex justify-content-between align-items-center">
-            <div>{t("nft:card.status")}</div>
-            {nft.isBurned ? (
-              <div className="badge bg-danger">{t("nft:card.burned")}</div>
-            ) : (
-              <div className="badge bg-success">{t("nft:card.active")}</div>
-
-            )}
-          </div>
-        </li>
-        <li className="list-group-item ">
-          <div>{t("nft:card.name")}</div>
-          <small
-            style={{
-              whiteSpace: "pre-line",
-              overflowWrap: "anywhere",
-            }}
-          >
-            {nft.name}
-          </small>
-        </li>
-
-        <li className="list-group-item ">
-          <div className="">
-            <div>{t("nft:card.owner")}</div>
-            <small style={{
-              whiteSpace: "pre-line",
-              overflowWrap: "anywhere",
-            }}>{nft.ownerAddress}</small>
-          </div>
-        </li>
-
-        <li className="list-group-item ">
-          <div className="">
-            <div>{t("nft:card.minter")}</div>
-            <small style={{
-              whiteSpace: "pre-line",
-              overflowWrap: "anywhere",
-            }}>{nft.minterAddress}</small>
-          </div>
-        </li>
-
-        <li className="list-group-item ">
-          <div className="">
-            <div>{t("nft:card.mintTx")}</div>
-            <small style={{
-              whiteSpace: "pre-line",
-              overflowWrap: "anywhere",
-            }}>
-              <a href={localized("/transaction/" + nft.mintTransaction)} >
-                {nft.mintTransaction}
-              </a>
-            </small>
-          </div>
-        </li>
-
-
-
-      </ul>
-      <div className="card-footer text-muted text-center">
-        {t("nft:card.minted", { date: nft.timestampLabel })}
-      </div>
-    </div>
+      <DetailList>
+        <DetailRow label={t("card.owner")}>
+          <AddressLink address={nft.ownerAddress} side={6} />
+        </DetailRow>
+        <DetailRow label={t("card.minter")}>
+          <AddressLink address={nft.minterAddress} side={6} />
+        </DetailRow>
+        <DetailRow label={t("card.mintTx")}>
+          <Hash value={nft.mintTransaction} side={6} copy={false} href={localized(`/transaction/${nft.mintTransaction}`)} />
+        </DetailRow>
+      </DetailList>
+      <div className={styles.foot}>{t("card.minted", { date: nft.timestampLabel })}</div>
+    </Card>
   );
 };
