@@ -1,14 +1,12 @@
-// $enable-shadows: true;
-// $primary: #031745;
-// $secondary: #82e4fb;
-
-// $body-color: #f2f2f2;
-// $body-bg: #333;
-
+// Legacy Bootstrap theme. Still loaded while pages migrate to the new
+// design system (src/styles/tokens.scss + component modules); remove the two
+// Bootstrap imports once no page uses Bootstrap classes.
 @import "./theme.scss";
-
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
+// New shell: tokens and element defaults win over Bootstrap's reboot.
+@import "./tokens.scss";
+@import "./base.scss";
 
 .badge.badge-lg {
     font-size: 16px;
@@ -38,39 +36,8 @@
     color: #000;
 }
 
-// .detail-item {
-//     @include media-breakpoint-down(sm) {
-//         display: block !important;
-//         width:  100% !important;
-//     }
-// }
-
-
-.navbar .nav-link {
-    font-size: 0.9rem;
-    color: #fff !important;
-
-    &.btc-link {
-        color: #F7931A !important;
-    }
-
-    &:hover {
-        color: $secondary !important;
-        text-decoration: underline;
-    }
-
-    &.text-muted {
-        color: #666 !important;
-        pointer-events: none;
-    }
-
-
-}
-
 .block-row-list-container {
     position: relative;
-    // height: 100vh;
-    // overflow-y: auto;
 }
 
 table.block-row-list-table {
@@ -87,7 +54,7 @@ table.block-row-list-table {
 
             th {
                 position: sticky;
-                top: 0;
+                top: var(--header-h);
                 background-color: rgb(40, 40, 40);
 
 

@@ -1,0 +1,72 @@
+// Design tokens for Spyglass. Values mirror the VerifiedX GUI (AppColors in
+// vfx-gui) and the marketing site so the explorer reads as the same product.
+// Components consume these through var(--…); never hardcode a hex in a module
+// when a token exists.
+:root {
+  // Surfaces (GUI gray ramp, darkest first)
+  --bg: #000000;
+  --surface-1: #0b0d0f;
+  --surface-2: #151718;
+  --surface-3: #191b1d;
+  --surface-4: #1f2225;
+  --border: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --hover: rgba(255, 255, 255, 0.05);
+  --selected: rgba(255, 255, 255, 0.07);
+
+  // Text
+  --text: #e5ecf6;
+  --text-strong: #ffffff;
+  --text-soft: #cacace;
+  --text-muted: #8b95a1;
+  --text-faint: #5d6672;
+
+  // Accents
+  --accent: #73c4fa;
+  --accent-strong: #a5d5fb;
+  --accent-soft: rgba(115, 196, 250, 0.12);
+  --accent-glow: rgba(115, 196, 250, 0.2);
+  --btc: #f7931a;
+  --btc-soft: rgba(247, 147, 26, 0.14);
+  --green: #69e5ad;
+  --green-soft: rgba(105, 229, 173, 0.14);
+  --gold: #e4d069;
+  --gold-soft: rgba(228, 208, 105, 0.14);
+  --indigo: #ab92fb;
+  --indigo-soft: rgba(171, 146, 251, 0.14);
+  --red: #fa7b7e;
+  --red-soft: rgba(250, 123, 126, 0.14);
+
+  // Type
+  --font-body: "Mukta", system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  // Shape and depth
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  --shadow-glow: 0 0 14px var(--accent-glow);
+  --shadow-card: 0 0 14px rgba(115, 196, 250, 0.08);
+  --shadow-popover: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 14px var(--accent-glow);
+
+  // Layout
+  --header-h: 64px;
+  --container: 1440px;
+  --gutter: 16px;
+  --z-header: 50;
+  --z-popover: 60;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --gutter: 32px;
+  }
+}

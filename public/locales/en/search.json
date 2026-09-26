@@ -1,7 +1,9 @@
 {
   "component": {
     "placeholder": "Search",
-    "cta": "Search"
+    "cta": "Search",
+    "headerPlaceholder": "Block, tx, address or domain",
+    "ariaLabel": "Search the explorer"
   },
   "page": {
     "pageTitle": "VFX Spyglass",

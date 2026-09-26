@@ -4,7 +4,8 @@
     "testnetSuffix": "TESTNET",
     "devnetSuffix": "DEVNET",
     "devnetTag": "[DEVNET]",
-    "testnetTag": "[TESTNET]"
+    "testnetTag": "[TESTNET]",
+    "mainnetSuffix": "MAINNET"
   },
   "nav": {
     "blocks": "Blocks",
@@ -24,7 +25,15 @@
     "github": "GitHub",
     "discord": "Discord",
     "x": "X",
-    "switcherAria": "Language"
+    "switcherAria": "Language",
+    "tokens": "Tokens",
+    "btcShort": "BTC",
+    "more": "More links",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "primaryAria": "Primary",
+    "exploreHeading": "Explore",
+    "resourcesHeading": "Resources"
   },
   "maintenance": {
     "message": "Down for Maintenance. Come back soon!"
