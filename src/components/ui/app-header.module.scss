@@ -47,18 +47,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   overflow: hidden;
-  border-radius: 9px;
-  background: #000;
-  border: 1px solid rgba(115, 196, 250, 0.35);
-  box-shadow: 0 0 14px rgba(115, 196, 250, 0.35);
-  color: var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 0 14px rgba(115, 196, 250, 0.25);
 }
 
-// The animated cube GIF (320px, black background) fills the mark; the
-// rounded box clips its corners and the glow frames it.
+// The animated cube GIF (320px, black background) is the whole mark: no
+// border, just a soft glow so it sits on the black header.
 .brandGif {
   display: block;
   width: 100%;
