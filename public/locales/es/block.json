@@ -2,7 +2,9 @@
   "list": {
     "pageTitle": "VFX Spyglass",
     "metaDescription": "VerifiedX Spyglass: Bloques",
-    "breadcrumbCurrent": "Bloques"
+    "breadcrumbCurrent": "Bloques",
+    "heading": "Bloques",
+    "description": "Todos los bloques de la red VerifiedX, del más reciente al más antiguo"
   },
   "detail": {
     "pageTitle": "VFX Spyglass: Bloque {{height}}",

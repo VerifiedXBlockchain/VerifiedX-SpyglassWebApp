@@ -1,0 +1,77 @@
+@use "../../styles/breakpoints" as bp;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (min-width: bp.$tablet) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+  min-width: 0;
+  height: 52px;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+
+  &:focus-within {
+    border-color: rgba(115, 196, 250, 0.6);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+}
+
+.input {
+  flex-grow: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-strong);
+  font-family: var(--font-mono);
+  font-size: 15px;
+
+  &::placeholder {
+    font-family: var(--font-body);
+    color: var(--text-muted);
+  }
+
+  @media (min-width: bp.$tablet) {
+    font-size: 16px;
+  }
+}
+
+.clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-strong);
+    background: var(--hover);
+  }
+}
+
+.submit {
+  height: 52px;
+  padding-left: 22px;
+  padding-right: 22px;
+}

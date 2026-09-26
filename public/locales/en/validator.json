@@ -3,7 +3,11 @@
     "pageTitle": "VFX Spyglass: Validator Pool",
     "metaDescription": "VerifiedX Spyglass: Home",
     "totalActive": "Total Active Validators: {{count}}",
-    "checkStatusCta": "Check Validator Status"
+    "checkStatusCta": "Check Validator Status",
+    "heading": "Validators",
+    "description": "Every validator currently active on the network",
+    "activeCount_one": "{{count}} active",
+    "activeCount_other": "{{count}} active"
   },
   "detail": {
     "heading": "Validator Details",

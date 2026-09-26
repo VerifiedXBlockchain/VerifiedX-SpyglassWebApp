@@ -2,7 +2,9 @@
   "list": {
     "pageTitle": "VFX Spyglass: Transacciones",
     "metaDescription": "VerifiedX Spyglass: Transacciones",
-    "breadcrumbCurrent": "Transacciones"
+    "breadcrumbCurrent": "Transacciones",
+    "heading": "Transacciones",
+    "description": "Todas las transacciones de la red VerifiedX, de la más reciente a la más antigua"
   },
   "detail": {
     "pendingHeading": "Transacción pendiente",

@@ -45,3 +45,17 @@
   font-size: 12px;
   color: var(--text-muted);
 }
+
+.invalid {
+  border-color: rgba(250, 123, 126, 0.6);
+
+  &:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px var(--red-soft);
+  }
+}
+
+.error {
+  font-size: 12px;
+  color: var(--red);
+}

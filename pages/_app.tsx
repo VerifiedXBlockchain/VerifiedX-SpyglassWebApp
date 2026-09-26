@@ -8,6 +8,9 @@ import { appWithTranslation, useTranslation } from "next-i18next";
 import mapboxgl from "mapbox-gl";
 import nextI18NextConfig from "../next-i18next.config";
 import { AppHeader } from "../src/components/ui/app-header";
+import { Card } from "../src/components/ui/card";
+import { Page } from "../src/components/ui/page";
+import { CenteredState } from "../src/components/ui/spinner";
 import { IS_TESTNET, MAINTENENCE_MODE, SITE_ORIGIN } from "../src/constants";
 import { setActiveLocale } from "../src/utils/active-locale";
 
@@ -31,7 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="description" content="VerifiedX Spyglass: Home" />
           <link rel="icon" href="/favicon.png" />
         </Head>
-        <div className="p-5 text-center">{t("maintenance.message")}</div>
+        <Page narrow>
+          <Card>
+            <CenteredState title={t("maintenance.message")} />
+          </Card>
+        </Page>
       </>
     );
   }

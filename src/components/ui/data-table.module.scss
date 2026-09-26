@@ -37,6 +37,36 @@
   }
 }
 
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+
+  svg {
+    color: var(--text-faint);
+  }
+
+  &:hover {
+    color: var(--text-strong);
+  }
+}
+
+.sortActive {
+  color: var(--text-strong);
+
+  svg {
+    color: var(--accent);
+  }
+}
+
 .td {
   padding: 11px 16px;
   border-bottom: 1px solid var(--border);

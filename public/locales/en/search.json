@@ -20,8 +20,28 @@
       "transactions": "Transactions",
       "blocks": "Blocks"
     },
-    "totalTransactions": "{{count}} Transactions",
-    "totalBlocks": "{{count}} Blocks"
+    "totalTransactions": "{{count, number}} Transactions",
+    "totalBlocks": "{{count, number}} Blocks",
+    "title": "Search",
+    "emptyTitle": "Search the VerifiedX chain",
+    "emptyBody": "Paste an address, transaction hash, block height or domain.",
+    "resultsFor": "Results for",
+    "types": {
+      "address": "Address",
+      "hash": "Hash",
+      "blockHeight": "Block height",
+      "adnr": "Domain"
+    },
+    "domainNotFound": "No address owns the domain “{{domain}}”.",
+    "addressUnavailable": "Balance unavailable",
+    "labels": {
+      "balance": "Balance",
+      "locked": "Locked",
+      "total": "Total"
+    },
+    "tabsAria": "Result type",
+    "noTransactions": "No transactions match “{{query}}”.",
+    "noBlocks": "No blocks match “{{query}}”."
   },
   "topHolders": {
     "pageTitle": "VFX Spyglass: Top Holders",
@@ -31,7 +51,11 @@
       "address": "Address",
       "domain": "Domain",
       "balance": "Balance"
-    }
+    },
+    "heading": "Top holders",
+    "description": "The 100 addresses with the largest VFX balances",
+    "error": "Could not load the holder list.",
+    "empty": "No holders found"
   },
   "map": {
     "metaDescription": "VerifiedX Spyglass: Validator Map",

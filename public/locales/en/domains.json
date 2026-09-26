@@ -7,7 +7,12 @@
       "domain": "Domain",
       "address": "Address",
       "actions": "Actions",
-      "viewTransaction": "View Transaction"
-    }
+      "viewTransaction": "View Transaction",
+      "registeredIn": "Registered in",
+      "caption": "Registered domains"
+    },
+    "heading": "VFX Domains",
+    "description": "Human-readable names registered on chain and the addresses they resolve to",
+    "empty": "No domains registered yet"
   }
 }

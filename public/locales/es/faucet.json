@@ -6,7 +6,12 @@
     "available": "Fondos disponibles: {{amount}} VFX",
     "min": "Monto mínimo solicitable: {{amount}} VFX",
     "max": "Monto máximo solicitable: {{amount}} VFX",
-    "sender": "Dirección del remitente: {{address}}"
+    "sender": "Dirección del remitente: {{address}}",
+    "heading": "Detalles del faucet",
+    "availableLabel": "Fondos disponibles",
+    "minLabel": "Solicitud mínima",
+    "maxLabel": "Solicitud máxima",
+    "senderLabel": "Dirección del remitente"
   },
   "success": {
     "broadcast": "¡Éxito! TX transmitida",
@@ -33,8 +38,13 @@
     "phoneLabel": "Número de teléfono",
     "phonePlaceholder": "+1 (555) 123-4567",
     "phoneHelp": "Tu número de teléfono se solicita para evitar abusos de este servicio. Una vez enviado el código de verificación, solo se guarda un hash del número.",
-    "requestCta": "Solicitar fondos"
+    "requestCta": "Solicitar fondos",
+    "requestHeading": "Solicitar fondos",
+    "verifyHeading": "Introduce el código de verificación que te enviamos por SMS"
   },
   "returnCoinsDevnet": "Por favor, devuelve los fondos de devnet a {{address}} cuando ya no los necesites. Al devolver las monedas de devnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",
-  "returnCoinsTestnet": "Por favor, devuelve los fondos de testnet a {{address}} cuando ya no los necesites. Al devolver las monedas de testnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers."
+  "returnCoinsTestnet": "Por favor, devuelve los fondos de testnet a {{address}} cuando ya no los necesites. Al devolver las monedas de testnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",
+  "description": "Solicita fondos de prueba para desarrollo y pruebas",
+  "unavailableHeading": "Faucet no disponible",
+  "unavailableBody": "El servicio de faucet no respondió. Inténtalo de nuevo en unos minutos."
 }

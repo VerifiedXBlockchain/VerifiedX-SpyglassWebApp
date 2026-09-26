@@ -1,5 +1,6 @@
 import { MouseEvent, ReactNode } from "react";
 import { navigateTo } from "../../utils/navigate";
+import { ChevronDownIcon, ChevronUpIcon } from "./icons";
 import { Skeleton } from "./skeleton";
 import styles from "./data-table.module.scss";
 
@@ -12,6 +13,13 @@ export interface Column<T> {
   hideBelowDesktop?: boolean;
   nowrap?: boolean;
   width?: string;
+  /** Header becomes a button that calls `onSort(key)`. */
+  sortable?: boolean;
+}
+
+export interface SortState {
+  key: string;
+  direction: "asc" | "desc";
 }
 
 interface Props<T> {
@@ -27,6 +35,9 @@ interface Props<T> {
   caption?: string;
   dense?: boolean;
   className?: string;
+  /** Current sort, shown on the matching sortable header. The caller sorts `rows`. */
+  sort?: SortState;
+  onSort?: (key: string) => void;
 }
 
 const cellClass = <T,>(column: Column<T>, base: string) =>
@@ -45,7 +56,7 @@ const cellClass = <T,>(column: Column<T>, base: string) =>
  * buttons keep working; loading renders skeleton rows so the layout is
  * stable before data arrives.
  */
-export function DataTable<T>({ columns, rows, rowKey, rowHref, loading, skeletonRows = 8, emptyLabel, caption, dense, className }: Props<T>) {
+export function DataTable<T>({ columns, rows, rowKey, rowHref, loading, skeletonRows = 8, emptyLabel, caption, dense, className, sort, onSort }: Props<T>) {
   const onRowClick = (href: string) => (event: MouseEvent<HTMLTableRowElement>) => {
     const target = event.target as HTMLElement;
     if (target.closest("a, button, input, [role=button]")) return;
@@ -59,11 +70,22 @@ export function DataTable<T>({ columns, rows, rowKey, rowHref, loading, skeleton
           {caption ? <caption className={styles.caption}>{caption}</caption> : null}
           <thead>
             <tr>
-              {columns.map((column) => (
-                <th key={column.key} scope="col" className={cellClass(column, styles.th)} style={column.width ? { width: column.width } : undefined}>
-                  {column.header}
-                </th>
-              ))}
+              {columns.map((column) => {
+                const active = sort?.key === column.key;
+                const ariaSort = active ? (sort?.direction === "asc" ? "ascending" : "descending") : undefined;
+                return (
+                  <th key={column.key} scope="col" className={cellClass(column, styles.th)} style={column.width ? { width: column.width } : undefined} aria-sort={ariaSort}>
+                    {column.sortable && onSort ? (
+                      <button type="button" className={[styles.sortButton, active ? styles.sortActive : ""].filter(Boolean).join(" ")} onClick={() => onSort(column.key)}>
+                        {column.header}
+                        {active && sort?.direction === "asc" ? <ChevronUpIcon size={11} /> : <ChevronDownIcon size={11} />}
+                      </button>
+                    ) : (
+                      column.header
+                    )}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>

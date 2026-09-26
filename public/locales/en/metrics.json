@@ -1,5 +1,5 @@
 {
-  "heading": "Metrics",
+  "heading": "Network metrics",
   "spyglassHeading": "Spyglass",
   "labels": {
     "lifetimeSupply": "Lifetime Supply",
@@ -14,12 +14,22 @@
     "networkMetrics": "Network Metrics",
     "blockDifferenceAverage": "Block Difference Average",
     "blockLastDelay": "Block Last Delay",
-    "blockAverages": "Block Averages"
+    "blockAverages": "Block Averages",
+    "latestBlock": "Latest block",
+    "totalTransactionsSub": "Since genesis",
+    "totalVfxAddressesSub": "Addresses that have held VFX",
+    "viewValidators": "View the validator pool",
+    "cliVersionSub": "Node software reported by the indexer"
   },
   "search": {
     "placeholder": "Search Address"
   },
   "units": {
-    "seconds": "s"
-  }
+    "seconds": "s",
+    "vfx": "VFX"
+  },
+  "pageTitle": "VFX Spyglass: Metrics",
+  "description": "Supply, activity and block health across the VerifiedX network",
+  "supplyHeading": "Supply and activity",
+  "unavailable": "Unavailable"
 }
