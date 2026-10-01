@@ -28,14 +28,19 @@ export function blockTiming(blocks: Block[]): BlockTiming {
   };
 }
 
-/** Union of two block lists keyed by height, newest first. */
+/**
+ * Union of two block lists keyed by height, newest first. A block already held
+ * is replaced when the incoming copy carries more transactions, so a copy that
+ * arrived short gets corrected by the next fetch instead of sticking.
+ */
 export function mergeBlocks(existing: Block[], incoming: Block[]): Block[] {
   if (incoming.length === 0) return existing;
   const byHeight = new Map<number, Block>();
   for (const block of existing) byHeight.set(block.height, block);
   let changed = false;
   for (const block of incoming) {
-    if (!byHeight.has(block.height)) {
+    const held = byHeight.get(block.height);
+    if (!held || block.transactions.length > held.transactions.length) {
       byHeight.set(block.height, block);
       changed = true;
     }
