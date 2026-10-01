@@ -13,6 +13,8 @@ interface ServerToClientEvents {
 interface ClientToServerEvents {}
 
 const POLL_INTERVAL_MS = 5000;
+/** While streaming, page 1 is still re-fetched this often to correct any block the socket delivered short. */
+const RECONCILE_INTERVAL_MS = 20000;
 
 export interface LiveBlocks {
   /** Newest first, de-duplicated by height. */
@@ -27,7 +29,8 @@ export interface LiveBlocks {
 /**
  * Live block feed for the home page: a socket pushes new blocks; a 5-second
  * poll of page 1 covers the gap until the socket proves it is delivering
- * consecutive blocks, then stops. Older pages load on demand.
+ * consecutive blocks, then slows to a 20-second reconcile. Older pages load
+ * on demand.
  */
 export function useLiveBlocks(): LiveBlocks {
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -58,7 +61,6 @@ export function useLiveBlocks(): LiveBlocks {
   }, []);
 
   useEffect(() => {
-    if (streaming) return;
     const service = new BlockService();
     const poll = async () => {
       try {
@@ -68,7 +70,7 @@ export function useLiveBlocks(): LiveBlocks {
         console.error("Block poll failed", error);
       }
     };
-    const id = setInterval(poll, POLL_INTERVAL_MS);
+    const id = setInterval(poll, streaming ? RECONCILE_INTERVAL_MS : POLL_INTERVAL_MS);
     return () => clearInterval(id);
   }, [streaming]);
 
