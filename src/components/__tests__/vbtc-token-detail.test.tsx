@@ -6,6 +6,7 @@ import { VbtcTokenDetail } from "../vbtc-token-detail";
 
 jest.mock("next/router", () => ({ useRouter: jest.fn() }));
 jest.mock("next-i18next", () => ({ useTranslation: () => ({ t: (key: string) => identityT(key) }) }));
+jest.mock("../../hooks/useMediaQuery", () => ({ TABLET_QUERY: "tablet", useMediaQuery: () => true }));
 
 const token = () =>
   new VbtcToken({
@@ -48,6 +49,15 @@ describe("VbtcTokenDetail vault status", () => {
     expect(screen.getByText("detail.vault.badge.legacy")).toBeInTheDocument();
     expect(screen.getByText("detail.vault.explain.legacy")).toBeInTheDocument();
     expect(screen.getByText("detail.fields.totalReceived")).toBeInTheDocument();
+  });
+
+  it("explains the watched withdrawal lifecycle on a watched vault only", () => {
+    const { unmount } = render(<VbtcTokenDetail token={token()} vault="watched" />);
+    expect(screen.getByText("detail.withdrawals.watchedLifecycle")).toBeInTheDocument();
+    unmount();
+    render(<VbtcTokenDetail token={token()} vault="legacy" />);
+    expect(screen.queryByText("detail.withdrawals.watchedLifecycle")).not.toBeInTheDocument();
+    expect(screen.getByText("detail.withdrawals.empty")).toBeInTheDocument();
   });
 
   it("badges a frozen legacy vault", () => {

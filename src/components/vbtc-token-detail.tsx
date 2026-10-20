@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { IS_DEVNET, IS_TESTNET, VBTC_ENFORCEMENT_HEIGHT, VBTC_RECORD_HEIGHT } from "../constants";
+import { MEMPOOL_BASE, VBTC_ENFORCEMENT_HEIGHT, VBTC_RECORD_HEIGHT } from "../constants";
 import { VbtcToken } from "../models/vbtc-token";
 import { numberWithCommas } from "../utils/formatting";
 import { useLocalized } from "../utils/use-localized";
@@ -8,6 +8,7 @@ import { VaultStatus } from "../utils/vbtc-vault";
 import { HoldersList } from "./tokens/holders-list";
 import { TokenImage } from "./tokens/token-image";
 import { VBTC_FALLBACK_IMAGE, VbtcBalance } from "./tokens/vbtc-token-table";
+import { VbtcWithdrawals } from "./tokens/vbtc-withdrawals";
 import { AddressLink } from "./transactions/transaction-cells";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -19,8 +20,6 @@ import { Pill, PillTone } from "./ui/pill";
 import { SectionHeader } from "./ui/section-header";
 import layout from "./ui/detail-layout.module.scss";
 import styles from "./tokens/token-detail.module.scss";
-
-const MEMPOOL_BASE = IS_DEVNET || IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space";
 
 const VAULT_TONE: Record<VaultStatus, PillTone> = { watched: "green", legacy: "neutral", frozen: "red" };
 
@@ -143,6 +142,10 @@ export const VbtcTokenDetail = ({ token, vault = null }: Props) => {
 
       <SectionHeader title={t("vbtcToken:detail.balancesHeading")} className={layout.section} />
       <HoldersList balances={token.addresses} unit="vBTC" emptyLabel={t("vbtcToken:detail.noBalances") as string} />
+
+      <SectionHeader title={t("vbtcToken:detail.withdrawals.heading")} className={layout.section} />
+      {watched ? <p className={styles.lifecycle}>{t("vbtcToken:detail.withdrawals.watchedLifecycle")}</p> : null}
+      <VbtcWithdrawals withdrawals={token.withdrawal_requests} />
     </>
   );
 };
