@@ -71,9 +71,21 @@
         "bitcoinPending": "Bitcoin pendiente",
         "cancelRequested": "Cancelación solicitada",
         "paid": "Pagado",
-        "closed": "Cerrado"
+        "closed": "Cerrado",
+        "waiting": "En espera",
+        "pinned": "Fijado",
+        "releasing": "Liberándose",
+        "cancelled": "Cancelado",
+        "released": "Liberado",
+        "expired": "Caducado",
+        "void": "Anulado"
       },
-      "watchedLifecycle": "En una bóveda vigilada nadie completa un retiro a mano. Una vez solicitado, la cadena fija la transacción de Bitcoin que lo paga con las monedas de la bóveda, y los firmantes de la bóveda la difunden; el solicitante puede subir su comisión o renunciar a él (una liberación). Queda pagado cuando un informe de Bitcoin ve esa transacción confirmada, y se cierra con el vBTC devuelto (menos la comisión de Bitcoin de la liberación, si la hubo) si se libera, se cancela antes de fijarse o caduca. Una reorganización de Bitcoin puede reabrir un retiro pagado hasta que se pague de nuevo."
+      "watchedLifecycle": "En una bóveda vigilada nadie completa un retiro a mano. Una vez solicitado, la cadena fija la transacción de Bitcoin que lo paga con las monedas de la bóveda, y los firmantes de la bóveda la difunden; el solicitante puede subir su comisión o renunciar a él (una liberación). Queda pagado cuando un informe de Bitcoin ve esa transacción confirmada, y se cierra con el vBTC devuelto (menos la comisión de Bitcoin de la liberación, si la hubo) si se libera, se cancela antes de fijarse, caduca o queda anulado (una moneda fijada para él se gastó en otra transacción). Una reorganización de Bitcoin puede reabrir un retiro pagado hasta que se pague de nuevo.",
+      "expiresAt": "Se cierra en el bloque {{height}} si no se fija",
+      "pinFeeRate": "Fijado a {{rate}} sat/vB",
+      "refunded": "Reembolsado {{amount}} vBTC",
+      "notConfirmed": "Fijada, aún sin confirmar",
+      "releasePinned": "Liberación fijada, aún sin confirmar"
     }
   }
 }

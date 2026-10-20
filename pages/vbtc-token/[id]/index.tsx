@@ -14,7 +14,7 @@ import { IS_DEVNET, IS_TESTNET } from "../../../src/constants";
 import { VbtcToken } from "../../../src/models/vbtc-token";
 import { VbtcTokenService } from "../../../src/services/vbtc-service";
 import { truncateMiddle } from "../../../src/utils/formatting";
-import { VaultStatus } from "../../../src/utils/vbtc-vault";
+import { VaultHeights } from "../../../src/utils/vbtc-vault";
 import { useLocalized } from "../../../src/utils/use-localized";
 
 const VbtcTokenDetailPage: NextPage = () => {
@@ -24,16 +24,14 @@ const VbtcTokenDetailPage: NextPage = () => {
 
   const [token, setToken] = useState<VbtcToken | undefined>(undefined);
   const [notFound, setNotFound] = useState(false);
-  const [vault, setVault] = useState<VaultStatus | null>(null);
+  const [heights, setHeights] = useState<VaultHeights | null>(null);
 
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
     setToken(undefined);
     setNotFound(false);
-    setVault(null);
-    const service = new VbtcTokenService();
-    service
+    new VbtcTokenService()
       .retrieve(id.toString())
       .then((data) => {
         if (cancelled) return;
@@ -42,13 +40,6 @@ const VbtcTokenDetailPage: NextPage = () => {
           return;
         }
         setToken(data);
-        // Without the status the page reads as before: no badge, provider totals shown.
-        service
-          .vaultStatus(data)
-          .then((status) => {
-            if (!cancelled) setVault(status);
-          })
-          .catch((error) => console.error("vBTC vault status lookup failed", error));
       })
       .catch((error) => {
         console.error("vBTC token lookup failed", error);
@@ -58,6 +49,20 @@ const VbtcTokenDetailPage: NextPage = () => {
       cancelled = true;
     };
   }, [id]);
+
+  // Without the heights the page reads as before: no badge, provider totals shown.
+  useEffect(() => {
+    let cancelled = false;
+    new VbtcTokenService()
+      .heights()
+      .then((data) => {
+        if (!cancelled) setHeights(data);
+      })
+      .catch((error) => console.error("vBTC heights lookup failed", error));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const idText = `${id ?? ""}`;
   const netTag = IS_DEVNET ? ` ${t("common:brand.devnetTag")}` : IS_TESTNET ? ` ${t("common:brand.testnetTag")}` : "";
@@ -82,7 +87,7 @@ const VbtcTokenDetailPage: NextPage = () => {
             <CenteredState title={t("vbtcToken:detail.notFound")} body={t("vbtcToken:detail.notFoundBody", { id: idText })} />
           </Card>
         ) : token ? (
-          <VbtcTokenDetail token={token} vault={vault} />
+          <VbtcTokenDetail token={token} heights={heights} />
         ) : (
           <>
             <Skeleton width={260} height={30} />

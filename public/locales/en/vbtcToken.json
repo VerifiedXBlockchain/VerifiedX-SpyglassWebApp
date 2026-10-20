@@ -71,9 +71,21 @@
         "bitcoinPending": "Bitcoin pending",
         "cancelRequested": "Cancel requested",
         "paid": "Paid",
-        "closed": "Closed"
+        "closed": "Closed",
+        "waiting": "Waiting",
+        "pinned": "Pinned",
+        "releasing": "Releasing",
+        "cancelled": "Cancelled",
+        "released": "Released",
+        "expired": "Expired",
+        "void": "Void"
       },
-      "watchedLifecycle": "On a watched vault nobody completes a withdrawal by hand. Once requested, the chain fixes the Bitcoin transaction that pays it from the vault's coins, and the vault's signers broadcast it; the requester can raise its fee or give it up (a release). It is paid when a Bitcoin report sees that transaction confirmed, and closed with the vBTC returned (less the release's Bitcoin fee, for a release) if it is released, cancelled before it is fixed, or expires. A Bitcoin reorg can reopen a paid withdrawal until it is paid again."
+      "watchedLifecycle": "On a watched vault nobody completes a withdrawal by hand. Once requested, the chain fixes the Bitcoin transaction that pays it from the vault's coins, and the vault's signers broadcast it; the requester can raise its fee or give it up (a release). It is paid when a Bitcoin report sees that transaction confirmed, and closed with the vBTC returned (less the release's Bitcoin fee, for a release) if it is released, cancelled before it is fixed, or expires, or is void (a coin fixed for it was spent by another transaction). A Bitcoin reorg can reopen a paid withdrawal until it is paid again.",
+      "expiresAt": "Closes at block {{height}} if not fixed",
+      "pinFeeRate": "Pinned at {{rate}} sat/vB",
+      "refunded": "Refunded {{amount}} vBTC",
+      "notConfirmed": "Pinned, not yet confirmed",
+      "releasePinned": "Release pinned, not yet confirmed"
     }
   }
 }

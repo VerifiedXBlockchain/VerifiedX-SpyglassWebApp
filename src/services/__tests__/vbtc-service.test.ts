@@ -1,35 +1,29 @@
-import { VbtcToken } from "../../models/vbtc-token";
-import { BlockService } from "../block-service";
-import { TransactionService } from "../transaction-service";
+import { httpGet } from "../../utils/network";
 import { VbtcTokenService } from "../vbtc-service";
 
-jest.mock("../../constants", () => ({
-  API_BASE_URL: "https://api.test",
-  VBTC_RECORD_HEIGHT: 1_172_000,
-  VBTC_ENFORCEMENT_HEIGHT: 1_192_500,
-}));
-jest.mock("../block-service");
-jest.mock("../transaction-service");
+jest.mock("../../constants", () => ({ API_BASE_URL: "https://api.test" }));
+jest.mock("../../utils/network", () => ({ httpGet: jest.fn() }));
 
-const token = (mint: string | null = "minthash") => new VbtcToken({ sc_identifier: "sc", nft: { mint_transaction: mint } });
+const answer = (body: unknown, ok = true, status = 200) => (httpGet as jest.Mock).mockResolvedValue({ ok, status, parsedBody: body });
 
-const givenChain = (mintHeight: number, tip: number) => {
-  (TransactionService as jest.Mock).mockImplementation(() => ({ retrieve: jest.fn().mockResolvedValue({ height: mintHeight }) }));
-  (BlockService as jest.Mock).mockImplementation(() => ({ list: jest.fn().mockResolvedValue({ results: [{ height: tip }] }) }));
-};
-
-describe("VbtcTokenService.vaultStatus", () => {
-  it("reads the mint transaction's height against the chain tip", async () => {
-    givenChain(1_180_000, 1_190_000);
-    await expect(new VbtcTokenService().vaultStatus(token())).resolves.toBe("watched");
-    givenChain(1_024_808, 1_190_000);
-    await expect(new VbtcTokenService().vaultStatus(token())).resolves.toBe("legacy");
-    givenChain(1_024_808, 1_192_499);
-    await expect(new VbtcTokenService().vaultStatus(token())).resolves.toBe("frozen");
+describe("VbtcTokenService.heights", () => {
+  it("reads the network's attestation heights from Spyglass", async () => {
+    answer({ record_height: 1_172_000, enforcement_height: 1_192_500, latest_block_height: 1_172_400 });
+    await expect(new VbtcTokenService().heights()).resolves.toEqual({
+      recordHeight: 1_172_000,
+      enforcementHeight: 1_192_500,
+      latestBlockHeight: 1_172_400,
+    });
+    expect(httpGet).toHaveBeenCalledWith("https://api.test/btc/vbtc-v2/heights/", {});
   });
 
-  it("gives no status for a token without a mint transaction", async () => {
-    givenChain(1_180_000, 1_190_000);
-    await expect(new VbtcTokenService().vaultStatus(token(null))).resolves.toBeNull();
+  it("keeps a height Core has not set as null", async () => {
+    answer({ record_height: null, enforcement_height: null, latest_block_height: 7_500_000 });
+    await expect(new VbtcTokenService().heights()).resolves.toEqual({ recordHeight: null, enforcementHeight: null, latestBlockHeight: 7_500_000 });
+  });
+
+  it("fails when Spyglass does not serve the heights", async () => {
+    answer({ detail: "Not found." }, false, 404);
+    await expect(new VbtcTokenService().heights()).rejects.toThrow("HTTP 404");
   });
 });

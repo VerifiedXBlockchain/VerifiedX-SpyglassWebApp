@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { MEMPOOL_BASE, VBTC_ENFORCEMENT_HEIGHT, VBTC_RECORD_HEIGHT } from "../constants";
+import { MEMPOOL_BASE } from "../constants";
 import { VbtcToken } from "../models/vbtc-token";
 import { numberWithCommas } from "../utils/formatting";
 import { useLocalized } from "../utils/use-localized";
-import { VaultStatus } from "../utils/vbtc-vault";
+import { VaultHeights, vaultStatus } from "../utils/vbtc-vault";
 import { HoldersList } from "./tokens/holders-list";
 import { TokenImage } from "./tokens/token-image";
 import { VBTC_FALLBACK_IMAGE, VbtcBalance } from "./tokens/vbtc-token-table";
+import { VaultBadge } from "./tokens/vault-badge";
 import { VbtcWithdrawals } from "./tokens/vbtc-withdrawals";
 import { AddressLink } from "./transactions/transaction-cells";
 import { Button } from "./ui/button";
@@ -16,30 +17,29 @@ import { DetailList, DetailRow } from "./ui/detail-list";
 import { Hash } from "./ui/hash";
 import { ExternalLinkIcon } from "./ui/icons";
 import { PageHeader } from "./ui/page-header";
-import { Pill, PillTone } from "./ui/pill";
+import { Pill } from "./ui/pill";
 import { SectionHeader } from "./ui/section-header";
 import layout from "./ui/detail-layout.module.scss";
 import styles from "./tokens/token-detail.module.scss";
 
-const VAULT_TONE: Record<VaultStatus, PillTone> = { watched: "green", legacy: "neutral", frozen: "red" };
-
 interface Props {
   token: VbtcToken;
-  /** Null when unknown or before the record height: the page reads as it always has. */
-  vault?: VaultStatus | null;
+  /** Null until loaded, or when Spyglass did not answer: the page reads as it always has. */
+  heights?: VaultHeights | null;
 }
 
-export const VbtcTokenDetail = ({ token, vault = null }: Props) => {
+export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
   const { t } = useTranslation(["vbtcToken", "common"]);
   const { locale } = useRouter();
   const localized = useLocalized();
   const description = token.description.replace(/\\n/g, "\n");
   // A watched vault's backing is what the chain holds on Bitcoin (global_balance);
   // Spyglass stops keeping the providers' received / sent / count for it.
+  const vault = vaultStatus(token, heights);
   const watched = vault === "watched";
   const gates = {
-    record: numberWithCommas(VBTC_RECORD_HEIGHT ?? 0),
-    enforcement: numberWithCommas(VBTC_ENFORCEMENT_HEIGHT ?? 0),
+    record: numberWithCommas(heights?.recordHeight ?? 0),
+    enforcement: numberWithCommas(heights?.enforcementHeight ?? 0),
   };
 
   return (
@@ -51,11 +51,7 @@ export const VbtcTokenDetail = ({ token, vault = null }: Props) => {
             <Pill tone="btc" size="md">
               {t("vbtcToken:detail.badge")}
             </Pill>
-            {vault ? (
-              <Pill tone={VAULT_TONE[vault]} size="md">
-                {t(`vbtcToken:detail.vault.badge.${vault}`)}
-              </Pill>
-            ) : null}
+            <VaultBadge status={vault} size="md" />
             {token.is_pending_withdrawal ? (
               <Pill tone="gold" size="md">
                 {t("vbtcToken:detail.pendingWithdrawal")}
