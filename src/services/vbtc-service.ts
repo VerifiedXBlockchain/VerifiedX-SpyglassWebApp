@@ -1,7 +1,10 @@
-import { API_BASE_URL } from "../constants";
+import { API_BASE_URL, VBTC_RECORD_HEIGHT } from "../constants";
 import { PaginatedResponse } from "../models/paginated-response";
 import { VbtcToken } from "../models/vbtc-token";
 import { httpGet } from "../utils/network";
+import { vaultStatus, VaultStatus } from "../utils/vbtc-vault";
+import { BlockService } from "./block-service";
+import { TransactionService } from "./transaction-service";
 
 export class VbtcTokenService {
     async list(page: number): Promise<PaginatedResponse<VbtcToken>> {
@@ -25,5 +28,16 @@ export class VbtcTokenService {
         return new VbtcToken(data);
     }
 
+    /** Whether the chain watches this vault, from its mint transaction's height and the chain tip. */
+    async vaultStatus(token: VbtcToken): Promise<VaultStatus | null> {
+        if (VBTC_RECORD_HEIGHT == null || !token.nft.mintTransaction) return null;
+        const [mint, blocks] = await Promise.all([
+            new TransactionService().retrieve(token.nft.mintTransaction),
+            new BlockService().list(1),
+        ]);
+        const tip = blocks.results[0]?.height;
+        if (!mint.height || !tip) return null;
+        return vaultStatus(mint.height, tip);
+    }
 
 }
