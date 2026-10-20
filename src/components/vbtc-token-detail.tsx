@@ -4,10 +4,11 @@ import { MEMPOOL_BASE } from "../constants";
 import { VbtcToken } from "../models/vbtc-token";
 import { numberWithCommas } from "../utils/formatting";
 import { useLocalized } from "../utils/use-localized";
-import { VaultHeights, VaultStatus, vaultStatus } from "../utils/vbtc-vault";
+import { VaultHeights, vaultStatus } from "../utils/vbtc-vault";
 import { HoldersList } from "./tokens/holders-list";
 import { TokenImage } from "./tokens/token-image";
 import { VBTC_FALLBACK_IMAGE, VbtcBalance } from "./tokens/vbtc-token-table";
+import { VaultBadge } from "./tokens/vault-badge";
 import { VbtcWithdrawals } from "./tokens/vbtc-withdrawals";
 import { AddressLink } from "./transactions/transaction-cells";
 import { Button } from "./ui/button";
@@ -16,12 +17,10 @@ import { DetailList, DetailRow } from "./ui/detail-list";
 import { Hash } from "./ui/hash";
 import { ExternalLinkIcon } from "./ui/icons";
 import { PageHeader } from "./ui/page-header";
-import { Pill, PillTone } from "./ui/pill";
+import { Pill } from "./ui/pill";
 import { SectionHeader } from "./ui/section-header";
 import layout from "./ui/detail-layout.module.scss";
 import styles from "./tokens/token-detail.module.scss";
-
-export const VAULT_TONE: Record<VaultStatus, PillTone> = { watched: "green", legacy: "neutral", frozen: "red" };
 
 interface Props {
   token: VbtcToken;
@@ -52,11 +51,7 @@ export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
             <Pill tone="btc" size="md">
               {t("vbtcToken:detail.badge")}
             </Pill>
-            {vault ? (
-              <Pill tone={VAULT_TONE[vault]} size="md">
-                {t(`vbtcToken:detail.vault.badge.${vault}`)}
-              </Pill>
-            ) : null}
+            <VaultBadge status={vault} size="md" />
             {token.is_pending_withdrawal ? (
               <Pill tone="gold" size="md">
                 {t("vbtcToken:detail.pendingWithdrawal")}
