@@ -11,6 +11,9 @@ export const MAINTENENCE_MODE = process.env.NEXT_PUBLIC_MAINTENENCE_MODE == "tru
 
 export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://spyglass.verifiedx.io";
 
+/** mempool.space for the Bitcoin network vBTC uses here (testnet4 off mainnet). */
+export const MEMPOOL_BASE = IS_DEVNET || IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space";
+
 /** VerifiedX Live: the real-time 3D globe of validators, blocks and transactions. */
 export const LIVE_SITE_URL = "https://live.verifiedx.io";
 
@@ -18,3 +21,13 @@ export const SENTINEL_ADDRESSES: Record<string, string> = {
   "Shielded_Pool": "Shielded Pool",
   "TW_Base": "Token Withdrawal Base",
 };
+
+/**
+ * Core's vBTC attestation heights (Globals.BitcoinAttestationRecordHeight and
+ * BitcoinAttestationHeight). A vault minted at or above the record height is
+ * watched: the chain tracks its Bitcoin from block reports. From the
+ * enforcement height every older vault is frozen. Null where Core has not set
+ * them yet (mainnet until the 9.0 release; devnet is not a Core network).
+ */
+export const VBTC_RECORD_HEIGHT: number | null = IS_DEVNET ? null : IS_TESTNET ? 1_172_000 : null;
+export const VBTC_ENFORCEMENT_HEIGHT: number | null = IS_DEVNET ? null : IS_TESTNET ? 1_192_500 : null;

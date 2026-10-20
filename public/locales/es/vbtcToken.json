@@ -28,7 +28,9 @@
       "threshold": "Umbral de firma",
       "depositAddress": "Dirección de depósito BTC",
       "frostKey": "Clave pública del grupo FROST",
-      "mintedAt": "Emitido"
+      "mintedAt": "Emitido",
+      "backing": "Respaldo (en Bitcoin)",
+      "currentDepositAddress": "Dirección de depósito BTC (clave actual)"
     },
     "balancesHeading": "Saldos",
     "badge": "vBTC",
@@ -38,6 +40,40 @@
     "viewOnMempool": "Ver en mempool.space",
     "noBalances": "Ninguna dirección posee este token todavía",
     "notFound": "Token vBTC no encontrado",
-    "notFoundBody": "No se ha indexado ningún token vBTC con el id “{{id}}”."
+    "notFoundBody": "No se ha indexado ningún token vBTC con el id “{{id}}”.",
+    "vault": {
+      "label": "Bóveda",
+      "badge": {
+        "watched": "Vigilada",
+        "legacy": "Bóveda antigua",
+        "frozen": "Congelada"
+      },
+      "explain": {
+        "watched": "Creada desde el bloque {{record}}: la cadena vigila el Bitcoin de esta bóveda mediante informes de bloque. Su respaldo es el Bitcoin que la cadena tiene registrado para ella, y una rotación de clave cambia la dirección de depósito.",
+        "legacy": "Creada antes del bloque {{record}}, así que la cadena no vigila su Bitcoin. Desde el bloque {{enforcement}} nada en ella podrá gastarse ni retirarse: los titulares deben pasarse a una bóveda vigilada antes.",
+        "frozen": "Creada antes del bloque {{record}}, así que la cadena nunca vigiló su Bitcoin. Congelada desde el bloque {{enforcement}}: nada en ella puede gastarse ni retirarse."
+      }
+    },
+    "withdrawals": {
+      "heading": "Retiros",
+      "empty": "Todavía no hay retiros de esta bóveda",
+      "requested": "Solicitado",
+      "requester": "Solicitante",
+      "amount": "Cantidad",
+      "to": "A (Bitcoin)",
+      "requestedFee": "Comisión solicitada",
+      "feeRate": "{{rate}} sat/vB",
+      "status": "Estado",
+      "bitcoinTx": "Transacción de Bitcoin",
+      "settledBy": "Registrado por",
+      "stage": {
+        "open": "Abierto",
+        "bitcoinPending": "Bitcoin pendiente",
+        "cancelRequested": "Cancelación solicitada",
+        "paid": "Pagado",
+        "closed": "Cerrado"
+      },
+      "watchedLifecycle": "En una bóveda vigilada nadie completa un retiro a mano. Una vez solicitado, la cadena fija la transacción de Bitcoin que lo paga con las monedas de la bóveda, y los firmantes de la bóveda la difunden; el solicitante puede subir su comisión o renunciar a él (una liberación). Queda pagado cuando un informe de Bitcoin ve esa transacción confirmada, y se cierra con el vBTC devuelto (menos la comisión de Bitcoin de la liberación, si la hubo) si se libera, se cancela antes de fijarse o caduca. Una reorganización de Bitcoin puede reabrir un retiro pagado hasta que se pague de nuevo."
+    }
   }
 }

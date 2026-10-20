@@ -28,7 +28,9 @@
       "threshold": "Signing threshold",
       "depositAddress": "BTC deposit address",
       "frostKey": "FROST group public key",
-      "mintedAt": "Minted"
+      "mintedAt": "Minted",
+      "backing": "Backing (held on Bitcoin)",
+      "currentDepositAddress": "BTC deposit address (current key)"
     },
     "balancesHeading": "Balances",
     "badge": "vBTC",
@@ -38,6 +40,40 @@
     "viewOnMempool": "View on mempool.space",
     "noBalances": "No addresses hold this token yet",
     "notFound": "vBTC token not found",
-    "notFoundBody": "No vBTC token with id “{{id}}” has been indexed."
+    "notFoundBody": "No vBTC token with id “{{id}}” has been indexed.",
+    "vault": {
+      "label": "Vault",
+      "badge": {
+        "watched": "Watched",
+        "legacy": "Legacy vault",
+        "frozen": "Frozen"
+      },
+      "explain": {
+        "watched": "Created from block {{record}}: the chain watches this vault's Bitcoin from block reports. Its backing is the Bitcoin the chain holds for it, and a key rotation moves the deposit address.",
+        "legacy": "Created before block {{record}}, so the chain does not watch its Bitcoin. From block {{enforcement}} nothing on it can be spent or withdrawn: holders should move to a watched vault before then.",
+        "frozen": "Created before block {{record}}, so the chain never watched its Bitcoin. Frozen since block {{enforcement}}: nothing on it can be spent or withdrawn."
+      }
+    },
+    "withdrawals": {
+      "heading": "Withdrawals",
+      "empty": "No withdrawals from this vault yet",
+      "requested": "Requested",
+      "requester": "Requester",
+      "amount": "Amount",
+      "to": "To (Bitcoin)",
+      "requestedFee": "Requested fee",
+      "feeRate": "{{rate}} sat/vB",
+      "status": "Status",
+      "bitcoinTx": "Bitcoin transaction",
+      "settledBy": "Recorded by",
+      "stage": {
+        "open": "Open",
+        "bitcoinPending": "Bitcoin pending",
+        "cancelRequested": "Cancel requested",
+        "paid": "Paid",
+        "closed": "Closed"
+      },
+      "watchedLifecycle": "On a watched vault nobody completes a withdrawal by hand. Once requested, the chain fixes the Bitcoin transaction that pays it from the vault's coins, and the vault's signers broadcast it; the requester can raise its fee or give it up (a release). It is paid when a Bitcoin report sees that transaction confirmed, and closed with the vBTC returned (less the release's Bitcoin fee, for a release) if it is released, cancelled before it is fixed, or expires. A Bitcoin reorg can reopen a paid withdrawal until it is paid again."
+    }
   }
 }
