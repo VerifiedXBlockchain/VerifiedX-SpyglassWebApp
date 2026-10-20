@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { MEMPOOL_BASE } from "../../constants";
 import { TABLET_QUERY, useMediaQuery } from "../../hooks/useMediaQuery";
 import { VbtcWithdrawal } from "../../models/vbtc-token";
-import { truncateMiddle } from "../../utils/formatting";
+import { numberWithCommas, truncateMiddle } from "../../utils/formatting";
 import { useLocalized } from "../../utils/use-localized";
 import { WITHDRAWAL_STAGE_TONE, withdrawalStage } from "../../utils/vbtc-withdrawal";
 import { AddressLink } from "../transactions/transaction-cells";
@@ -27,6 +27,43 @@ const StagePill = ({ withdrawal }: { withdrawal: VbtcWithdrawal }) => {
   const { t } = useTranslation("vbtcToken");
   const stage = withdrawalStage(withdrawal);
   return <Pill tone={WITHDRAWAL_STAGE_TONE[stage]}>{t(`detail.withdrawals.stage.${stage}`)}</Pill>;
+};
+
+/** The one fact that goes with the stage: when a waiting request expires, a pin's fee rate, a release's refund. */
+const StageDetail = ({ withdrawal }: { withdrawal: VbtcWithdrawal }) => {
+  const { t } = useTranslation("vbtcToken");
+  const stage = withdrawalStage(withdrawal);
+  let text: string | null = null;
+  if (stage === "waiting" && withdrawal.expires_at_height != null) {
+    text = t("detail.withdrawals.expiresAt", { height: numberWithCommas(withdrawal.expires_at_height) });
+  } else if ((stage === "pinned" || stage === "releasing") && withdrawal.pin_fee_rate != null) {
+    text = t("detail.withdrawals.pinFeeRate", { rate: withdrawal.pin_fee_rate });
+  } else if (stage === "released" && withdrawal.refunded_amount != null) {
+    text = t("detail.withdrawals.refunded", { amount: numberWithCommas(withdrawal.refunded_amount) });
+  }
+  return text ? <span className={styles.sub}>{text}</span> : null;
+};
+
+/** The Bitcoin transaction that paid it, or, while it is open, the one pinned for it. */
+const BitcoinTx = ({ withdrawal, date }: { withdrawal: VbtcWithdrawal; date: (value: Date | null) => string }) => {
+  const { t } = useTranslation("vbtcToken");
+  if (withdrawal.btc_transaction_hash) {
+    return (
+      <span className={styles.stack}>
+        <MempoolLink kind="tx" value={withdrawal.btc_transaction_hash} />
+        {withdrawal.completed_at ? <span className={styles.sub}>{date(withdrawal.completed_at)}</span> : null}
+      </span>
+    );
+  }
+  if (withdrawal.pin_txid) {
+    return (
+      <span className={styles.stack}>
+        <MempoolLink kind="tx" value={withdrawal.pin_txid} />
+        <span className={styles.sub}>{t(withdrawal.releasing ? "detail.withdrawals.releasePinned" : "detail.withdrawals.notConfirmed")}</span>
+      </span>
+    );
+  }
+  return <span className={styles.sub}>—</span>;
 };
 
 const newestFirst = (a: VbtcWithdrawal, b: VbtcWithdrawal) => (b.created_at?.getTime() ?? 0) - (a.created_at?.getTime() ?? 0);
@@ -61,21 +98,18 @@ export const VbtcWithdrawals = ({ withdrawals: unsorted }: { withdrawals: VbtcWi
       { key: "amount", header: t("detail.withdrawals.amount"), align: "end", nowrap: true, render: (w) => <VbtcBalance value={w.amount} /> },
       { key: "to", header: t("detail.withdrawals.to"), nowrap: true, render: (w) => <MempoolLink kind="address" value={w.btc_address} /> },
       { key: "fee", header: t("detail.withdrawals.requestedFee"), nowrap: true, hideBelowDesktop: true, render: (w) => <span className={styles.sub}>{feeRate(w)}</span> },
-      { key: "status", header: t("detail.withdrawals.status"), nowrap: true, render: (w) => <StagePill withdrawal={w} /> },
       {
-        key: "bitcoin",
-        header: t("detail.withdrawals.bitcoinTx"),
+        key: "status",
+        header: t("detail.withdrawals.status"),
         nowrap: true,
-        render: (w) =>
-          w.btc_transaction_hash ? (
-            <span className={styles.stack}>
-              <MempoolLink kind="tx" value={w.btc_transaction_hash} />
-              {w.completed_at ? <span className={styles.sub}>{date(w.completed_at)}</span> : null}
-            </span>
-          ) : (
-            <span className={styles.sub}>—</span>
-          ),
+        render: (w) => (
+          <span className={styles.stack}>
+            <StagePill withdrawal={w} />
+            <StageDetail withdrawal={w} />
+          </span>
+        ),
       },
+      { key: "bitcoin", header: t("detail.withdrawals.bitcoinTx"), nowrap: true, render: (w) => <BitcoinTx withdrawal={w} date={date} /> },
       {
         key: "settled",
         header: t("detail.withdrawals.settledBy"),
@@ -106,7 +140,10 @@ export const VbtcWithdrawals = ({ withdrawals: unsorted }: { withdrawals: VbtcWi
         <div key={w.id || w.request_transaction_hash} className={styles.item}>
           <div className={styles.line}>
             <VbtcBalance value={w.amount} />
-            <StagePill withdrawal={w} />
+            <span className={styles.stageEnd}>
+              <StagePill withdrawal={w} />
+              <StageDetail withdrawal={w} />
+            </span>
           </div>
           <div className={styles.line}>
             <MempoolLink kind="address" value={w.btc_address} />
@@ -116,10 +153,10 @@ export const VbtcWithdrawals = ({ withdrawals: unsorted }: { withdrawals: VbtcWi
             <Hash value={w.request_transaction_hash} side={6} href={txHref(w.request_transaction_hash)} copy={false} size="sm" />
             <span className={styles.sub}>{date(w.created_at)}</span>
           </div>
-          {w.btc_transaction_hash ? (
+          {w.btc_transaction_hash || w.pin_txid ? (
             <div className={styles.line}>
               <span className={styles.sub}>{t("detail.withdrawals.bitcoinTx")}</span>
-              <MempoolLink kind="tx" value={w.btc_transaction_hash} />
+              <BitcoinTx withdrawal={w} date={date} />
             </div>
           ) : null}
         </div>

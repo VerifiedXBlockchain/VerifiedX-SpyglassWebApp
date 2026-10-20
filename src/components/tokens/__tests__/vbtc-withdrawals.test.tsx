@@ -92,8 +92,55 @@ describe("VbtcWithdrawals", () => {
     });
   });
 
+  describe("pin state and close reason (tablet and up)", () => {
+    beforeEach(() => (useMediaQuery as jest.Mock).mockReturnValue(true));
+    const PIN = "c0ffee00c0ffee00c0ffee00c0ffee00c0ffee00c0ffee00c0ffee00c0ffee00";
+
+    it("shows a waiting request with the block it closes at", () => {
+      render(<VbtcWithdrawals withdrawals={[withdrawal({ pin_state: "Waiting", expires_at_height: 1_172_371 })]} />);
+      expect(screen.getByText("detail.withdrawals.stage.waiting")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.expiresAt")).toBeInTheDocument();
+    });
+
+    it("links a pinned request's Bitcoin transaction and shows its fee rate", () => {
+      render(<VbtcWithdrawals withdrawals={[withdrawal({ pin_state: "Pinned", pin_txid: PIN, pin_fee_rate: 12 })]} />);
+      expect(screen.getByText("detail.withdrawals.stage.pinned")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.pinFeeRate")).toBeInTheDocument();
+      expect(screen.getByTitle(PIN)).toHaveAttribute("href", `https://mempool.space/tx/${PIN}`);
+      expect(screen.getByText("detail.withdrawals.notConfirmed")).toBeInTheDocument();
+    });
+
+    it("shows a release in progress", () => {
+      render(<VbtcWithdrawals withdrawals={[withdrawal({ pin_state: "Pinned", pin_txid: PIN, pin_fee_rate: 3, releasing: true })]} />);
+      expect(screen.getByText("detail.withdrawals.stage.releasing")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.releasePinned")).toBeInTheDocument();
+    });
+
+    it("names why a closed request closed, with a release's refund", () => {
+      render(
+        <VbtcWithdrawals
+          withdrawals={[
+            withdrawal({ id: 1, status: "cancelled", closed_because: "Released", refunded_amount: 0.00009 }),
+            withdrawal({ id: 2, status: "cancelled", closed_because: "Expired", request_transaction_hash: "e".repeat(64) }),
+          ]}
+        />,
+      );
+      expect(screen.getByText("detail.withdrawals.stage.released")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.refunded")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.stage.expired")).toBeInTheDocument();
+    });
+  });
+
   describe("compact list (phones)", () => {
     beforeEach(() => (useMediaQuery as jest.Mock).mockReturnValue(false));
+
+    it("shows a pinned request's stage, fee rate and Bitcoin transaction", () => {
+      const pin = "d".repeat(64);
+      render(<VbtcWithdrawals withdrawals={[withdrawal({ pin_state: "Pinned", pin_txid: pin, pin_fee_rate: 12 })]} />);
+      expect(screen.getByText("detail.withdrawals.stage.pinned")).toBeInTheDocument();
+      expect(screen.getByText("detail.withdrawals.pinFeeRate")).toBeInTheDocument();
+      expect(screen.getByTitle(pin)).toHaveAttribute("href", `https://mempool.space/tx/${pin}`);
+    });
 
     it("shows the stage and the mempool.space link", () => {
       render(<VbtcWithdrawals withdrawals={[paid()]} />);
