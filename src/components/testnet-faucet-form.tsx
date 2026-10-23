@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { AsYouType, parsePhoneNumberWithError } from "libphonenumber-js";
-import { IS_DEVNET, IS_TESTNET } from "../constants";
+import { IS_DEVNET, IS_TESTNET, MEMPOOL_BASE } from "../constants";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { FaucetService } from "../services/faucet-service";
+import { validateFaucetRequest } from "../utils/faucet-request";
 import { useLocalized } from "../utils/use-localized";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -37,6 +38,8 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
+  const [btcAddress, setBtcAddress] = useState("");
+  const [btcAmount, setBtcAmount] = useState("");
   const [phone, setPhone] = useState("");
 
   const [verificationUuid, setVerificationUuid] = useState("");
@@ -44,11 +47,14 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
   const [addressInvalid, setAddressInvalid] = useState(false);
   const [amountInvalid, setAmountInvalid] = useState(false);
+  const [btcAddressInvalid, setBtcAddressInvalid] = useState(false);
+  const [btcAmountInvalid, setBtcAmountInvalid] = useState(false);
   const [phoneInvalid, setPhoneInvalid] = useState(false);
   const [verificationCodeInvalid, setVerificationCodeInvalid] = useState(false);
   const [processing, setProcessing] = useState(false);
 
   const [hash, setHash] = useState<string | null>(null);
+  const [btcHash, setBtcHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Format as the user types; numbers without a country code are treated as US.
@@ -59,24 +65,18 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
   const handleRequest = async (event: FormEvent) => {
     event.preventDefault();
-    setAddressInvalid(false);
-    setAmountInvalid(false);
     setPhoneInvalid(false);
     setError(null);
     setHash(null);
+    setBtcHash(null);
 
-    let hasError = false;
-
-    if (address.length !== 34 || address[0].toUpperCase() !== "X") {
-      setAddressInvalid(true);
-      hasError = true;
-    }
-
-    const amountParsed = parseFloat(amount);
-    if (!amountParsed || amountParsed <= info.minAmount || amountParsed > info.maxAmount) {
-      setAmountInvalid(true);
-      hasError = true;
-    }
+    const { valid, errors, payload } = validateFaucetRequest({ address, amount, btcAddress, btcAmount }, info);
+    setAddressInvalid(errors.address);
+    setAmountInvalid(errors.amount);
+    setBtcAddressInvalid(errors.btcAddress);
+    setBtcAmountInvalid(errors.btcAmount);
+    if (errors.empty) setError(t("errors.nothingRequested") as string);
+    let hasError = !valid;
 
     let phoneParsed = "";
     try {
@@ -97,10 +97,12 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
     setProcessing(true);
     try {
-      const result = await faucetService.requestFunds(address, amountParsed, phoneParsed);
+      const result = await faucetService.requestFunds({ ...payload, phone: phoneParsed });
       if (result.uuid) {
         setAddress("");
         setAmount("");
+        setBtcAddress("");
+        setBtcAmount("");
         setPhone("");
         setVerificationUuid(result.uuid);
       } else {
@@ -127,11 +129,14 @@ const TestnetFaucetForm = ({ info }: Props) => {
     setProcessing(true);
     try {
       const result = await faucetService.verify(verificationUuid, verificationCode.trim());
-      if (result.hash) {
+      // One part can be paid while the other fails: show whatever was sent, and the error beside it.
+      if (result.hash) setHash(extractTxHash(result.hash));
+      if (result.btc_hash) setBtcHash(result.btc_hash);
+      if (result.hash || result.btc_hash) {
         setVerificationUuid("");
         setVerificationCode("");
-        setHash(extractTxHash(result.hash));
-      } else {
+      }
+      if ((!result.hash && !result.btc_hash) || /fail/i.test(result.message ?? "")) {
         setError(result.message ?? (t("errors.generic") as string));
       }
     } catch (verifyError) {
@@ -160,6 +165,11 @@ const TestnetFaucetForm = ({ info }: Props) => {
           <DetailRow label={t("info.maxLabel")} mono>
             {info.maxAmount} VFX
           </DetailRow>
+          {info.btc.enabled ? (
+            <DetailRow label={t("info.btcMaxLabel")} mono>
+              {info.btc.maxAmount} BTC
+            </DetailRow>
+          ) : null}
           {isTestNetwork ? (
             <DetailRow label={t("info.senderLabel")} stacked>
               <Hash value={info.address} full />
@@ -176,6 +186,17 @@ const TestnetFaucetForm = ({ info }: Props) => {
             </Pill>
           </span>
           <Hash value={hash} full href={localized(`/transaction/${hash}`)} />
+        </div>
+      ) : null}
+
+      {btcHash ? (
+        <div className={[styles.notice, styles.success].join(" ")} role="status">
+          <span className={styles.noticeTitle}>
+            <Pill tone="green" icon={<CheckIcon size={11} />}>
+              {t("success.btcBroadcast")}
+            </Pill>
+          </span>
+          <Hash value={btcHash} full href={`${MEMPOOL_BASE}/tx/${btcHash}`} />
         </div>
       ) : null}
 
@@ -232,6 +253,34 @@ const TestnetFaucetForm = ({ info }: Props) => {
               step="any"
               error={amountInvalid ? t("errors.invalidAmount") : undefined}
             />
+            {info.btc.enabled ? (
+              <>
+                <TextInput
+                  name="btc-address"
+                  label={t("form.btcAddressLabel")}
+                  placeholder={t("form.btcAddressPlaceholder") as string}
+                  value={btcAddress}
+                  onChange={(event) => setBtcAddress(event.target.value)}
+                  mono
+                  autoComplete="off"
+                  spellCheck={false}
+                  hint={t("form.btcHelp")}
+                  error={btcAddressInvalid ? t("errors.invalidBtcAddress") : undefined}
+                />
+                <TextInput
+                  name="btc-amount"
+                  type="number"
+                  label={t("form.btcAmountLabel")}
+                  placeholder={t("form.btcAmountPlaceholder") as string}
+                  value={btcAmount}
+                  onChange={(event) => setBtcAmount(event.target.value)}
+                  min={info.btc.minAmount}
+                  max={info.btc.maxAmount}
+                  step="any"
+                  error={btcAmountInvalid ? t("errors.invalidAmount") : undefined}
+                />
+              </>
+            ) : null}
             <TextInput
               name="phone"
               type="tel"
