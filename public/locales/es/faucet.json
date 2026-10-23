@@ -11,18 +11,22 @@
     "availableLabel": "Fondos disponibles",
     "minLabel": "Solicitud mínima",
     "maxLabel": "Solicitud máxima",
-    "senderLabel": "Dirección del remitente"
+    "senderLabel": "Dirección del remitente",
+    "btcMaxLabel": "Máximo de BTC por número"
   },
   "success": {
     "broadcast": "¡Éxito! TX transmitida",
-    "hash": "Hash de la transacción: {{hash}}"
+    "hash": "Hash de la transacción: {{hash}}",
+    "btcBroadcast": "¡BTC de signet enviado!"
   },
   "errors": {
     "generic": "Error",
     "invalidAddress": "Dirección inválida",
     "invalidAmount": "Monto inválido",
     "invalidPhone": "Número de teléfono inválido",
-    "invalidCode": "Código inválido"
+    "invalidCode": "Código inválido",
+    "invalidBtcAddress": "Dirección de BTC de testnet no válida",
+    "nothingRequested": "Ingresa una dirección y un monto de VFX, una dirección y un monto de BTC, o ambos."
   },
   "form": {
     "verificationCodeLabel": "Código de verificación",
@@ -40,7 +44,12 @@
     "phoneHelp": "Tu número de teléfono se solicita para evitar abusos de este servicio. Una vez enviado el código de verificación, solo se guarda un hash del número.",
     "requestCta": "Solicitar fondos",
     "requestHeading": "Solicitar fondos",
-    "verifyHeading": "Introduce el código de verificación que te enviamos por SMS"
+    "verifyHeading": "Introduce el código de verificación que te enviamos por SMS",
+    "btcAddressLabel": "Dirección de BTC de signet (opcional)",
+    "btcAddressPlaceholder": "tb1q…",
+    "btcAmountLabel": "Monto de BTC solicitado",
+    "btcAmountPlaceholder": "0.002",
+    "btcHelp": "BTC de testnet en el signet de VerifiedX, para probar vBTC. Deja vacíos los campos de VFX para pedir solo BTC."
   },
   "returnCoinsDevnet": "Por favor, devuelve los fondos de devnet a {{address}} cuando ya no los necesites. Al devolver las monedas de devnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",
   "returnCoinsTestnet": "Por favor, devuelve los fondos de testnet a {{address}} cuando ya no los necesites. Al devolver las monedas de testnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",

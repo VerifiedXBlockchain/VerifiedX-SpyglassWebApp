@@ -11,18 +11,22 @@
     "availableLabel": "Available funds",
     "minLabel": "Minimum request",
     "maxLabel": "Maximum request",
-    "senderLabel": "Sender address"
+    "senderLabel": "Sender address",
+    "btcMaxLabel": "Maximum BTC per number"
   },
   "success": {
     "broadcast": "Success, TX Broadcasted!",
-    "hash": "Transaction Hash: {{hash}}"
+    "hash": "Transaction Hash: {{hash}}",
+    "btcBroadcast": "Signet BTC sent!"
   },
   "errors": {
     "generic": "Error",
     "invalidAddress": "Invalid Address",
     "invalidAmount": "Invalid Amount",
     "invalidPhone": "Invalid Phone Number",
-    "invalidCode": "Invalid Code"
+    "invalidCode": "Invalid Code",
+    "invalidBtcAddress": "Invalid testnet BTC address",
+    "nothingRequested": "Enter a VFX address and amount, a BTC address and amount, or both."
   },
   "form": {
     "verificationCodeLabel": "Verification Code",
@@ -40,7 +44,12 @@
     "phoneHelp": "Your phone number is required to prevent abuse of this service. Once the verification code is sent, only a hash of the phone number is stored.",
     "requestCta": "Request Funds",
     "requestHeading": "Request funds",
-    "verifyHeading": "Enter the verification code we texted you"
+    "verifyHeading": "Enter the verification code we texted you",
+    "btcAddressLabel": "Signet BTC Address (optional)",
+    "btcAddressPlaceholder": "tb1q…",
+    "btcAmountLabel": "BTC Amount Requested",
+    "btcAmountPlaceholder": "0.002",
+    "btcHelp": "Testnet BTC on the VerifiedX signet, for vBTC testing. Leave the VFX fields empty to ask for BTC only."
   },
   "returnCoinsDevnet": "Please send devnet coin back to {{address}} when you don't need them anymore. By returning the devnet coins, you contribute to the devnet ecosystem and help maintain its functionality for other developers and testers.",
   "returnCoinsTestnet": "Please send testnet coin back to {{address}} when you don't need them anymore. By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers.",
