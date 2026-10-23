@@ -25,8 +25,7 @@
     "invalidAmount": "Monto inválido",
     "invalidPhone": "Número de teléfono inválido",
     "invalidCode": "Código inválido",
-    "invalidBtcAddress": "Dirección de BTC de testnet no válida",
-    "nothingRequested": "Ingresa una dirección y un monto de VFX, una dirección y un monto de BTC, o ambos."
+    "invalidBtcAddress": "Dirección de BTC de testnet no válida"
   },
   "form": {
     "verificationCodeLabel": "Código de verificación",
@@ -45,11 +44,13 @@
     "requestCta": "Solicitar fondos",
     "requestHeading": "Solicitar fondos",
     "verifyHeading": "Introduce el código de verificación que te enviamos por SMS",
-    "btcAddressLabel": "Dirección de BTC de signet (opcional)",
+    "btcAddressLabel": "Dirección de BTC de signet",
     "btcAddressPlaceholder": "tb1q…",
     "btcAmountLabel": "Monto de BTC solicitado",
     "btcAmountPlaceholder": "0.002",
-    "btcHelp": "BTC de testnet en el signet de VerifiedX, para probar vBTC. Deja vacíos los campos de VFX para pedir solo BTC."
+    "btcHelp": "BTC de testnet en el signet de VerifiedX, para probar vBTC.",
+    "btcTab": "BTC de signet",
+    "assetLabel": "Activo a solicitar"
   },
   "returnCoinsDevnet": "Por favor, devuelve los fondos de devnet a {{address}} cuando ya no los necesites. Al devolver las monedas de devnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",
   "returnCoinsTestnet": "Por favor, devuelve los fondos de testnet a {{address}} cuando ya no los necesites. Al devolver las monedas de testnet contribuyes al ecosistema y ayudas a mantener su funcionamiento para otros desarrolladores y testers.",

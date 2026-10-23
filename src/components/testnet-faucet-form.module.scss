@@ -10,6 +10,11 @@
   gap: 14px;
 }
 
+// The asset switch keeps its own width instead of stretching across the form.
+.assetTabs {
+  align-self: flex-start;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

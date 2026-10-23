@@ -25,8 +25,7 @@
     "invalidAmount": "Invalid Amount",
     "invalidPhone": "Invalid Phone Number",
     "invalidCode": "Invalid Code",
-    "invalidBtcAddress": "Invalid testnet BTC address",
-    "nothingRequested": "Enter a VFX address and amount, a BTC address and amount, or both."
+    "invalidBtcAddress": "Invalid testnet BTC address"
   },
   "form": {
     "verificationCodeLabel": "Verification Code",
@@ -45,11 +44,13 @@
     "requestCta": "Request Funds",
     "requestHeading": "Request funds",
     "verifyHeading": "Enter the verification code we texted you",
-    "btcAddressLabel": "Signet BTC Address (optional)",
+    "btcAddressLabel": "Signet BTC Address",
     "btcAddressPlaceholder": "tb1q…",
     "btcAmountLabel": "BTC Amount Requested",
     "btcAmountPlaceholder": "0.002",
-    "btcHelp": "Testnet BTC on the VerifiedX signet, for vBTC testing. Leave the VFX fields empty to ask for BTC only."
+    "btcHelp": "Testnet BTC on the VerifiedX signet, for vBTC testing.",
+    "btcTab": "Signet BTC",
+    "assetLabel": "Asset to request"
   },
   "returnCoinsDevnet": "Please send devnet coin back to {{address}} when you don't need them anymore. By returning the devnet coins, you contribute to the devnet ecosystem and help maintain its functionality for other developers and testers.",
   "returnCoinsTestnet": "Please send testnet coin back to {{address}} when you don't need them anymore. By returning the testnet coins, you contribute to the testnet ecosystem and help maintain its functionality for other developers and testers.",
