@@ -38,6 +38,7 @@
     "summary": "Summary",
     "custody": "Smart contract & custody",
     "viewOnMempool": "View on mempool.space",
+    "viewOnSignet": "View on the VFX signet explorer",
     "noBalances": "No addresses hold this token yet",
     "notFound": "vBTC token not found",
     "notFoundBody": "No vBTC token with id “{{id}}” has been indexed.",

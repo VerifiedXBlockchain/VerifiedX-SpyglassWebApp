@@ -6,7 +6,7 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { IS_DEVNET, IS_TESTNET, LIVE_SITE_URL } from "../../constants";
+import { IS_DEVNET, IS_TESTNET, LIVE_SITE_URL, MEMPOOL_BASE } from "../../constants";
 import { navigateTo } from "../../utils/navigate";
 import { useLocalized } from "../../utils/use-localized";
 import { LanguageSwitcher } from "../language-switcher";
@@ -39,7 +39,7 @@ const TOKEN_LINKS: NavLink[] = [
   { key: "nfts", labelKey: "nav.nfts", href: "/nfts", matches: ["/nfts"] },
 ];
 
-const BTC_SPYGLASS_URL = IS_DEVNET || IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space/";
+const BTC_SPYGLASS_URL = `${MEMPOOL_BASE}/`;
 
 const EXTERNAL_LINKS: { key: string; labelKey: string; href: string }[] = [
   { key: "verifiedXSite", labelKey: "nav.verifiedXSite", href: "https://verifiedx.io" },

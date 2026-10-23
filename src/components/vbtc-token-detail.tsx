@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { MEMPOOL_BASE } from "../constants";
+import { BTC_IS_SIGNET, MEMPOOL_BASE } from "../constants";
 import { VbtcToken } from "../models/vbtc-token";
 import { numberWithCommas } from "../utils/formatting";
 import { useLocalized } from "../utils/use-localized";
@@ -117,7 +117,7 @@ export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
                 <Hash value={token.deposit_address} full tone="strong" />
                 <div style={{ marginTop: 8 }}>
                   <Button href={`${MEMPOOL_BASE}/address/${token.deposit_address}`} external variant="btc" size="sm" iconRight={<ExternalLinkIcon />}>
-                    {t("vbtcToken:detail.viewOnMempool")}
+                    {t(BTC_IS_SIGNET ? "vbtcToken:detail.viewOnSignet" : "vbtcToken:detail.viewOnMempool")}
                   </Button>
                 </div>
               </DetailRow>
