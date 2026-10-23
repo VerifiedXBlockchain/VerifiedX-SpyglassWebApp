@@ -9,6 +9,7 @@ import { useLocalized } from "../utils/use-localized";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { DetailList, DetailRow } from "./ui/detail-list";
+import { Tabs } from "./search/tabs";
 import { Hash } from "./ui/hash";
 import { CheckIcon } from "./ui/icons";
 import { Pill } from "./ui/pill";
@@ -32,10 +33,14 @@ interface Props {
   info: TestnetFaucetInfo;
 }
 
+type FaucetAsset = "vfx" | "btc";
+
 const TestnetFaucetForm = ({ info }: Props) => {
   const { t } = useTranslation("faucet");
   const localized = useLocalized();
 
+  // One asset per request: the tab picks which. Without BTC on offer there is only VFX.
+  const [asset, setAsset] = useState<FaucetAsset>("vfx");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [btcAddress, setBtcAddress] = useState("");
@@ -70,12 +75,16 @@ const TestnetFaucetForm = ({ info }: Props) => {
     setHash(null);
     setBtcHash(null);
 
-    const { valid, errors, payload } = validateFaucetRequest({ address, amount, btcAddress, btcAmount }, info);
-    setAddressInvalid(errors.address);
-    setAmountInvalid(errors.amount);
-    setBtcAddressInvalid(errors.btcAddress);
-    setBtcAmountInvalid(errors.btcAmount);
-    if (errors.empty) setError(t("errors.nothingRequested") as string);
+    const isBtc = asset === "btc";
+    const { valid, errors, payload } = validateFaucetRequest(
+      isBtc ? { address: "", amount: "", btcAddress, btcAmount } : { address, amount, btcAddress: "", btcAmount: "" },
+      info,
+    );
+    // Blank fields on the selected tab show as that tab's field errors.
+    setAddressInvalid(errors.address || (!isBtc && errors.empty));
+    setAmountInvalid(errors.amount || (!isBtc && errors.empty));
+    setBtcAddressInvalid(errors.btcAddress || (isBtc && errors.empty));
+    setBtcAmountInvalid(errors.btcAmount || (isBtc && errors.empty));
     let hasError = !valid;
 
     let phoneParsed = "";
@@ -154,27 +163,35 @@ const TestnetFaucetForm = ({ info }: Props) => {
     <div className={styles.stack}>
       <Card title={t("info.heading")}>
         <DetailList>
-          {isTestNetwork ? (
-            <DetailRow label={t("info.availableLabel")} mono>
-              {info.available} VFX
-            </DetailRow>
-          ) : null}
-          <DetailRow label={t("info.minLabel")} mono>
-            {info.minAmount} VFX
-          </DetailRow>
-          <DetailRow label={t("info.maxLabel")} mono>
-            {info.maxAmount} VFX
-          </DetailRow>
-          {info.btc.enabled ? (
-            <DetailRow label={t("info.btcMaxLabel")} mono>
-              {info.btc.maxAmount} BTC
-            </DetailRow>
-          ) : null}
-          {isTestNetwork ? (
-            <DetailRow label={t("info.senderLabel")} stacked>
-              <Hash value={info.address} full />
-            </DetailRow>
-          ) : null}
+          {asset === "btc" ? (
+            <>
+              <DetailRow label={t("info.minLabel")} mono>
+                {info.btc.minAmount} BTC
+              </DetailRow>
+              <DetailRow label={t("info.btcMaxLabel")} mono>
+                {info.btc.maxAmount} BTC
+              </DetailRow>
+            </>
+          ) : (
+            <>
+              {isTestNetwork ? (
+                <DetailRow label={t("info.availableLabel")} mono>
+                  {info.available} VFX
+                </DetailRow>
+              ) : null}
+              <DetailRow label={t("info.minLabel")} mono>
+                {info.minAmount} VFX
+              </DetailRow>
+              <DetailRow label={t("info.maxLabel")} mono>
+                {info.maxAmount} VFX
+              </DetailRow>
+              {isTestNetwork ? (
+                <DetailRow label={t("info.senderLabel")} stacked>
+                  <Hash value={info.address} full />
+                </DetailRow>
+              ) : null}
+            </>
+          )}
         </DetailList>
       </Card>
 
@@ -230,30 +247,20 @@ const TestnetFaucetForm = ({ info }: Props) => {
       ) : (
         <Card title={t("form.requestHeading")}>
           <form className={styles.fields} onSubmit={handleRequest}>
-            <TextInput
-              name="address"
-              label={addressLabel}
-              placeholder={addressPlaceholder as string}
-              value={address}
-              onChange={(event) => setAddress(event.target.value)}
-              mono
-              autoComplete="off"
-              spellCheck={false}
-              error={addressInvalid ? t("errors.invalidAddress") : undefined}
-            />
-            <TextInput
-              name="amount"
-              type="number"
-              label={t("form.amountLabel")}
-              placeholder={t("form.amountPlaceholder") as string}
-              value={amount}
-              onChange={(event) => setAmount(event.target.value)}
-              min={info.minAmount}
-              max={info.maxAmount}
-              step="any"
-              error={amountInvalid ? t("errors.invalidAmount") : undefined}
-            />
             {info.btc.enabled ? (
+              <div className={styles.assetTabs}>
+                <Tabs<FaucetAsset>
+                  aria-label={t("form.assetLabel") as string}
+                  tabs={[
+                    { id: "vfx", label: "VFX" },
+                    { id: "btc", label: t("form.btcTab") },
+                  ]}
+                  active={asset}
+                  onChange={setAsset}
+                />
+              </div>
+            ) : null}
+            {asset === "btc" ? (
               <>
                 <TextInput
                   name="btc-address"
@@ -280,7 +287,33 @@ const TestnetFaucetForm = ({ info }: Props) => {
                   error={btcAmountInvalid ? t("errors.invalidAmount") : undefined}
                 />
               </>
-            ) : null}
+            ) : (
+              <>
+                <TextInput
+                  name="address"
+                  label={addressLabel}
+                  placeholder={addressPlaceholder as string}
+                  value={address}
+                  onChange={(event) => setAddress(event.target.value)}
+                  mono
+                  autoComplete="off"
+                  spellCheck={false}
+                  error={addressInvalid ? t("errors.invalidAddress") : undefined}
+                />
+                <TextInput
+                  name="amount"
+                  type="number"
+                  label={t("form.amountLabel")}
+                  placeholder={t("form.amountPlaceholder") as string}
+                  value={amount}
+                  onChange={(event) => setAmount(event.target.value)}
+                  min={info.minAmount}
+                  max={info.maxAmount}
+                  step="any"
+                  error={amountInvalid ? t("errors.invalidAmount") : undefined}
+                />
+              </>
+            )}
             <TextInput
               name="phone"
               type="tel"
