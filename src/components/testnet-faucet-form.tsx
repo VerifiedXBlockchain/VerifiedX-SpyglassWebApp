@@ -1,13 +1,15 @@
 import { FormEvent, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { AsYouType, parsePhoneNumberWithError } from "libphonenumber-js";
-import { IS_DEVNET, IS_TESTNET } from "../constants";
+import { IS_DEVNET, IS_TESTNET, MEMPOOL_BASE } from "../constants";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
 import { FaucetService } from "../services/faucet-service";
+import { validateFaucetRequest } from "../utils/faucet-request";
 import { useLocalized } from "../utils/use-localized";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { DetailList, DetailRow } from "./ui/detail-list";
+import { Tabs } from "./search/tabs";
 import { Hash } from "./ui/hash";
 import { CheckIcon } from "./ui/icons";
 import { Pill } from "./ui/pill";
@@ -31,12 +33,18 @@ interface Props {
   info: TestnetFaucetInfo;
 }
 
+type FaucetAsset = "vfx" | "btc";
+
 const TestnetFaucetForm = ({ info }: Props) => {
   const { t } = useTranslation("faucet");
   const localized = useLocalized();
 
+  // One asset per request: the tab picks which. Without BTC on offer there is only VFX.
+  const [asset, setAsset] = useState<FaucetAsset>("vfx");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
+  const [btcAddress, setBtcAddress] = useState("");
+  const [btcAmount, setBtcAmount] = useState("");
   const [phone, setPhone] = useState("");
 
   const [verificationUuid, setVerificationUuid] = useState("");
@@ -44,11 +52,14 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
   const [addressInvalid, setAddressInvalid] = useState(false);
   const [amountInvalid, setAmountInvalid] = useState(false);
+  const [btcAddressInvalid, setBtcAddressInvalid] = useState(false);
+  const [btcAmountInvalid, setBtcAmountInvalid] = useState(false);
   const [phoneInvalid, setPhoneInvalid] = useState(false);
   const [verificationCodeInvalid, setVerificationCodeInvalid] = useState(false);
   const [processing, setProcessing] = useState(false);
 
   const [hash, setHash] = useState<string | null>(null);
+  const [btcHash, setBtcHash] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Format as the user types; numbers without a country code are treated as US.
@@ -59,24 +70,22 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
   const handleRequest = async (event: FormEvent) => {
     event.preventDefault();
-    setAddressInvalid(false);
-    setAmountInvalid(false);
     setPhoneInvalid(false);
     setError(null);
     setHash(null);
+    setBtcHash(null);
 
-    let hasError = false;
-
-    if (address.length !== 34 || address[0].toUpperCase() !== "X") {
-      setAddressInvalid(true);
-      hasError = true;
-    }
-
-    const amountParsed = parseFloat(amount);
-    if (!amountParsed || amountParsed <= info.minAmount || amountParsed > info.maxAmount) {
-      setAmountInvalid(true);
-      hasError = true;
-    }
+    const isBtc = asset === "btc";
+    const { valid, errors, payload } = validateFaucetRequest(
+      isBtc ? { address: "", amount: "", btcAddress, btcAmount } : { address, amount, btcAddress: "", btcAmount: "" },
+      info,
+    );
+    // Blank fields on the selected tab show as that tab's field errors.
+    setAddressInvalid(errors.address || (!isBtc && errors.empty));
+    setAmountInvalid(errors.amount || (!isBtc && errors.empty));
+    setBtcAddressInvalid(errors.btcAddress || (isBtc && errors.empty));
+    setBtcAmountInvalid(errors.btcAmount || (isBtc && errors.empty));
+    let hasError = !valid;
 
     let phoneParsed = "";
     try {
@@ -97,10 +106,12 @@ const TestnetFaucetForm = ({ info }: Props) => {
 
     setProcessing(true);
     try {
-      const result = await faucetService.requestFunds(address, amountParsed, phoneParsed);
+      const result = await faucetService.requestFunds({ ...payload, phone: phoneParsed });
       if (result.uuid) {
         setAddress("");
         setAmount("");
+        setBtcAddress("");
+        setBtcAmount("");
         setPhone("");
         setVerificationUuid(result.uuid);
       } else {
@@ -127,11 +138,14 @@ const TestnetFaucetForm = ({ info }: Props) => {
     setProcessing(true);
     try {
       const result = await faucetService.verify(verificationUuid, verificationCode.trim());
-      if (result.hash) {
+      // One part can be paid while the other fails: show whatever was sent, and the error beside it.
+      if (result.hash) setHash(extractTxHash(result.hash));
+      if (result.btc_hash) setBtcHash(result.btc_hash);
+      if (result.hash || result.btc_hash) {
         setVerificationUuid("");
         setVerificationCode("");
-        setHash(extractTxHash(result.hash));
-      } else {
+      }
+      if ((!result.hash && !result.btc_hash) || /fail/i.test(result.message ?? "")) {
         setError(result.message ?? (t("errors.generic") as string));
       }
     } catch (verifyError) {
@@ -149,22 +163,35 @@ const TestnetFaucetForm = ({ info }: Props) => {
     <div className={styles.stack}>
       <Card title={t("info.heading")}>
         <DetailList>
-          {isTestNetwork ? (
-            <DetailRow label={t("info.availableLabel")} mono>
-              {info.available} VFX
-            </DetailRow>
-          ) : null}
-          <DetailRow label={t("info.minLabel")} mono>
-            {info.minAmount} VFX
-          </DetailRow>
-          <DetailRow label={t("info.maxLabel")} mono>
-            {info.maxAmount} VFX
-          </DetailRow>
-          {isTestNetwork ? (
-            <DetailRow label={t("info.senderLabel")} stacked>
-              <Hash value={info.address} full />
-            </DetailRow>
-          ) : null}
+          {asset === "btc" ? (
+            <>
+              <DetailRow label={t("info.minLabel")} mono>
+                {info.btc.minAmount} BTC
+              </DetailRow>
+              <DetailRow label={t("info.btcMaxLabel")} mono>
+                {info.btc.maxAmount} BTC
+              </DetailRow>
+            </>
+          ) : (
+            <>
+              {isTestNetwork ? (
+                <DetailRow label={t("info.availableLabel")} mono>
+                  {info.available} VFX
+                </DetailRow>
+              ) : null}
+              <DetailRow label={t("info.minLabel")} mono>
+                {info.minAmount} VFX
+              </DetailRow>
+              <DetailRow label={t("info.maxLabel")} mono>
+                {info.maxAmount} VFX
+              </DetailRow>
+              {isTestNetwork ? (
+                <DetailRow label={t("info.senderLabel")} stacked>
+                  <Hash value={info.address} full />
+                </DetailRow>
+              ) : null}
+            </>
+          )}
         </DetailList>
       </Card>
 
@@ -176,6 +203,17 @@ const TestnetFaucetForm = ({ info }: Props) => {
             </Pill>
           </span>
           <Hash value={hash} full href={localized(`/transaction/${hash}`)} />
+        </div>
+      ) : null}
+
+      {btcHash ? (
+        <div className={[styles.notice, styles.success].join(" ")} role="status">
+          <span className={styles.noticeTitle}>
+            <Pill tone="green" icon={<CheckIcon size={11} />}>
+              {t("success.btcBroadcast")}
+            </Pill>
+          </span>
+          <Hash value={btcHash} full href={`${MEMPOOL_BASE}/tx/${btcHash}`} />
         </div>
       ) : null}
 
@@ -209,29 +247,73 @@ const TestnetFaucetForm = ({ info }: Props) => {
       ) : (
         <Card title={t("form.requestHeading")}>
           <form className={styles.fields} onSubmit={handleRequest}>
-            <TextInput
-              name="address"
-              label={addressLabel}
-              placeholder={addressPlaceholder as string}
-              value={address}
-              onChange={(event) => setAddress(event.target.value)}
-              mono
-              autoComplete="off"
-              spellCheck={false}
-              error={addressInvalid ? t("errors.invalidAddress") : undefined}
-            />
-            <TextInput
-              name="amount"
-              type="number"
-              label={t("form.amountLabel")}
-              placeholder={t("form.amountPlaceholder") as string}
-              value={amount}
-              onChange={(event) => setAmount(event.target.value)}
-              min={info.minAmount}
-              max={info.maxAmount}
-              step="any"
-              error={amountInvalid ? t("errors.invalidAmount") : undefined}
-            />
+            {info.btc.enabled ? (
+              <div className={styles.assetTabs}>
+                <Tabs<FaucetAsset>
+                  aria-label={t("form.assetLabel") as string}
+                  tabs={[
+                    { id: "vfx", label: "VFX" },
+                    { id: "btc", label: t("form.btcTab") },
+                  ]}
+                  active={asset}
+                  onChange={setAsset}
+                />
+              </div>
+            ) : null}
+            {asset === "btc" ? (
+              <>
+                <TextInput
+                  name="btc-address"
+                  label={t("form.btcAddressLabel")}
+                  placeholder={t("form.btcAddressPlaceholder") as string}
+                  value={btcAddress}
+                  onChange={(event) => setBtcAddress(event.target.value)}
+                  mono
+                  autoComplete="off"
+                  spellCheck={false}
+                  hint={t("form.btcHelp")}
+                  error={btcAddressInvalid ? t("errors.invalidBtcAddress") : undefined}
+                />
+                <TextInput
+                  name="btc-amount"
+                  type="number"
+                  label={t("form.btcAmountLabel")}
+                  placeholder={t("form.btcAmountPlaceholder") as string}
+                  value={btcAmount}
+                  onChange={(event) => setBtcAmount(event.target.value)}
+                  min={info.btc.minAmount}
+                  max={info.btc.maxAmount}
+                  step="any"
+                  error={btcAmountInvalid ? t("errors.invalidAmount") : undefined}
+                />
+              </>
+            ) : (
+              <>
+                <TextInput
+                  name="address"
+                  label={addressLabel}
+                  placeholder={addressPlaceholder as string}
+                  value={address}
+                  onChange={(event) => setAddress(event.target.value)}
+                  mono
+                  autoComplete="off"
+                  spellCheck={false}
+                  error={addressInvalid ? t("errors.invalidAddress") : undefined}
+                />
+                <TextInput
+                  name="amount"
+                  type="number"
+                  label={t("form.amountLabel")}
+                  placeholder={t("form.amountPlaceholder") as string}
+                  value={amount}
+                  onChange={(event) => setAmount(event.target.value)}
+                  min={info.minAmount}
+                  max={info.maxAmount}
+                  step="any"
+                  error={amountInvalid ? t("errors.invalidAmount") : undefined}
+                />
+              </>
+            )}
             <TextInput
               name="phone"
               type="tel"

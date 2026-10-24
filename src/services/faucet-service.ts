@@ -2,6 +2,7 @@ import { API_BASE_URL } from "../constants";
 import { Adnr } from "../models/adnr";
 import { PaginatedResponse } from "../models/paginated-response";
 import { TestnetFaucetInfo } from "../models/testnet-faucet-info";
+import { FaucetRequestPayload } from "../utils/faucet-request";
 import { httpGet, httpPost } from "../utils/network";
 
 export class FaucetService {
@@ -12,16 +13,8 @@ export class FaucetService {
         return info;
     }
 
-    async requestFunds(
-        address: string,
-        amount: number,
-        phone: string,
-    ): Promise<any> {
-        const response = await httpPost(`${API_BASE_URL}/faucet/request/`, {
-            address: address,
-            amount: amount,
-            phone: phone,
-        });
+    async requestFunds(request: FaucetRequestPayload): Promise<any> {
+        const response = await httpPost(`${API_BASE_URL}/faucet/request/`, request);
         const data: any = response.parsedBody;
         console.log(data);
         return data;

@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { IS_DEVNET, IS_TESTNET } from "../../constants";
+import { MEMPOOL_BASE } from "../../constants";
 import { usePagedList } from "../../hooks/usePagedList";
 import { Adnr } from "../../models/adnr";
 import { AdnrService } from "../../services/adnr-service";
@@ -11,8 +11,6 @@ import { InfiniteList } from "../ui/infinite-list";
 import { Pill } from "../ui/pill";
 import cells from "../blocks/block-cells.module.scss";
 import styles from "./domain-feed.module.scss";
-
-const MEMPOOL_BASE = IS_DEVNET || IS_TESTNET ? "https://mempool.space/testnet4" : "https://mempool.space";
 
 /** Registered VFX and BTC domains with the address each one resolves to. */
 export const DomainFeed = () => {

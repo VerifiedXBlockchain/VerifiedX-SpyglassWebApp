@@ -325,9 +325,39 @@ export class Transaction {
         return "vBTC Bridge Lock";
       case 38:
         return "vBTC Bridge Unlock";
+      case 39:
+        return "vBTC Bridge Pool Unlock";
+      case 40:
+        return "vBTC Bridge Exit to BTC";
+      case 41:
+        return "vBTC Bridge Exit to BTC Complete";
+      case 42:
+        return "vBTC Bridge Exit to BTC Failed";
+      case 43:
+        return "Bitcoin Report";
+      case 44:
+        return this.coinPinLabel;
+      case 45:
+        return "Bitcoin Reorg";
+      case 46:
+        return "vBTC Vault Rekey";
       default:
         return "-";
     }
+  }
+
+  // Type 44 is a requester's fee raise or release on a watched vault's
+  // withdrawal; unreadable data gets the neutral name rather than a guess.
+  private get coinPinLabel(): string {
+    let fn: unknown = null;
+    try {
+      fn = this.nftDataValue("Function");
+    } catch {
+      return "vBTC Withdrawal Pin";
+    }
+    if (fn == "VBTCWithdrawalFeeBump()") return "vBTC Withdrawal Fee Raise";
+    if (fn == "VBTCWithdrawalRelease()") return "vBTC Withdrawal Release";
+    return "vBTC Withdrawal Pin";
   }
 
   get displayAmount(): string {
