@@ -3,11 +3,9 @@ import { useTranslation } from "next-i18next";
 import { VbtcToken } from "../../models/vbtc-token";
 import { numberWithCommas } from "../../utils/formatting";
 import { useLocalized } from "../../utils/use-localized";
-import { VaultHeights, vaultStatus } from "../../utils/vbtc-vault";
 import { Column, DataTable } from "../ui/data-table";
 import { Hash } from "../ui/hash";
 import { TokenImage } from "./token-image";
-import { VaultBadge } from "./vault-badge";
 import styles from "./token-cells.module.scss";
 
 export const VBTC_FALLBACK_IMAGE = "/vbtc-fallback.gif";
@@ -16,8 +14,6 @@ interface Props {
   tokens: VbtcToken[];
   loading?: boolean;
   emptyLabel?: string;
-  /** For the watched / legacy / frozen badge; none without it. */
-  heights?: VaultHeights | null;
 }
 
 export const VbtcBalance = ({ value }: { value: number }) => (
@@ -27,7 +23,7 @@ export const VbtcBalance = ({ value }: { value: number }) => (
   </span>
 );
 
-export const VbtcTokenTable = ({ tokens, loading, emptyLabel, heights = null }: Props) => {
+export const VbtcTokenTable = ({ tokens, loading, emptyLabel }: Props) => {
   const { t } = useTranslation("vbtcToken");
   const { locale } = useRouter();
   const localized = useLocalized();
@@ -44,7 +40,6 @@ export const VbtcTokenTable = ({ tokens, loading, emptyLabel, heights = null }: 
               {token.name}
             </a>
           </span>
-          <VaultBadge status={vaultStatus(token, heights)} />
         </span>
       ),
     },

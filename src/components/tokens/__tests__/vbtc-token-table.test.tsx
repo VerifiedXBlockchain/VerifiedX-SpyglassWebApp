@@ -42,31 +42,8 @@ describe("VbtcTokenTable", () => {
     expect(screen.getByText("list.empty")).toBeInTheDocument();
   });
 
-  describe("vault badge", () => {
-    const heights = (latestBlockHeight: number) => ({ recordHeight: 1_172_000, enforcementHeight: 1_192_500, latestBlockHeight });
-
-    it("badges each vault by whether the chain watches it", () => {
-      render(
-        <VbtcTokenTable
-          tokens={[token({ is_watched: true }), token({ sc_identifier: "old:1", name: "Old vault", is_watched: false })]}
-          heights={heights(1_180_000)}
-        />,
-      );
-      expect(within(screen.getByRole("row", { name: /Bfly vBTC/ })).getByText("detail.vault.badge.watched")).toBeInTheDocument();
-      expect(within(screen.getByRole("row", { name: /Old vault/ })).getByText("detail.vault.badge.legacy")).toBeInTheDocument();
-    });
-
-    it("badges an older vault frozen from the enforcement height", () => {
-      render(<VbtcTokenTable tokens={[token({ is_watched: false })]} heights={heights(1_192_499)} />);
-      expect(screen.getByText("detail.vault.badge.frozen")).toBeInTheDocument();
-    });
-
-    it("shows no badge without the heights or before the record height", () => {
-      const { unmount } = render(<VbtcTokenTable tokens={[token({ is_watched: true })]} />);
-      expect(screen.queryByText("detail.vault.badge.watched")).not.toBeInTheDocument();
-      unmount();
-      render(<VbtcTokenTable tokens={[token({ is_watched: false })]} heights={heights(1_171_000)} />);
-      expect(screen.queryByText("detail.vault.badge.legacy")).not.toBeInTheDocument();
-    });
+  it("shows no watched, legacy or frozen badge", () => {
+    render(<VbtcTokenTable tokens={[token({ is_watched: true }), token({ sc_identifier: "old:1", name: "Old vault", is_watched: false })]} />);
+    expect(screen.queryByText(/detail\.vault\./)).not.toBeInTheDocument();
   });
 });

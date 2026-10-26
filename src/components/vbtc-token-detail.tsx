@@ -8,7 +8,6 @@ import { VaultHeights, vaultStatus } from "../utils/vbtc-vault";
 import { HoldersList } from "./tokens/holders-list";
 import { TokenImage } from "./tokens/token-image";
 import { VBTC_FALLBACK_IMAGE, VbtcBalance } from "./tokens/vbtc-token-table";
-import { VaultBadge } from "./tokens/vault-badge";
 import { VbtcWithdrawals } from "./tokens/vbtc-withdrawals";
 import { AddressLink } from "./transactions/transaction-cells";
 import { Button } from "./ui/button";
@@ -35,12 +34,8 @@ export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
   const description = token.description.replace(/\\n/g, "\n");
   // A watched vault's backing is what the chain holds on Bitcoin (global_balance);
   // Spyglass stops keeping the providers' received / sent / count for it.
-  const vault = vaultStatus(token, heights);
-  const watched = vault === "watched";
-  const gates = {
-    record: numberWithCommas(heights?.recordHeight ?? 0),
-    enforcement: numberWithCommas(heights?.enforcementHeight ?? 0),
-  };
+  // The status is not shown as a badge; it only decides which fields apply.
+  const watched = vaultStatus(token, heights) === "watched";
 
   return (
     <>
@@ -51,7 +46,6 @@ export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
             <Pill tone="btc" size="md">
               {t("vbtcToken:detail.badge")}
             </Pill>
-            <VaultBadge status={vault} size="md" />
             {token.is_pending_withdrawal ? (
               <Pill tone="gold" size="md">
                 {t("vbtcToken:detail.pendingWithdrawal")}
@@ -104,11 +98,6 @@ export const VbtcTokenDetail = ({ token, heights = null }: Props) => {
 
         <Card title={t("vbtcToken:detail.custody")} as="section" aria-label={t("vbtcToken:detail.custody") as string}>
           <DetailList>
-            {vault ? (
-              <DetailRow label={t("vbtcToken:detail.vault.label")} stacked>
-                <span className={styles.description}>{t(`vbtcToken:detail.vault.explain.${vault}`, gates)}</span>
-              </DetailRow>
-            ) : null}
             <DetailRow label={t("vbtcToken:detail.fields.smartContractId")} stacked>
               <Hash value={token.sc_identifier} full tone="strong" href={localized(`/nfts/${token.sc_identifier}`)} />
             </DetailRow>
