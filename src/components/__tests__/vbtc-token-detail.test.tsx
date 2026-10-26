@@ -40,18 +40,14 @@ describe("VbtcTokenDetail vault status", () => {
 
   it("shows a watched vault's backing and current deposit address, without the providers' totals", () => {
     render(<VbtcTokenDetail token={token(true)} heights={HEIGHTS} />);
-    expect(screen.getByText("detail.vault.badge.watched")).toBeInTheDocument();
-    expect(screen.getByText("detail.vault.explain.watched")).toBeInTheDocument();
     expect(screen.getByText("detail.fields.backing")).toBeInTheDocument();
     expect(screen.getByText("detail.fields.currentDepositAddress")).toBeInTheDocument();
     expect(screen.queryByText("detail.fields.totalReceived")).not.toBeInTheDocument();
     expect(screen.queryByText("detail.fields.txCount")).not.toBeInTheDocument();
   });
 
-  it("badges a legacy vault and keeps its provider totals", () => {
+  it("keeps a pre-9.0 vault's provider totals", () => {
     render(<VbtcTokenDetail token={token(false)} heights={HEIGHTS} />);
-    expect(screen.getByText("detail.vault.badge.legacy")).toBeInTheDocument();
-    expect(screen.getByText("detail.vault.explain.legacy")).toBeInTheDocument();
     expect(screen.getByText("detail.fields.totalReceived")).toBeInTheDocument();
   });
 
@@ -64,9 +60,11 @@ describe("VbtcTokenDetail vault status", () => {
     expect(screen.getByText("detail.withdrawals.empty")).toBeInTheDocument();
   });
 
-  it("badges a frozen legacy vault", () => {
+  it("shows no vault status badge or explanation, before or after the freeze", () => {
+    const { unmount } = render(<VbtcTokenDetail token={token(true)} heights={HEIGHTS} />);
+    expect(screen.queryByText(/detail\.vault\./)).not.toBeInTheDocument();
+    unmount();
     render(<VbtcTokenDetail token={token(false)} heights={FROZEN_HEIGHTS} />);
-    expect(screen.getByText("detail.vault.badge.frozen")).toBeInTheDocument();
-    expect(screen.getByText("detail.vault.explain.frozen")).toBeInTheDocument();
+    expect(screen.queryByText(/detail\.vault\./)).not.toBeInTheDocument();
   });
 });

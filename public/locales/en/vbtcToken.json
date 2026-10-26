@@ -42,19 +42,6 @@
     "noBalances": "No addresses hold this token yet",
     "notFound": "vBTC token not found",
     "notFoundBody": "No vBTC token with id “{{id}}” has been indexed.",
-    "vault": {
-      "label": "Vault",
-      "badge": {
-        "watched": "Watched",
-        "legacy": "Legacy vault",
-        "frozen": "Frozen"
-      },
-      "explain": {
-        "watched": "Created from block {{record}}: the chain watches this vault's Bitcoin from block reports. Its backing is the Bitcoin the chain holds for it, and a key rotation moves the deposit address.",
-        "legacy": "Created before block {{record}}, so the chain does not watch its Bitcoin. From block {{enforcement}} nothing on it can be spent or withdrawn: holders should move to a watched vault before then.",
-        "frozen": "Created before block {{record}}, so the chain never watched its Bitcoin. Frozen since block {{enforcement}}: nothing on it can be spent or withdrawn."
-      }
-    },
     "withdrawals": {
       "heading": "Withdrawals",
       "empty": "No withdrawals from this vault yet",
