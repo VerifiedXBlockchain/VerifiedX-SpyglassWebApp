@@ -34,14 +34,23 @@ describe("AppHeader", () => {
     expect(within(nav).getByRole("link", { name: "nav.blocks" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("groups the token explorers under a Tokens menu", async () => {
+  it("gives vBTC its own primary nav link, marked current on its pages", () => {
+    useRouterMock.mockReturnValue(mockRouter({ pathname: "/vbtc-token/[id]", asPath: "/vbtc-token/abc" }));
+    render(<AppHeader />);
+    const [nav] = screen.getAllByRole("navigation", { name: "nav.primaryAria" });
+    const vbtc = within(nav).getByRole("link", { name: "nav.vbtc" });
+    expect(vbtc).toHaveAttribute("href", "/vbtc-token");
+    expect(vbtc).toHaveAttribute("aria-current", "page");
+  });
+
+  it("groups the other token explorers under a Tokens menu", async () => {
     const user = userEvent.setup();
     render(<AppHeader />);
     const trigger = screen.getByRole("button", { name: "nav.tokens" });
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     await user.click(trigger);
     const menu = screen.getByRole("menu");
-    expect(within(menu).getByRole("menuitem", { name: "nav.vbtc" })).toHaveAttribute("href", "/vbtc-token");
+    expect(within(menu).queryByRole("menuitem", { name: "nav.vbtc" })).not.toBeInTheDocument();
     expect(within(menu).getByRole("menuitem", { name: "nav.fungibleTokens" })).toHaveAttribute("href", "/fungible-token");
     expect(within(menu).getByRole("menuitem", { name: "nav.nfts" })).toHaveAttribute("href", "/nfts");
     // fireEvent (act-wrapped) rather than user.keyboard: the Escape listener lives on document.
