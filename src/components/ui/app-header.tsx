@@ -27,6 +27,8 @@ interface NavLink {
 const PRIMARY_LINKS: NavLink[] = [
   { key: "blocks", labelKey: "nav.blocks", href: "/block", matches: ["/", "/block"] },
   { key: "transactions", labelKey: "nav.transactions", href: "/transaction", matches: ["/transaction"] },
+  // vBTC stands on its own in the primary nav, always visible, not inside the Tokens menu.
+  { key: "vbtc", labelKey: "nav.vbtc", href: "/vbtc-token", matches: ["/vbtc-token"] },
   { key: "validators", labelKey: "nav.validators", href: "/validators", matches: ["/validators"] },
   ...(!IS_TESTNET && !IS_DEVNET ? [{ key: "metrics", labelKey: "nav.metrics", href: "/metrics", matches: ["/metrics"] }] : []),
   { key: "domains", labelKey: "nav.domains", href: "/domains", matches: ["/domains"] },
@@ -34,7 +36,6 @@ const PRIMARY_LINKS: NavLink[] = [
 ];
 
 const TOKEN_LINKS: NavLink[] = [
-  { key: "vbtc", labelKey: "nav.vbtc", href: "/vbtc-token", matches: ["/vbtc-token"] },
   { key: "fungibleTokens", labelKey: "nav.fungibleTokens", href: "/fungible-token", matches: ["/fungible-token"] },
   { key: "nfts", labelKey: "nav.nfts", href: "/nfts", matches: ["/nfts"] },
 ];

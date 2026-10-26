@@ -98,7 +98,8 @@
 }
 
 .navLink {
-  padding: 8px 11px;
+  // 9px sides (was 11) so the nav fits at the desktop breakpoint with vBTC as its own link.
+  padding: 8px 9px;
   border-radius: var(--radius-sm);
   color: var(--text-soft);
   font-size: 14px;
@@ -163,7 +164,7 @@
   @media (min-width: bp.$desktop) {
     // Preferred 270px, but may shrink so the full nav never overflows at the desktop breakpoint.
     flex: 0 1 270px;
-    min-width: 170px;
+    min-width: 140px;
   }
 }
 
